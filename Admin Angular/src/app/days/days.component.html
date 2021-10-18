@@ -1,0 +1,1252 @@
+<div class="pageHeader">
+    <div nz-row>
+        <div nz-col [nzSpan]="12">
+            <h1 class="title">Days</h1>
+        </div>
+        <div nz-col [nzSpan]="12">
+            <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
+                <ng-template #suffixIconButton>
+                    <button nz-button nzType="primary" nzSearch><i nz-icon nzType="search"></i></button>
+                </ng-template>
+                <input type="text" nz-input placeholder="Search for a day" />
+            </nz-input-group>
+
+        </div>
+    </div>
+</div>
+<br>
+
+<nz-table #basicTable nzBordered [nzData]="listOfData" [nzTitle]="header">
+    <ng-template #header>
+        <div nz-row>
+            <div nz-col [nzSpan]="24">
+                <span class="float-right">
+                                    <button nz-button  nzType="primary" (click)="showAddDayModal()">Add day</button>
+                </span>
+            </div>
+
+        </div>
+    </ng-template>
+    <thead>
+        <tr>
+            <th>Day</th>
+            <th nzAlign='center'><i nz-icon nzType="eye" nzTheme="outline" style="font-size: 16px; color: #08c;"></i></th>
+            <th nzAlign='center'><i nz-icon nzType="edit" nzTheme="outline" style="font-size: 16px; color: #f5bd1f;"></i></th>
+            <th nzAlign='center'><i nz-icon nzType="delete" nzTheme="outline" style="font-size: 16px; color: red;"></i></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let data of basicTable.data">
+            <td>{{ data.day }}</td>
+
+            <td nzAlign='center'>
+                <button nz-button class="login-form-forgot login-form-button login-form-margin" nzType="primary" (click)="showViewDayModal()">View Day</button>
+            </td>
+
+            <td nzAlign='center'>
+                <button nz-button class="login-form-forgot login-form-button login-form-margin" nzType="primary" (click)="showUpdateDayModal()">Update Day</button>
+            </td>
+            <td nzAlign='center'>
+                <button nz-button class="login-form-forgot login-form-button login-form-margin" nzType="danger" (click)="showDeleteDayModal()">Delete Day</button>
+            </td>
+
+        </tr>
+    </tbody>
+</nz-table>
+
+<!-- Add res modal -->
+<nz-modal [(nzVisible)]="isAddDayVisible" [nzTitle]="title2" nzCentered nzClosable=false>
+    <ng-template #title2><span style="color:#00162b; margin-right: 6px;">Add</span><span style="color:#f5bd1f;">Day</span></ng-template>
+    <form nz-form [formGroup]="validateForm">
+        <ng-container *nzModalContent>
+            <nz-form-item>
+                <nz-form-control nzErrorTip="Please input the day!">
+                    <nz-input-group [nzAddOnBefore]="Icon">
+                        <ng-template #Icon><i nz-icon nzType="schedule" nzTheme="outline"></i></ng-template>
+                        <input type="text" nz-input formControlName="name" placeholder="Day" />
+                    </nz-input-group>
+                </nz-form-control>
+            </nz-form-item>
+
+
+            <div id="VL">
+                <nz-divider style="border-width: 2px; min-height:50%; border-color: #1d62ca;" nzText="Vegeterian Lunch"></nz-divider>
+                <nz-form-item>
+                    <nz-form-control nzErrorTip="Please select an item type!">
+                        <nz-input-group [nzAddOnBefore]="calendarIcon">
+                            <ng-template #calendarIcon><i nz-icon nzType="unordered-list" nzTheme="outline"></i></ng-template>
+                            <nz-select style="width: 100%;" #type nzPlaceHolder="Select Item Type" formControlName="aType">
+                                <nz-option nzCustomContent nzLabel="Starch" nzValue="Starch">Starch</nz-option>
+                                <nz-option nzCustomContent nzLabel="Sauce" nzValue="Sauce"> Sauce</nz-option>
+                                <nz-option nzCustomContent nzLabel="Gravy" nzValue="Gravy"> Gravy</nz-option>
+                                <nz-option nzCustomContent nzLabel="Vegetable" nzValue="Vegetable"> Vegetable</nz-option>
+                                <nz-option nzCustomContent nzLabel="Protein" nzValue="Protein"> Protein</nz-option>
+                                <nz-option nzCustomContent nzLabel="Salad" nzValue="Salad"> Salad</nz-option>
+                            </nz-select>
+                        </nz-input-group>
+                    </nz-form-control>
+                </nz-form-item>
+                <nz-form-item *ngIf="type.value=='Starch'">
+                    <nz-form-control nzErrorTip="Please select starch items!">
+                        <nz-input-group [nzAddOnBefore]="calendarIcon">
+                            <ng-template #calendarIcon><i nz-icon nzType="unordered-list" nzTheme="outline"></i></ng-template>
+                            <nz-select style="width: 100%;" [(ngModel)]="multipleValue" #starch formControlName="starch" nzMode="multiple" nzPlaceHolder="Select starch items">
+                                <nz-option *ngFor="let option of listOfStarch" [nzLabel]="option.item" [nzValue]="option.item"></nz-option>
+                            </nz-select>
+                        </nz-input-group>
+                    </nz-form-control>
+                </nz-form-item>
+                <nz-form-item *ngIf="type.value=='Sauce'">
+                    <nz-form-control nzErrorTip="Please select sauce items!">
+                        <nz-input-group [nzAddOnBefore]="calendarIcon">
+                            <ng-template #calendarIcon><i nz-icon nzType="unordered-list" nzTheme="outline"></i></ng-template>
+                            <nz-select style="width: 100%;" [(ngModel)]="multipleSauce" nzMode="multiple" formControlName="sauce" nzPlaceHolder="Select sauce items">
+                                <nz-option *ngFor="let option of listOfSauce" [nzLabel]="option.item" [nzValue]="option.item"></nz-option>
+                            </nz-select>
+                        </nz-input-group>
+                    </nz-form-control>
+                </nz-form-item>
+                <nz-form-item *ngIf="type.value=='Gravy'">
+                    <nz-form-control nzErrorTip="Please select gravy items!">
+                        <nz-input-group [nzAddOnBefore]="calendarIcon">
+                            <ng-template #calendarIcon><i nz-icon nzType="unordered-list" nzTheme="outline"></i></ng-template>
+                            <nz-select style="width: 100%;" [(ngModel)]="multipleGravy" nzMode="multiple" formControlName="gravy" nzPlaceHolder="Select gravy items">
+                                <nz-option *ngFor="let option of listOfGravy" [nzLabel]="option.item" [nzValue]="option.item"></nz-option>
+                            </nz-select>
+                        </nz-input-group>
+                    </nz-form-control>
+                </nz-form-item>
+
+                <nz-form-item *ngIf="type.value=='Vegetable'">
+                    <nz-form-control nzErrorTip="Please select vegetable items!">
+                        <nz-input-group [nzAddOnBefore]="calendarIcon">
+                            <ng-template #calendarIcon><i nz-icon nzType="unordered-list" nzTheme="outline"></i></ng-template>
+                            <nz-select style="width: 100%;" [(ngModel)]="multipleVegetable" nzMode="multiple" formControlName="vegetable" nzPlaceHolder="Select vegetable items">
+                                <nz-option *ngFor="let option of listOfVegetable" [nzLabel]="option.item" [nzValue]="option.item"></nz-option>
+                            </nz-select>
+                        </nz-input-group>
+                    </nz-form-control>
+                </nz-form-item>
+
+                <nz-form-item *ngIf="type.value=='Protein'">
+                    <nz-form-control nzErrorTip="Please select protein items!">
+                        <nz-input-group [nzAddOnBefore]="calendarIcon">
+                            <ng-template #calendarIcon><i nz-icon nzType="unordered-list" nzTheme="outline"></i></ng-template>
+                            <nz-select style="width: 100%;" [(ngModel)]="multipleProtein" nzMode="multiple" formControlName="protein" nzPlaceHolder="Select protein items">
+                                <nz-option *ngFor="let option of listOfProtein" [nzLabel]="option.item" [nzValue]="option.item"></nz-option>
+                            </nz-select>
+                        </nz-input-group>
+                    </nz-form-control>
+                </nz-form-item>
+
+                <nz-form-item *ngIf="type.value=='Salad'">
+                    <nz-form-control nzErrorTip="Please select salad items!">
+                        <nz-input-group [nzAddOnBefore]="calendarIcon">
+                            <ng-template #calendarIcon><i nz-icon nzType="unordered-list" nzTheme="outline"></i></ng-template>
+                            <nz-select style="width: 100%;" [(ngModel)]="multipleSalad" nzMode="multiple" formControlName="salad" nzPlaceHolder="Select salad items">
+                                <nz-option *ngFor="let option of listOfSalad" [nzLabel]="option.item" [nzValue]="option.item"></nz-option>
+                            </nz-select>
+                        </nz-input-group>
+                    </nz-form-control>
+                </nz-form-item>
+
+                <nz-form-item>
+                    <nz-form-control nzErrorTip="Please select items!">
+                        <nz-input-group [nzAddOnBefore]="calendarIcon1">
+                            <ng-template #calendarIcon1><i nz-icon nzType="info" nzTheme="outline"></i></ng-template>
+                            <textarea nz-input nzAutosize placeholder="Items" value=" {{multipleValue}} &#13;&#10; {{multipleSauce}} &#13;&#10; {{multipleGravy}} &#13;&#10; {{multipleVegetable}} &#13;&#10; {{multipleProtein}} &#13;&#10; {{multipleSalad}}" formControlName="description"></textarea>
+
+                        </nz-input-group>
+                    </nz-form-control>
+                </nz-form-item>
+
+
+            </div>
+
+
+            <div id="SL">
+                <nz-divider style="border-width: 2px; min-height:50%; border-color: #1d62ca;" nzText="Standard Lunch"></nz-divider>
+                <nz-form-item>
+                    <nz-form-control nzErrorTip="Please select an item type!">
+                        <nz-input-group [nzAddOnBefore]="calendarIcon">
+                            <ng-template #calendarIcon><i nz-icon nzType="unordered-list" nzTheme="outline"></i></ng-template>
+                            <nz-select style="width: 100%;" #type1 nzPlaceHolder="Select Item Type" formControlName="aType1">
+                                <nz-option nzCustomContent nzLabel="Starch" nzValue="Starch">Starch</nz-option>
+                                <nz-option nzCustomContent nzLabel="Sauce" nzValue="Sauce"> Sauce</nz-option>
+                                <nz-option nzCustomContent nzLabel="Gravy" nzValue="Gravy"> Gravy</nz-option>
+                                <nz-option nzCustomContent nzLabel="Vegetable" nzValue="Vegetable"> Vegetable</nz-option>
+                                <nz-option nzCustomContent nzLabel="Protein" nzValue="Protein"> Protein</nz-option>
+                                <nz-option nzCustomContent nzLabel="Salad" nzValue="Salad"> Salad</nz-option>
+                            </nz-select>
+                        </nz-input-group>
+                    </nz-form-control>
+                </nz-form-item>
+                <nz-form-item *ngIf="type1.value=='Starch'">
+                    <nz-form-control nzErrorTip="Please select starch items!">
+                        <nz-input-group [nzAddOnBefore]="calendarIcon">
+                            <ng-template #calendarIcon><i nz-icon nzType="unordered-list" nzTheme="outline"></i></ng-template>
+                            <nz-select style="width: 100%;" [(ngModel)]="multipleValueSL" #starch formControlName="starch1" nzMode="multiple" nzPlaceHolder="Select starch items">
+                                <nz-option *ngFor="let option of listOfStarch" [nzLabel]="option.item" [nzValue]="option.item"></nz-option>
+                            </nz-select>
+                        </nz-input-group>
+                    </nz-form-control>
+                </nz-form-item>
+                <nz-form-item *ngIf="type1.value=='Sauce'">
+                    <nz-form-control nzErrorTip="Please select sauce items!">
+                        <nz-input-group [nzAddOnBefore]="calendarIcon">
+                            <ng-template #calendarIcon><i nz-icon nzType="unordered-list" nzTheme="outline"></i></ng-template>
+                            <nz-select style="width: 100%;" [(ngModel)]="multipleSauceSL" nzMode="multiple" formControlName="sauce1" nzPlaceHolder="Select sauce items">
+                                <nz-option *ngFor="let option of listOfSauce" [nzLabel]="option.item" [nzValue]="option.item"></nz-option>
+                            </nz-select>
+                        </nz-input-group>
+                    </nz-form-control>
+                </nz-form-item>
+                <nz-form-item *ngIf="type1.value=='Gravy'">
+                    <nz-form-control nzErrorTip="Please select gravy items!">
+                        <nz-input-group [nzAddOnBefore]="calendarIcon">
+                            <ng-template #calendarIcon><i nz-icon nzType="unordered-list" nzTheme="outline"></i></ng-template>
+                            <nz-select style="width: 100%;" [(ngModel)]="multipleGravySL" nzMode="multiple" formControlName="gravy1" nzPlaceHolder="Select gravy items">
+                                <nz-option *ngFor="let option of listOfGravy" [nzLabel]="option.item" [nzValue]="option.item"></nz-option>
+                            </nz-select>
+                        </nz-input-group>
+                    </nz-form-control>
+                </nz-form-item>
+
+                <nz-form-item *ngIf="type1.value=='Vegetable'">
+                    <nz-form-control nzErrorTip="Please select vegetable items!">
+                        <nz-input-group [nzAddOnBefore]="calendarIcon">
+                            <ng-template #calendarIcon><i nz-icon nzType="unordered-list" nzTheme="outline"></i></ng-template>
+                            <nz-select style="width: 100%;" [(ngModel)]="multipleVegetableSL" nzMode="multiple" formControlName="vegetable1" nzPlaceHolder="Select vegetable items">
+                                <nz-option *ngFor="let option of listOfVegetable" [nzLabel]="option.item" [nzValue]="option.item"></nz-option>
+                            </nz-select>
+                        </nz-input-group>
+                    </nz-form-control>
+                </nz-form-item>
+
+                <nz-form-item *ngIf="type1.value=='Protein'">
+                    <nz-form-control nzErrorTip="Please select protein items!">
+                        <nz-input-group [nzAddOnBefore]="calendarIcon">
+                            <ng-template #calendarIcon><i nz-icon nzType="unordered-list" nzTheme="outline"></i></ng-template>
+                            <nz-select style="width: 100%;" [(ngModel)]="multipleProteinSL" nzMode="multiple" formControlName="protein1" nzPlaceHolder="Select protein items">
+                                <nz-option *ngFor="let option of listOfProtein" [nzLabel]="option.item" [nzValue]="option.item"></nz-option>
+                            </nz-select>
+                        </nz-input-group>
+                    </nz-form-control>
+                </nz-form-item>
+
+                <nz-form-item *ngIf="type1.value=='Salad'">
+                    <nz-form-control nzErrorTip="Please select salad items!">
+                        <nz-input-group [nzAddOnBefore]="calendarIcon">
+                            <ng-template #calendarIcon><i nz-icon nzType="unordered-list" nzTheme="outline"></i></ng-template>
+                            <nz-select style="width: 100%;" [(ngModel)]="multipleSaladSL" nzMode="multiple" formControlName="salad1" nzPlaceHolder="Select salad items">
+                                <nz-option *ngFor="let option of listOfSalad" [nzLabel]="option.item" [nzValue]="option.item"></nz-option>
+                            </nz-select>
+                        </nz-input-group>
+                    </nz-form-control>
+                </nz-form-item>
+
+                <nz-form-item>
+                    <nz-form-control nzErrorTip="Please select items!">
+                        <nz-input-group [nzAddOnBefore]="calendarIcon1">
+                            <ng-template #calendarIcon1><i nz-icon nzType="info" nzTheme="outline"></i></ng-template>
+                            <textarea nz-input nzAutosize placeholder="Items" value=" {{multipleValueSL}} &#13;&#10; {{multipleSauceSL}} &#13;&#10; {{multipleGravySL}} &#13;&#10; {{multipleVegetableSL}} &#13;&#10; {{multipleProteinSL}} &#13;&#10; {{multipleSaladSL}}" formControlName="description1"></textarea>
+
+                        </nz-input-group>
+                    </nz-form-control>
+                </nz-form-item>
+            </div>
+
+            <div id="TL">
+                <nz-divider style="border-width: 2px; min-height:50%; border-color: #1d62ca;" nzText="TuksRes Lunch"></nz-divider>
+                <nz-form-item>
+                    <nz-form-control nzErrorTip="Please select an item type!">
+                        <nz-input-group [nzAddOnBefore]="calendarIcon">
+                            <ng-template #calendarIcon><i nz-icon nzType="unordered-list" nzTheme="outline"></i></ng-template>
+                            <nz-select style="width: 100%;" #type nzPlaceHolder="Select Item Type" formControlName="aType2">
+                                <nz-option nzCustomContent nzLabel="Starch" nzValue="Starch">Starch</nz-option>
+                                <nz-option nzCustomContent nzLabel="Sauce" nzValue="Sauce"> Sauce</nz-option>
+                                <nz-option nzCustomContent nzLabel="Gravy" nzValue="Gravy"> Gravy</nz-option>
+                                <nz-option nzCustomContent nzLabel="Vegetable" nzValue="Vegetable"> Vegetable</nz-option>
+                                <nz-option nzCustomContent nzLabel="Protein" nzValue="Protein"> Protein</nz-option>
+                                <nz-option nzCustomContent nzLabel="Salad" nzValue="Salad"> Salad</nz-option>
+                            </nz-select>
+                        </nz-input-group>
+                    </nz-form-control>
+                </nz-form-item>
+                <nz-form-item *ngIf="type.value=='Starch'">
+                    <nz-form-control nzErrorTip="Please select starch items!">
+                        <nz-input-group [nzAddOnBefore]="calendarIcon">
+                            <ng-template #calendarIcon><i nz-icon nzType="unordered-list" nzTheme="outline"></i></ng-template>
+                            <nz-select style="width: 100%;" [(ngModel)]="multipleValueTL" #starch formControlName="starch2" nzMode="multiple" nzPlaceHolder="Select starch items">
+                                <nz-option *ngFor="let option of listOfStarch" [nzLabel]="option.item" [nzValue]="option.item"></nz-option>
+                            </nz-select>
+                        </nz-input-group>
+                    </nz-form-control>
+                </nz-form-item>
+                <nz-form-item *ngIf="type.value=='Sauce'">
+                    <nz-form-control nzErrorTip="Please select sauce items!">
+                        <nz-input-group [nzAddOnBefore]="calendarIcon">
+                            <ng-template #calendarIcon><i nz-icon nzType="unordered-list" nzTheme="outline"></i></ng-template>
+                            <nz-select style="width: 100%;" [(ngModel)]="multipleSauceTL" nzMode="multiple" formControlName="sauce2" nzPlaceHolder="Select sauce items">
+                                <nz-option *ngFor="let option of listOfSauce" [nzLabel]="option.item" [nzValue]="option.item"></nz-option>
+                            </nz-select>
+                        </nz-input-group>
+                    </nz-form-control>
+                </nz-form-item>
+                <nz-form-item *ngIf="type.value=='Gravy'">
+                    <nz-form-control nzErrorTip="Please select gravy items!">
+                        <nz-input-group [nzAddOnBefore]="calendarIcon">
+                            <ng-template #calendarIcon><i nz-icon nzType="unordered-list" nzTheme="outline"></i></ng-template>
+                            <nz-select style="width: 100%;" [(ngModel)]="multipleGravyTL" nzMode="multiple" formControlName="gravy2" nzPlaceHolder="Select gravy items">
+                                <nz-option *ngFor="let option of listOfGravy" [nzLabel]="option.item" [nzValue]="option.item"></nz-option>
+                            </nz-select>
+                        </nz-input-group>
+                    </nz-form-control>
+                </nz-form-item>
+
+                <nz-form-item *ngIf="type.value=='Vegetable'">
+                    <nz-form-control nzErrorTip="Please select vegetable items!">
+                        <nz-input-group [nzAddOnBefore]="calendarIcon">
+                            <ng-template #calendarIcon><i nz-icon nzType="unordered-list" nzTheme="outline"></i></ng-template>
+                            <nz-select style="width: 100%;" [(ngModel)]="multipleVegetableTL" nzMode="multiple" formControlName="vegetable2" nzPlaceHolder="Select vegetable items">
+                                <nz-option *ngFor="let option of listOfVegetable" [nzLabel]="option.item" [nzValue]="option.item"></nz-option>
+                            </nz-select>
+                        </nz-input-group>
+                    </nz-form-control>
+                </nz-form-item>
+
+                <nz-form-item *ngIf="type.value=='Protein'">
+                    <nz-form-control nzErrorTip="Please select protein items!">
+                        <nz-input-group [nzAddOnBefore]="calendarIcon">
+                            <ng-template #calendarIcon><i nz-icon nzType="unordered-list" nzTheme="outline"></i></ng-template>
+                            <nz-select style="width: 100%;" [(ngModel)]="multipleProteinTL" nzMode="multiple" formControlName="protein2" nzPlaceHolder="Select protein items">
+                                <nz-option *ngFor="let option of listOfProtein" [nzLabel]="option.item" [nzValue]="option.item"></nz-option>
+                            </nz-select>
+                        </nz-input-group>
+                    </nz-form-control>
+                </nz-form-item>
+
+                <nz-form-item *ngIf="type.value=='Salad'">
+                    <nz-form-control nzErrorTip="Please select salad items!">
+                        <nz-input-group [nzAddOnBefore]="calendarIcon">
+                            <ng-template #calendarIcon><i nz-icon nzType="unordered-list" nzTheme="outline"></i></ng-template>
+                            <nz-select style="width: 100%;" [(ngModel)]="multipleSaladTL" nzMode="multiple" formControlName="salad2" nzPlaceHolder="Select salad items">
+                                <nz-option *ngFor="let option of listOfSalad" [nzLabel]="option.item" [nzValue]="option.item"></nz-option>
+                            </nz-select>
+                        </nz-input-group>
+                    </nz-form-control>
+                </nz-form-item>
+
+                <nz-form-item>
+                    <nz-form-control nzErrorTip="Please select items!">
+                        <nz-input-group [nzAddOnBefore]="calendarIcon1">
+                            <ng-template #calendarIcon1><i nz-icon nzType="info" nzTheme="outline"></i></ng-template>
+                            <textarea nz-input nzAutosize placeholder="Items" value=" {{multipleValueTL}} &#13;&#10; {{multipleSauceTL}} &#13;&#10; {{multipleGravyTL}} &#13;&#10; {{multipleVegetableTL}} &#13;&#10; {{multipleProteinTL}} &#13;&#10; {{multipleSaladTL}}" formControlName="description2"></textarea>
+
+                        </nz-input-group>
+                    </nz-form-control>
+                </nz-form-item>
+            </div>
+
+
+            <div id="VS">
+                <nz-divider style="border-width: 2px; min-height:50%; border-color: #1d62ca;" nzText="Vegeterian Supper"></nz-divider>
+                <nz-form-item>
+                    <nz-form-control nzErrorTip="Please select an item type!">
+                        <nz-input-group [nzAddOnBefore]="calendarIcon">
+                            <ng-template #calendarIcon><i nz-icon nzType="unordered-list" nzTheme="outline"></i></ng-template>
+                            <nz-select style="width: 100%;" #type nzPlaceHolder="Select Item Type" formControlName="aType3">
+                                <nz-option nzCustomContent nzLabel="Starch" nzValue="Starch">Starch</nz-option>
+                                <nz-option nzCustomContent nzLabel="Sauce" nzValue="Sauce"> Sauce</nz-option>
+                                <nz-option nzCustomContent nzLabel="Gravy" nzValue="Gravy"> Gravy</nz-option>
+                                <nz-option nzCustomContent nzLabel="Vegetable" nzValue="Vegetable"> Vegetable</nz-option>
+                                <nz-option nzCustomContent nzLabel="Protein" nzValue="Protein"> Protein</nz-option>
+                                <nz-option nzCustomContent nzLabel="Salad" nzValue="Salad"> Salad</nz-option>
+                            </nz-select>
+                        </nz-input-group>
+                    </nz-form-control>
+                </nz-form-item>
+                <nz-form-item *ngIf="type.value=='Starch'">
+                    <nz-form-control nzErrorTip="Please select starch items!">
+                        <nz-input-group [nzAddOnBefore]="calendarIcon">
+                            <ng-template #calendarIcon><i nz-icon nzType="unordered-list" nzTheme="outline"></i></ng-template>
+                            <nz-select style="width: 100%;" [(ngModel)]="multipleValueVS" #starch formControlName="starch3" nzMode="multiple" nzPlaceHolder="Select starch items">
+                                <nz-option *ngFor="let option of listOfStarch" [nzLabel]="option.item" [nzValue]="option.item"></nz-option>
+                            </nz-select>
+                        </nz-input-group>
+                    </nz-form-control>
+                </nz-form-item>
+                <nz-form-item *ngIf="type.value=='Sauce'">
+                    <nz-form-control nzErrorTip="Please select sauce items!">
+                        <nz-input-group [nzAddOnBefore]="calendarIcon">
+                            <ng-template #calendarIcon><i nz-icon nzType="unordered-list" nzTheme="outline"></i></ng-template>
+                            <nz-select style="width: 100%;" [(ngModel)]="multipleSauceVS" nzMode="multiple" formControlName="sauce3" nzPlaceHolder="Select sauce items">
+                                <nz-option *ngFor="let option of listOfSauce" [nzLabel]="option.item" [nzValue]="option.item"></nz-option>
+                            </nz-select>
+                        </nz-input-group>
+                    </nz-form-control>
+                </nz-form-item>
+                <nz-form-item *ngIf="type.value=='Gravy'">
+                    <nz-form-control nzErrorTip="Please select gravy items!">
+                        <nz-input-group [nzAddOnBefore]="calendarIcon">
+                            <ng-template #calendarIcon><i nz-icon nzType="unordered-list" nzTheme="outline"></i></ng-template>
+                            <nz-select style="width: 100%;" [(ngModel)]="multipleGravyVS" nzMode="multiple" formControlName="gravy3" nzPlaceHolder="Select gravy items">
+                                <nz-option *ngFor="let option of listOfGravy" [nzLabel]="option.item" [nzValue]="option.item"></nz-option>
+                            </nz-select>
+                        </nz-input-group>
+                    </nz-form-control>
+                </nz-form-item>
+
+                <nz-form-item *ngIf="type.value=='Vegetable'">
+                    <nz-form-control nzErrorTip="Please select vegetable items!">
+                        <nz-input-group [nzAddOnBefore]="calendarIcon">
+                            <ng-template #calendarIcon><i nz-icon nzType="unordered-list" nzTheme="outline"></i></ng-template>
+                            <nz-select style="width: 100%;" [(ngModel)]="multipleVegetableVS" nzMode="multiple" formControlName="vegetable3" nzPlaceHolder="Select vegetable items">
+                                <nz-option *ngFor="let option of listOfVegetable" [nzLabel]="option.item" [nzValue]="option.item"></nz-option>
+                            </nz-select>
+                        </nz-input-group>
+                    </nz-form-control>
+                </nz-form-item>
+
+                <nz-form-item *ngIf="type.value=='Protein'">
+                    <nz-form-control nzErrorTip="Please select protein items!">
+                        <nz-input-group [nzAddOnBefore]="calendarIcon">
+                            <ng-template #calendarIcon><i nz-icon nzType="unordered-list" nzTheme="outline"></i></ng-template>
+                            <nz-select style="width: 100%;" [(ngModel)]="multipleProteinVS" nzMode="multiple" formControlName="protein3" nzPlaceHolder="Select protein items">
+                                <nz-option *ngFor="let option of listOfProtein" [nzLabel]="option.item" [nzValue]="option.item"></nz-option>
+                            </nz-select>
+                        </nz-input-group>
+                    </nz-form-control>
+                </nz-form-item>
+
+                <nz-form-item *ngIf="type.value=='Salad'">
+                    <nz-form-control nzErrorTip="Please select salad items!">
+                        <nz-input-group [nzAddOnBefore]="calendarIcon">
+                            <ng-template #calendarIcon><i nz-icon nzType="unordered-list" nzTheme="outline"></i></ng-template>
+                            <nz-select style="width: 100%;" [(ngModel)]="multipleSaladVS" nzMode="multiple" formControlName="salad3" nzPlaceHolder="Select salad items">
+                                <nz-option *ngFor="let option of listOfSalad" [nzLabel]="option.item" [nzValue]="option.item"></nz-option>
+                            </nz-select>
+                        </nz-input-group>
+                    </nz-form-control>
+                </nz-form-item>
+
+                <nz-form-item>
+                    <nz-form-control nzErrorTip="Please select items!">
+                        <nz-input-group [nzAddOnBefore]="calendarIcon1">
+                            <ng-template #calendarIcon1><i nz-icon nzType="info" nzTheme="outline"></i></ng-template>
+                            <textarea nz-input nzAutosize placeholder="Items" value=" {{multipleValueVS}} &#13;&#10; {{multipleSauceVS}} &#13;&#10; {{multipleGravyVS}} &#13;&#10; {{multipleVegetableVS}} &#13;&#10; {{multipleProteinVS}} &#13;&#10; {{multipleSaladVS}}" formControlName="description3"></textarea>
+
+                        </nz-input-group>
+                    </nz-form-control>
+                </nz-form-item>
+            </div>
+
+            <div id="SS">
+                <nz-divider style="border-width: 2px; min-height:50%; border-color: #1d62ca;" nzText="Standard Supper"></nz-divider>
+                <nz-form-item>
+                    <nz-form-control nzErrorTip="Please select an item type!">
+                        <nz-input-group [nzAddOnBefore]="calendarIcon">
+                            <ng-template #calendarIcon><i nz-icon nzType="unordered-list" nzTheme="outline"></i></ng-template>
+                            <nz-select style="width: 100%;" #type nzPlaceHolder="Select Item Type" formControlName="aType4">
+                                <nz-option nzCustomContent nzLabel="Starch" nzValue="Starch">Starch</nz-option>
+                                <nz-option nzCustomContent nzLabel="Sauce" nzValue="Sauce"> Sauce</nz-option>
+                                <nz-option nzCustomContent nzLabel="Gravy" nzValue="Gravy"> Gravy</nz-option>
+                                <nz-option nzCustomContent nzLabel="Vegetable" nzValue="Vegetable"> Vegetable</nz-option>
+                                <nz-option nzCustomContent nzLabel="Protein" nzValue="Protein"> Protein</nz-option>
+                                <nz-option nzCustomContent nzLabel="Salad" nzValue="Salad"> Salad</nz-option>
+                            </nz-select>
+                        </nz-input-group>
+                    </nz-form-control>
+                </nz-form-item>
+                <nz-form-item *ngIf="type.value=='Starch'">
+                    <nz-form-control nzErrorTip="Please select starch items!">
+                        <nz-input-group [nzAddOnBefore]="calendarIcon">
+                            <ng-template #calendarIcon><i nz-icon nzType="unordered-list" nzTheme="outline"></i></ng-template>
+                            <nz-select style="width: 100%;" [(ngModel)]="multipleValueSS" #starch formControlName="starch4" nzMode="multiple" nzPlaceHolder="Select starch items">
+                                <nz-option *ngFor="let option of listOfStarch" [nzLabel]="option.item" [nzValue]="option.item"></nz-option>
+                            </nz-select>
+                        </nz-input-group>
+                    </nz-form-control>
+                </nz-form-item>
+                <nz-form-item *ngIf="type.value=='Sauce'">
+                    <nz-form-control nzErrorTip="Please select sauce items!">
+                        <nz-input-group [nzAddOnBefore]="calendarIcon">
+                            <ng-template #calendarIcon><i nz-icon nzType="unordered-list" nzTheme="outline"></i></ng-template>
+                            <nz-select style="width: 100%;" [(ngModel)]="multipleSauceSS" nzMode="multiple" formControlName="sauce4" nzPlaceHolder="Select sauce items">
+                                <nz-option *ngFor="let option of listOfSauce" [nzLabel]="option.item" [nzValue]="option.item"></nz-option>
+                            </nz-select>
+                        </nz-input-group>
+                    </nz-form-control>
+                </nz-form-item>
+                <nz-form-item *ngIf="type.value=='Gravy'">
+                    <nz-form-control nzErrorTip="Please select gravy items!">
+                        <nz-input-group [nzAddOnBefore]="calendarIcon">
+                            <ng-template #calendarIcon><i nz-icon nzType="unordered-list" nzTheme="outline"></i></ng-template>
+                            <nz-select style="width: 100%;" [(ngModel)]="multipleGravySS" nzMode="multiple" formControlName="gravy4" nzPlaceHolder="Select gravy items">
+                                <nz-option *ngFor="let option of listOfGravy" [nzLabel]="option.item" [nzValue]="option.item"></nz-option>
+                            </nz-select>
+                        </nz-input-group>
+                    </nz-form-control>
+                </nz-form-item>
+
+                <nz-form-item *ngIf="type.value=='Vegetable'">
+                    <nz-form-control nzErrorTip="Please select vegetable items!">
+                        <nz-input-group [nzAddOnBefore]="calendarIcon">
+                            <ng-template #calendarIcon><i nz-icon nzType="unordered-list" nzTheme="outline"></i></ng-template>
+                            <nz-select style="width: 100%;" [(ngModel)]="multipleVegetableSS" nzMode="multiple" formControlName="vegetable4" nzPlaceHolder="Select vegetable items">
+                                <nz-option *ngFor="let option of listOfVegetable" [nzLabel]="option.item" [nzValue]="option.item"></nz-option>
+                            </nz-select>
+                        </nz-input-group>
+                    </nz-form-control>
+                </nz-form-item>
+
+                <nz-form-item *ngIf="type.value=='Protein'">
+                    <nz-form-control nzErrorTip="Please select protein items!">
+                        <nz-input-group [nzAddOnBefore]="calendarIcon">
+                            <ng-template #calendarIcon><i nz-icon nzType="unordered-list" nzTheme="outline"></i></ng-template>
+                            <nz-select style="width: 100%;" [(ngModel)]="multipleProteinSS" nzMode="multiple" formControlName="protein4" nzPlaceHolder="Select protein items">
+                                <nz-option *ngFor="let option of listOfProtein" [nzLabel]="option.item" [nzValue]="option.item"></nz-option>
+                            </nz-select>
+                        </nz-input-group>
+                    </nz-form-control>
+                </nz-form-item>
+
+                <nz-form-item *ngIf="type.value=='Salad'">
+                    <nz-form-control nzErrorTip="Please select salad items!">
+                        <nz-input-group [nzAddOnBefore]="calendarIcon">
+                            <ng-template #calendarIcon><i nz-icon nzType="unordered-list" nzTheme="outline"></i></ng-template>
+                            <nz-select style="width: 100%;" [(ngModel)]="multipleSaladSS" nzMode="multiple" formControlName="salad4" nzPlaceHolder="Select salad items">
+                                <nz-option *ngFor="let option of listOfSalad" [nzLabel]="option.item" [nzValue]="option.item"></nz-option>
+                            </nz-select>
+                        </nz-input-group>
+                    </nz-form-control>
+                </nz-form-item>
+
+                <nz-form-item>
+                    <nz-form-control nzErrorTip="Please select items!">
+                        <nz-input-group [nzAddOnBefore]="calendarIcon1">
+                            <ng-template #calendarIcon1><i nz-icon nzType="info" nzTheme="outline"></i></ng-template>
+                            <textarea nz-input nzAutosize placeholder="Items" value=" {{multipleValueSS}} &#13;&#10; {{multipleSauceSS}} &#13;&#10; {{multipleGravySS}} &#13;&#10; {{multipleVegetableSS}} &#13;&#10; {{multipleProteinSS}} &#13;&#10; {{multipleSaladSS}}" formControlName="description4"></textarea>
+
+                        </nz-input-group>
+                    </nz-form-control>
+                </nz-form-item>
+            </div>
+
+            <div id="TS">
+                <nz-divider style="border-width: 2px; min-height:50%; border-color: #1d62ca;" nzText="TuksRes Supper"></nz-divider>
+                <nz-form-item>
+                    <nz-form-control nzErrorTip="Please select an item type!">
+                        <nz-input-group [nzAddOnBefore]="calendarIcon">
+                            <ng-template #calendarIcon><i nz-icon nzType="unordered-list" nzTheme="outline"></i></ng-template>
+                            <nz-select style="width: 100%;" #type nzPlaceHolder="Select Item Type" formControlName="aType5">
+                                <nz-option nzCustomContent nzLabel="Starch" nzValue="Starch">Starch</nz-option>
+                                <nz-option nzCustomContent nzLabel="Sauce" nzValue="Sauce"> Sauce</nz-option>
+                                <nz-option nzCustomContent nzLabel="Gravy" nzValue="Gravy"> Gravy</nz-option>
+                                <nz-option nzCustomContent nzLabel="Vegetable" nzValue="Vegetable"> Vegetable</nz-option>
+                                <nz-option nzCustomContent nzLabel="Protein" nzValue="Protein"> Protein</nz-option>
+                                <nz-option nzCustomContent nzLabel="Salad" nzValue="Salad"> Salad</nz-option>
+                            </nz-select>
+                        </nz-input-group>
+                    </nz-form-control>
+                </nz-form-item>
+                <nz-form-item *ngIf="type.value=='Starch'">
+                    <nz-form-control nzErrorTip="Please select starch items!">
+                        <nz-input-group [nzAddOnBefore]="calendarIcon">
+                            <ng-template #calendarIcon><i nz-icon nzType="unordered-list" nzTheme="outline"></i></ng-template>
+                            <nz-select style="width: 100%;" [(ngModel)]="multipleValueTS" #starch formControlName="starch5" nzMode="multiple" nzPlaceHolder="Select starch items">
+                                <nz-option *ngFor="let option of listOfStarch" [nzLabel]="option.item" [nzValue]="option.item"></nz-option>
+                            </nz-select>
+                        </nz-input-group>
+                    </nz-form-control>
+                </nz-form-item>
+                <nz-form-item *ngIf="type.value=='Sauce'">
+                    <nz-form-control nzErrorTip="Please select sauce items!">
+                        <nz-input-group [nzAddOnBefore]="calendarIcon">
+                            <ng-template #calendarIcon><i nz-icon nzType="unordered-list" nzTheme="outline"></i></ng-template>
+                            <nz-select style="width: 100%;" [(ngModel)]="multipleSauceTS" nzMode="multiple" formControlName="sauce5" nzPlaceHolder="Select sauce items">
+                                <nz-option *ngFor="let option of listOfSauce" [nzLabel]="option.item" [nzValue]="option.item"></nz-option>
+                            </nz-select>
+                        </nz-input-group>
+                    </nz-form-control>
+                </nz-form-item>
+                <nz-form-item *ngIf="type.value=='Gravy'">
+                    <nz-form-control nzErrorTip="Please select gravy items!">
+                        <nz-input-group [nzAddOnBefore]="calendarIcon">
+                            <ng-template #calendarIcon><i nz-icon nzType="unordered-list" nzTheme="outline"></i></ng-template>
+                            <nz-select style="width: 100%;" [(ngModel)]="multipleGravyTS" nzMode="multiple" formControlName="gravy5" nzPlaceHolder="Select gravy items">
+                                <nz-option *ngFor="let option of listOfGravy" [nzLabel]="option.item" [nzValue]="option.item"></nz-option>
+                            </nz-select>
+                        </nz-input-group>
+                    </nz-form-control>
+                </nz-form-item>
+
+                <nz-form-item *ngIf="type.value=='Vegetable'">
+                    <nz-form-control nzErrorTip="Please select vegetable items!">
+                        <nz-input-group [nzAddOnBefore]="calendarIcon">
+                            <ng-template #calendarIcon><i nz-icon nzType="unordered-list" nzTheme="outline"></i></ng-template>
+                            <nz-select style="width: 100%;" [(ngModel)]="multipleVegetableTS" nzMode="multiple" formControlName="vegetable5" nzPlaceHolder="Select vegetable items">
+                                <nz-option *ngFor="let option of listOfVegetable" [nzLabel]="option.item" [nzValue]="option.item"></nz-option>
+                            </nz-select>
+                        </nz-input-group>
+                    </nz-form-control>
+                </nz-form-item>
+
+                <nz-form-item *ngIf="type.value=='Protein'">
+                    <nz-form-control nzErrorTip="Please select protein items!">
+                        <nz-input-group [nzAddOnBefore]="calendarIcon">
+                            <ng-template #calendarIcon><i nz-icon nzType="unordered-list" nzTheme="outline"></i></ng-template>
+                            <nz-select style="width: 100%;" [(ngModel)]="multipleProteinTS" nzMode="multiple" formControlName="protein5" nzPlaceHolder="Select protein items">
+                                <nz-option *ngFor="let option of listOfProtein" [nzLabel]="option.item" [nzValue]="option.item"></nz-option>
+                            </nz-select>
+                        </nz-input-group>
+                    </nz-form-control>
+                </nz-form-item>
+
+                <nz-form-item *ngIf="type.value=='Salad'">
+                    <nz-form-control nzErrorTip="Please select salad items!">
+                        <nz-input-group [nzAddOnBefore]="calendarIcon">
+                            <ng-template #calendarIcon><i nz-icon nzType="unordered-list" nzTheme="outline"></i></ng-template>
+                            <nz-select style="width: 100%;" [(ngModel)]="multipleSaladTS" nzMode="multiple" formControlName="salad5" nzPlaceHolder="Select salad items">
+                                <nz-option *ngFor="let option of listOfSalad" [nzLabel]="option.item" [nzValue]="option.item"></nz-option>
+                            </nz-select>
+                        </nz-input-group>
+                    </nz-form-control>
+                </nz-form-item>
+
+                <nz-form-item>
+                    <nz-form-control nzErrorTip="Please select items!">
+                        <nz-input-group [nzAddOnBefore]="calendarIcon1">
+                            <ng-template #calendarIcon1><i nz-icon nzType="info" nzTheme="outline"></i></ng-template>
+                            <textarea nz-input nzAutosize placeholder="Items" value=" {{multipleValueTS}} &#13;&#10; {{multipleSauceTS}} &#13;&#10; {{multipleGravyTS}} &#13;&#10; {{multipleVegetableTS}} &#13;&#10; {{multipleProteinTS}} &#13;&#10; {{multipleSaladTS}}" formControlName="description5"></textarea>
+
+                        </nz-input-group>
+                    </nz-form-control>
+                </nz-form-item>
+            </div>
+
+
+
+        </ng-container>
+        <div *nzModalFooter>
+            <button nz-button nzType="danger" (click)="handleCancelAddDay()">Cancel</button>
+            <button nz-button nzType="primary" nz-popconfirm nzOkText="Yes" nzCancelText="No" nzPopconfirmTitle="Are you sure you want to add this day?" nzPopconfirmPlacement="top" (nzOnConfirm)="confirmAdd()" (nzOnCancel)="cancel()" [nzLoading]="isConfirmLoading">Add</button>
+        </div>
+    </form>
+</nz-modal>
+
+
+<nz-modal [(nzVisible)]="isViewDayVisible" nzWidth="50vw" [nzTitle]="title1" nzCentered nzClosable=false nzIconType="warning">
+    <ng-template #title1><span style=" color:#00162b; margin-right: 6px;">View</span><span style="color:#f5bd1f;">Day</span></ng-template>
+    <form nz-form>
+        <ng-container *nzModalContent>
+            <nz-descriptions [nzColumn]="2" nzBordered nzTitle="Day Details">
+                <nz-descriptions-item nzTitle="Day" [nzSpan]="2" class="font-weight-bold">Day 1</nz-descriptions-item>
+                <nz-descriptions-item nzTitle="Vegeterian Lunch" [nzSpan]="2">Vegeterian strips, Tortilla, Yoghurt sauce</nz-descriptions-item>
+                <nz-descriptions-item nzTitle="Standard Lunch" [nzSpan]="2">Crumbed chicken strips, Tortilla, Yoghurt sauce</nz-descriptions-item>
+                <nz-descriptions-item nzTitle="TuksRes Lunch" [nzSpan]="2">Beef Stir-fry,Tortilla,Yoghurt sauce</nz-descriptions-item>
+                <nz-descriptions-item nzTitle="Vegeterian Supper" [nzSpan]="2">Springrolls, Peas, Rice</nz-descriptions-item>
+                <nz-descriptions-item nzTitle="Standard Supper" [nzSpan]="2">Chicken Leg,Rice, French Salad & dressing</nz-descriptions-item>
+                <nz-descriptions-item nzTitle="TuksRes Supper" [nzSpan]="2">Wors, Rice, French Salad & dressing</nz-descriptions-item>
+            </nz-descriptions>
+        </ng-container>
+        <div *nzModalFooter nzColor="green">
+            <button nz-button nzType="danger" (click)="handleCancelViewDay()">Close</button>
+        </div>
+    </form>
+</nz-modal>
+
+
+<nz-modal [(nzVisible)]="isUpdateDayVisible" [nzTitle]="title2" nzCentered nzClosable=false>
+    <ng-template #title2><span style="color:#00162b; margin-right: 6px;">Update</span><span style="color:#f5bd1f;">Day</span></ng-template>
+    <form nz-form [formGroup]="validateForm">
+        <ng-container *nzModalContent>
+            <nz-form-item>
+                <nz-form-control nzErrorTip="Please input the day!">
+                    <nz-input-group [nzAddOnBefore]="Icon">
+                        <ng-template #Icon><i nz-icon nzType="schedule" nzTheme="outline"></i></ng-template>
+                        <input type="text" nz-input formControlName="name" placeholder="Day" />
+                    </nz-input-group>
+                </nz-form-control>
+            </nz-form-item>
+
+
+            <div id="VL">
+                <nz-divider style="border-width: 2px; min-height:50%; border-color: #1d62ca;" nzText="Vegeterian Lunch"></nz-divider>
+                <nz-form-item>
+                    <nz-form-control nzErrorTip="Please select an item type!">
+                        <nz-input-group [nzAddOnBefore]="calendarIcon">
+                            <ng-template #calendarIcon><i nz-icon nzType="unordered-list" nzTheme="outline"></i></ng-template>
+                            <nz-select style="width: 100%;" #type nzPlaceHolder="Select Item Type" formControlName="aType">
+                                <nz-option nzCustomContent nzLabel="Starch" nzValue="Starch">Starch</nz-option>
+                                <nz-option nzCustomContent nzLabel="Sauce" nzValue="Sauce"> Sauce</nz-option>
+                                <nz-option nzCustomContent nzLabel="Gravy" nzValue="Gravy"> Gravy</nz-option>
+                                <nz-option nzCustomContent nzLabel="Vegetable" nzValue="Vegetable"> Vegetable</nz-option>
+                                <nz-option nzCustomContent nzLabel="Protein" nzValue="Protein"> Protein</nz-option>
+                                <nz-option nzCustomContent nzLabel="Salad" nzValue="Salad"> Salad</nz-option>
+                            </nz-select>
+                        </nz-input-group>
+                    </nz-form-control>
+                </nz-form-item>
+                <nz-form-item *ngIf="type.value=='Starch'">
+                    <nz-form-control nzErrorTip="Please select starch items!">
+                        <nz-input-group [nzAddOnBefore]="calendarIcon">
+                            <ng-template #calendarIcon><i nz-icon nzType="unordered-list" nzTheme="outline"></i></ng-template>
+                            <nz-select style="width: 100%;" [(ngModel)]="multipleValue" #starch formControlName="starch" nzMode="multiple" nzPlaceHolder="Select starch items">
+                                <nz-option *ngFor="let option of listOfStarch" [nzLabel]="option.item" [nzValue]="option.item"></nz-option>
+                            </nz-select>
+                        </nz-input-group>
+                    </nz-form-control>
+                </nz-form-item>
+                <nz-form-item *ngIf="type.value=='Sauce'">
+                    <nz-form-control nzErrorTip="Please select sauce items!">
+                        <nz-input-group [nzAddOnBefore]="calendarIcon">
+                            <ng-template #calendarIcon><i nz-icon nzType="unordered-list" nzTheme="outline"></i></ng-template>
+                            <nz-select style="width: 100%;" [(ngModel)]="multipleSauce" nzMode="multiple" formControlName="sauce" nzPlaceHolder="Select sauce items">
+                                <nz-option *ngFor="let option of listOfSauce" [nzLabel]="option.item" [nzValue]="option.item"></nz-option>
+                            </nz-select>
+                        </nz-input-group>
+                    </nz-form-control>
+                </nz-form-item>
+                <nz-form-item *ngIf="type.value=='Gravy'">
+                    <nz-form-control nzErrorTip="Please select gravy items!">
+                        <nz-input-group [nzAddOnBefore]="calendarIcon">
+                            <ng-template #calendarIcon><i nz-icon nzType="unordered-list" nzTheme="outline"></i></ng-template>
+                            <nz-select style="width: 100%;" [(ngModel)]="multipleGravy" nzMode="multiple" formControlName="gravy" nzPlaceHolder="Select gravy items">
+                                <nz-option *ngFor="let option of listOfGravy" [nzLabel]="option.item" [nzValue]="option.item"></nz-option>
+                            </nz-select>
+                        </nz-input-group>
+                    </nz-form-control>
+                </nz-form-item>
+
+                <nz-form-item *ngIf="type.value=='Vegetable'">
+                    <nz-form-control nzErrorTip="Please select vegetable items!">
+                        <nz-input-group [nzAddOnBefore]="calendarIcon">
+                            <ng-template #calendarIcon><i nz-icon nzType="unordered-list" nzTheme="outline"></i></ng-template>
+                            <nz-select style="width: 100%;" [(ngModel)]="multipleVegetable" nzMode="multiple" formControlName="vegetable" nzPlaceHolder="Select vegetable items">
+                                <nz-option *ngFor="let option of listOfVegetable" [nzLabel]="option.item" [nzValue]="option.item"></nz-option>
+                            </nz-select>
+                        </nz-input-group>
+                    </nz-form-control>
+                </nz-form-item>
+
+                <nz-form-item *ngIf="type.value=='Protein'">
+                    <nz-form-control nzErrorTip="Please select protein items!">
+                        <nz-input-group [nzAddOnBefore]="calendarIcon">
+                            <ng-template #calendarIcon><i nz-icon nzType="unordered-list" nzTheme="outline"></i></ng-template>
+                            <nz-select style="width: 100%;" [(ngModel)]="multipleProtein" nzMode="multiple" formControlName="protein" nzPlaceHolder="Select protein items">
+                                <nz-option *ngFor="let option of listOfProtein" [nzLabel]="option.item" [nzValue]="option.item"></nz-option>
+                            </nz-select>
+                        </nz-input-group>
+                    </nz-form-control>
+                </nz-form-item>
+
+                <nz-form-item *ngIf="type.value=='Salad'">
+                    <nz-form-control nzErrorTip="Please select salad items!">
+                        <nz-input-group [nzAddOnBefore]="calendarIcon">
+                            <ng-template #calendarIcon><i nz-icon nzType="unordered-list" nzTheme="outline"></i></ng-template>
+                            <nz-select style="width: 100%;" [(ngModel)]="multipleSalad" nzMode="multiple" formControlName="salad" nzPlaceHolder="Select salad items">
+                                <nz-option *ngFor="let option of listOfSalad" [nzLabel]="option.item" [nzValue]="option.item"></nz-option>
+                            </nz-select>
+                        </nz-input-group>
+                    </nz-form-control>
+                </nz-form-item>
+
+                <nz-form-item>
+                    <nz-form-control nzErrorTip="Please select items!">
+                        <nz-input-group [nzAddOnBefore]="calendarIcon1">
+                            <ng-template #calendarIcon1><i nz-icon nzType="info" nzTheme="outline"></i></ng-template>
+                            <textarea nz-input nzAutosize placeholder="Items" value=" {{multipleValue}} &#13;&#10; {{multipleSauce}} &#13;&#10; {{multipleGravy}} &#13;&#10; {{multipleVegetable}} &#13;&#10; {{multipleProtein}} &#13;&#10; {{multipleSalad}}" formControlName="description"></textarea>
+
+                        </nz-input-group>
+                    </nz-form-control>
+                </nz-form-item>
+
+
+            </div>
+
+
+            <div id="SL">
+                <nz-divider style="border-width: 2px; min-height:50%; border-color: #1d62ca;" nzText="Standard Lunch"></nz-divider>
+                <nz-form-item>
+                    <nz-form-control nzErrorTip="Please select an item type!">
+                        <nz-input-group [nzAddOnBefore]="calendarIcon">
+                            <ng-template #calendarIcon><i nz-icon nzType="unordered-list" nzTheme="outline"></i></ng-template>
+                            <nz-select style="width: 100%;" #type1 nzPlaceHolder="Select Item Type" formControlName="aType1">
+                                <nz-option nzCustomContent nzLabel="Starch" nzValue="Starch">Starch</nz-option>
+                                <nz-option nzCustomContent nzLabel="Sauce" nzValue="Sauce"> Sauce</nz-option>
+                                <nz-option nzCustomContent nzLabel="Gravy" nzValue="Gravy"> Gravy</nz-option>
+                                <nz-option nzCustomContent nzLabel="Vegetable" nzValue="Vegetable"> Vegetable</nz-option>
+                                <nz-option nzCustomContent nzLabel="Protein" nzValue="Protein"> Protein</nz-option>
+                                <nz-option nzCustomContent nzLabel="Salad" nzValue="Salad"> Salad</nz-option>
+                            </nz-select>
+                        </nz-input-group>
+                    </nz-form-control>
+                </nz-form-item>
+                <nz-form-item *ngIf="type1.value=='Starch'">
+                    <nz-form-control nzErrorTip="Please select starch items!">
+                        <nz-input-group [nzAddOnBefore]="calendarIcon">
+                            <ng-template #calendarIcon><i nz-icon nzType="unordered-list" nzTheme="outline"></i></ng-template>
+                            <nz-select style="width: 100%;" [(ngModel)]="multipleValueSL" #starch formControlName="starch1" nzMode="multiple" nzPlaceHolder="Select starch items">
+                                <nz-option *ngFor="let option of listOfStarch" [nzLabel]="option.item" [nzValue]="option.item"></nz-option>
+                            </nz-select>
+                        </nz-input-group>
+                    </nz-form-control>
+                </nz-form-item>
+                <nz-form-item *ngIf="type1.value=='Sauce'">
+                    <nz-form-control nzErrorTip="Please select sauce items!">
+                        <nz-input-group [nzAddOnBefore]="calendarIcon">
+                            <ng-template #calendarIcon><i nz-icon nzType="unordered-list" nzTheme="outline"></i></ng-template>
+                            <nz-select style="width: 100%;" [(ngModel)]="multipleSauceSL" nzMode="multiple" formControlName="sauce1" nzPlaceHolder="Select sauce items">
+                                <nz-option *ngFor="let option of listOfSauce" [nzLabel]="option.item" [nzValue]="option.item"></nz-option>
+                            </nz-select>
+                        </nz-input-group>
+                    </nz-form-control>
+                </nz-form-item>
+                <nz-form-item *ngIf="type1.value=='Gravy'">
+                    <nz-form-control nzErrorTip="Please select gravy items!">
+                        <nz-input-group [nzAddOnBefore]="calendarIcon">
+                            <ng-template #calendarIcon><i nz-icon nzType="unordered-list" nzTheme="outline"></i></ng-template>
+                            <nz-select style="width: 100%;" [(ngModel)]="multipleGravySL" nzMode="multiple" formControlName="gravy1" nzPlaceHolder="Select gravy items">
+                                <nz-option *ngFor="let option of listOfGravy" [nzLabel]="option.item" [nzValue]="option.item"></nz-option>
+                            </nz-select>
+                        </nz-input-group>
+                    </nz-form-control>
+                </nz-form-item>
+
+                <nz-form-item *ngIf="type1.value=='Vegetable'">
+                    <nz-form-control nzErrorTip="Please select vegetable items!">
+                        <nz-input-group [nzAddOnBefore]="calendarIcon">
+                            <ng-template #calendarIcon><i nz-icon nzType="unordered-list" nzTheme="outline"></i></ng-template>
+                            <nz-select style="width: 100%;" [(ngModel)]="multipleVegetableSL" nzMode="multiple" formControlName="vegetable1" nzPlaceHolder="Select vegetable items">
+                                <nz-option *ngFor="let option of listOfVegetable" [nzLabel]="option.item" [nzValue]="option.item"></nz-option>
+                            </nz-select>
+                        </nz-input-group>
+                    </nz-form-control>
+                </nz-form-item>
+
+                <nz-form-item *ngIf="type1.value=='Protein'">
+                    <nz-form-control nzErrorTip="Please select protein items!">
+                        <nz-input-group [nzAddOnBefore]="calendarIcon">
+                            <ng-template #calendarIcon><i nz-icon nzType="unordered-list" nzTheme="outline"></i></ng-template>
+                            <nz-select style="width: 100%;" [(ngModel)]="multipleProteinSL" nzMode="multiple" formControlName="protein1" nzPlaceHolder="Select protein items">
+                                <nz-option *ngFor="let option of listOfProtein" [nzLabel]="option.item" [nzValue]="option.item"></nz-option>
+                            </nz-select>
+                        </nz-input-group>
+                    </nz-form-control>
+                </nz-form-item>
+
+                <nz-form-item *ngIf="type1.value=='Salad'">
+                    <nz-form-control nzErrorTip="Please select salad items!">
+                        <nz-input-group [nzAddOnBefore]="calendarIcon">
+                            <ng-template #calendarIcon><i nz-icon nzType="unordered-list" nzTheme="outline"></i></ng-template>
+                            <nz-select style="width: 100%;" [(ngModel)]="multipleSaladSL" nzMode="multiple" formControlName="salad1" nzPlaceHolder="Select salad items">
+                                <nz-option *ngFor="let option of listOfSalad" [nzLabel]="option.item" [nzValue]="option.item"></nz-option>
+                            </nz-select>
+                        </nz-input-group>
+                    </nz-form-control>
+                </nz-form-item>
+
+                <nz-form-item>
+                    <nz-form-control nzErrorTip="Please select items!">
+                        <nz-input-group [nzAddOnBefore]="calendarIcon1">
+                            <ng-template #calendarIcon1><i nz-icon nzType="info" nzTheme="outline"></i></ng-template>
+                            <textarea nz-input nzAutosize placeholder="Items" value=" {{multipleValueSL}} &#13;&#10; {{multipleSauceSL}} &#13;&#10; {{multipleGravySL}} &#13;&#10; {{multipleVegetableSL}} &#13;&#10; {{multipleProteinSL}} &#13;&#10; {{multipleSaladSL}}" formControlName="description1"></textarea>
+
+                        </nz-input-group>
+                    </nz-form-control>
+                </nz-form-item>
+            </div>
+
+            <div id="TL">
+                <nz-divider style="border-width: 2px; min-height:50%; border-color: #1d62ca;" nzText="TuksRes Lunch"></nz-divider>
+                <nz-form-item>
+                    <nz-form-control nzErrorTip="Please select an item type!">
+                        <nz-input-group [nzAddOnBefore]="calendarIcon">
+                            <ng-template #calendarIcon><i nz-icon nzType="unordered-list" nzTheme="outline"></i></ng-template>
+                            <nz-select style="width: 100%;" #type nzPlaceHolder="Select Item Type" formControlName="aType2">
+                                <nz-option nzCustomContent nzLabel="Starch" nzValue="Starch">Starch</nz-option>
+                                <nz-option nzCustomContent nzLabel="Sauce" nzValue="Sauce"> Sauce</nz-option>
+                                <nz-option nzCustomContent nzLabel="Gravy" nzValue="Gravy"> Gravy</nz-option>
+                                <nz-option nzCustomContent nzLabel="Vegetable" nzValue="Vegetable"> Vegetable</nz-option>
+                                <nz-option nzCustomContent nzLabel="Protein" nzValue="Protein"> Protein</nz-option>
+                                <nz-option nzCustomContent nzLabel="Salad" nzValue="Salad"> Salad</nz-option>
+                            </nz-select>
+                        </nz-input-group>
+                    </nz-form-control>
+                </nz-form-item>
+                <nz-form-item *ngIf="type.value=='Starch'">
+                    <nz-form-control nzErrorTip="Please select starch items!">
+                        <nz-input-group [nzAddOnBefore]="calendarIcon">
+                            <ng-template #calendarIcon><i nz-icon nzType="unordered-list" nzTheme="outline"></i></ng-template>
+                            <nz-select style="width: 100%;" [(ngModel)]="multipleValueTL" #starch formControlName="starch2" nzMode="multiple" nzPlaceHolder="Select starch items">
+                                <nz-option *ngFor="let option of listOfStarch" [nzLabel]="option.item" [nzValue]="option.item"></nz-option>
+                            </nz-select>
+                        </nz-input-group>
+                    </nz-form-control>
+                </nz-form-item>
+                <nz-form-item *ngIf="type.value=='Sauce'">
+                    <nz-form-control nzErrorTip="Please select sauce items!">
+                        <nz-input-group [nzAddOnBefore]="calendarIcon">
+                            <ng-template #calendarIcon><i nz-icon nzType="unordered-list" nzTheme="outline"></i></ng-template>
+                            <nz-select style="width: 100%;" [(ngModel)]="multipleSauceTL" nzMode="multiple" formControlName="sauce2" nzPlaceHolder="Select sauce items">
+                                <nz-option *ngFor="let option of listOfSauce" [nzLabel]="option.item" [nzValue]="option.item"></nz-option>
+                            </nz-select>
+                        </nz-input-group>
+                    </nz-form-control>
+                </nz-form-item>
+                <nz-form-item *ngIf="type.value=='Gravy'">
+                    <nz-form-control nzErrorTip="Please select gravy items!">
+                        <nz-input-group [nzAddOnBefore]="calendarIcon">
+                            <ng-template #calendarIcon><i nz-icon nzType="unordered-list" nzTheme="outline"></i></ng-template>
+                            <nz-select style="width: 100%;" [(ngModel)]="multipleGravyTL" nzMode="multiple" formControlName="gravy2" nzPlaceHolder="Select gravy items">
+                                <nz-option *ngFor="let option of listOfGravy" [nzLabel]="option.item" [nzValue]="option.item"></nz-option>
+                            </nz-select>
+                        </nz-input-group>
+                    </nz-form-control>
+                </nz-form-item>
+
+                <nz-form-item *ngIf="type.value=='Vegetable'">
+                    <nz-form-control nzErrorTip="Please select vegetable items!">
+                        <nz-input-group [nzAddOnBefore]="calendarIcon">
+                            <ng-template #calendarIcon><i nz-icon nzType="unordered-list" nzTheme="outline"></i></ng-template>
+                            <nz-select style="width: 100%;" [(ngModel)]="multipleVegetableTL" nzMode="multiple" formControlName="vegetable2" nzPlaceHolder="Select vegetable items">
+                                <nz-option *ngFor="let option of listOfVegetable" [nzLabel]="option.item" [nzValue]="option.item"></nz-option>
+                            </nz-select>
+                        </nz-input-group>
+                    </nz-form-control>
+                </nz-form-item>
+
+                <nz-form-item *ngIf="type.value=='Protein'">
+                    <nz-form-control nzErrorTip="Please select protein items!">
+                        <nz-input-group [nzAddOnBefore]="calendarIcon">
+                            <ng-template #calendarIcon><i nz-icon nzType="unordered-list" nzTheme="outline"></i></ng-template>
+                            <nz-select style="width: 100%;" [(ngModel)]="multipleProteinTL" nzMode="multiple" formControlName="protein2" nzPlaceHolder="Select protein items">
+                                <nz-option *ngFor="let option of listOfProtein" [nzLabel]="option.item" [nzValue]="option.item"></nz-option>
+                            </nz-select>
+                        </nz-input-group>
+                    </nz-form-control>
+                </nz-form-item>
+
+                <nz-form-item *ngIf="type.value=='Salad'">
+                    <nz-form-control nzErrorTip="Please select salad items!">
+                        <nz-input-group [nzAddOnBefore]="calendarIcon">
+                            <ng-template #calendarIcon><i nz-icon nzType="unordered-list" nzTheme="outline"></i></ng-template>
+                            <nz-select style="width: 100%;" [(ngModel)]="multipleSaladTL" nzMode="multiple" formControlName="salad2" nzPlaceHolder="Select salad items">
+                                <nz-option *ngFor="let option of listOfSalad" [nzLabel]="option.item" [nzValue]="option.item"></nz-option>
+                            </nz-select>
+                        </nz-input-group>
+                    </nz-form-control>
+                </nz-form-item>
+
+                <nz-form-item>
+                    <nz-form-control nzErrorTip="Please select items!">
+                        <nz-input-group [nzAddOnBefore]="calendarIcon1">
+                            <ng-template #calendarIcon1><i nz-icon nzType="info" nzTheme="outline"></i></ng-template>
+                            <textarea nz-input nzAutosize placeholder="Items" value=" {{multipleValueTL}} &#13;&#10; {{multipleSauceTL}} &#13;&#10; {{multipleGravyTL}} &#13;&#10; {{multipleVegetableTL}} &#13;&#10; {{multipleProteinTL}} &#13;&#10; {{multipleSaladTL}}" formControlName="description2"></textarea>
+
+                        </nz-input-group>
+                    </nz-form-control>
+                </nz-form-item>
+            </div>
+
+
+            <div id="VS">
+                <nz-divider style="border-width: 2px; min-height:50%; border-color: #1d62ca;" nzText="Vegeterian Supper"></nz-divider>
+                <nz-form-item>
+                    <nz-form-control nzErrorTip="Please select an item type!">
+                        <nz-input-group [nzAddOnBefore]="calendarIcon">
+                            <ng-template #calendarIcon><i nz-icon nzType="unordered-list" nzTheme="outline"></i></ng-template>
+                            <nz-select style="width: 100%;" #type nzPlaceHolder="Select Item Type" formControlName="aType3">
+                                <nz-option nzCustomContent nzLabel="Starch" nzValue="Starch">Starch</nz-option>
+                                <nz-option nzCustomContent nzLabel="Sauce" nzValue="Sauce"> Sauce</nz-option>
+                                <nz-option nzCustomContent nzLabel="Gravy" nzValue="Gravy"> Gravy</nz-option>
+                                <nz-option nzCustomContent nzLabel="Vegetable" nzValue="Vegetable"> Vegetable</nz-option>
+                                <nz-option nzCustomContent nzLabel="Protein" nzValue="Protein"> Protein</nz-option>
+                                <nz-option nzCustomContent nzLabel="Salad" nzValue="Salad"> Salad</nz-option>
+                            </nz-select>
+                        </nz-input-group>
+                    </nz-form-control>
+                </nz-form-item>
+                <nz-form-item *ngIf="type.value=='Starch'">
+                    <nz-form-control nzErrorTip="Please select starch items!">
+                        <nz-input-group [nzAddOnBefore]="calendarIcon">
+                            <ng-template #calendarIcon><i nz-icon nzType="unordered-list" nzTheme="outline"></i></ng-template>
+                            <nz-select style="width: 100%;" [(ngModel)]="multipleValueVS" #starch formControlName="starch3" nzMode="multiple" nzPlaceHolder="Select starch items">
+                                <nz-option *ngFor="let option of listOfStarch" [nzLabel]="option.item" [nzValue]="option.item"></nz-option>
+                            </nz-select>
+                        </nz-input-group>
+                    </nz-form-control>
+                </nz-form-item>
+                <nz-form-item *ngIf="type.value=='Sauce'">
+                    <nz-form-control nzErrorTip="Please select sauce items!">
+                        <nz-input-group [nzAddOnBefore]="calendarIcon">
+                            <ng-template #calendarIcon><i nz-icon nzType="unordered-list" nzTheme="outline"></i></ng-template>
+                            <nz-select style="width: 100%;" [(ngModel)]="multipleSauceVS" nzMode="multiple" formControlName="sauce3" nzPlaceHolder="Select sauce items">
+                                <nz-option *ngFor="let option of listOfSauce" [nzLabel]="option.item" [nzValue]="option.item"></nz-option>
+                            </nz-select>
+                        </nz-input-group>
+                    </nz-form-control>
+                </nz-form-item>
+                <nz-form-item *ngIf="type.value=='Gravy'">
+                    <nz-form-control nzErrorTip="Please select gravy items!">
+                        <nz-input-group [nzAddOnBefore]="calendarIcon">
+                            <ng-template #calendarIcon><i nz-icon nzType="unordered-list" nzTheme="outline"></i></ng-template>
+                            <nz-select style="width: 100%;" [(ngModel)]="multipleGravyVS" nzMode="multiple" formControlName="gravy3" nzPlaceHolder="Select gravy items">
+                                <nz-option *ngFor="let option of listOfGravy" [nzLabel]="option.item" [nzValue]="option.item"></nz-option>
+                            </nz-select>
+                        </nz-input-group>
+                    </nz-form-control>
+                </nz-form-item>
+
+                <nz-form-item *ngIf="type.value=='Vegetable'">
+                    <nz-form-control nzErrorTip="Please select vegetable items!">
+                        <nz-input-group [nzAddOnBefore]="calendarIcon">
+                            <ng-template #calendarIcon><i nz-icon nzType="unordered-list" nzTheme="outline"></i></ng-template>
+                            <nz-select style="width: 100%;" [(ngModel)]="multipleVegetableVS" nzMode="multiple" formControlName="vegetable3" nzPlaceHolder="Select vegetable items">
+                                <nz-option *ngFor="let option of listOfVegetable" [nzLabel]="option.item" [nzValue]="option.item"></nz-option>
+                            </nz-select>
+                        </nz-input-group>
+                    </nz-form-control>
+                </nz-form-item>
+
+                <nz-form-item *ngIf="type.value=='Protein'">
+                    <nz-form-control nzErrorTip="Please select protein items!">
+                        <nz-input-group [nzAddOnBefore]="calendarIcon">
+                            <ng-template #calendarIcon><i nz-icon nzType="unordered-list" nzTheme="outline"></i></ng-template>
+                            <nz-select style="width: 100%;" [(ngModel)]="multipleProteinVS" nzMode="multiple" formControlName="protein3" nzPlaceHolder="Select protein items">
+                                <nz-option *ngFor="let option of listOfProtein" [nzLabel]="option.item" [nzValue]="option.item"></nz-option>
+                            </nz-select>
+                        </nz-input-group>
+                    </nz-form-control>
+                </nz-form-item>
+
+                <nz-form-item *ngIf="type.value=='Salad'">
+                    <nz-form-control nzErrorTip="Please select salad items!">
+                        <nz-input-group [nzAddOnBefore]="calendarIcon">
+                            <ng-template #calendarIcon><i nz-icon nzType="unordered-list" nzTheme="outline"></i></ng-template>
+                            <nz-select style="width: 100%;" [(ngModel)]="multipleSaladVS" nzMode="multiple" formControlName="salad3" nzPlaceHolder="Select salad items">
+                                <nz-option *ngFor="let option of listOfSalad" [nzLabel]="option.item" [nzValue]="option.item"></nz-option>
+                            </nz-select>
+                        </nz-input-group>
+                    </nz-form-control>
+                </nz-form-item>
+
+                <nz-form-item>
+                    <nz-form-control nzErrorTip="Please select items!">
+                        <nz-input-group [nzAddOnBefore]="calendarIcon1">
+                            <ng-template #calendarIcon1><i nz-icon nzType="info" nzTheme="outline"></i></ng-template>
+                            <textarea nz-input nzAutosize placeholder="Items" value=" {{multipleValueVS}} &#13;&#10; {{multipleSauceVS}} &#13;&#10; {{multipleGravyVS}} &#13;&#10; {{multipleVegetableVS}} &#13;&#10; {{multipleProteinVS}} &#13;&#10; {{multipleSaladVS}}" formControlName="description3"></textarea>
+
+                        </nz-input-group>
+                    </nz-form-control>
+                </nz-form-item>
+            </div>
+
+            <div id="SS">
+                <nz-divider style="border-width: 2px; min-height:50%; border-color: #1d62ca;" nzText="Standard Supper"></nz-divider>
+                <nz-form-item>
+                    <nz-form-control nzErrorTip="Please select an item type!">
+                        <nz-input-group [nzAddOnBefore]="calendarIcon">
+                            <ng-template #calendarIcon><i nz-icon nzType="unordered-list" nzTheme="outline"></i></ng-template>
+                            <nz-select style="width: 100%;" #type nzPlaceHolder="Select Item Type" formControlName="aType4">
+                                <nz-option nzCustomContent nzLabel="Starch" nzValue="Starch">Starch</nz-option>
+                                <nz-option nzCustomContent nzLabel="Sauce" nzValue="Sauce"> Sauce</nz-option>
+                                <nz-option nzCustomContent nzLabel="Gravy" nzValue="Gravy"> Gravy</nz-option>
+                                <nz-option nzCustomContent nzLabel="Vegetable" nzValue="Vegetable"> Vegetable</nz-option>
+                                <nz-option nzCustomContent nzLabel="Protein" nzValue="Protein"> Protein</nz-option>
+                                <nz-option nzCustomContent nzLabel="Salad" nzValue="Salad"> Salad</nz-option>
+                            </nz-select>
+                        </nz-input-group>
+                    </nz-form-control>
+                </nz-form-item>
+                <nz-form-item *ngIf="type.value=='Starch'">
+                    <nz-form-control nzErrorTip="Please select starch items!">
+                        <nz-input-group [nzAddOnBefore]="calendarIcon">
+                            <ng-template #calendarIcon><i nz-icon nzType="unordered-list" nzTheme="outline"></i></ng-template>
+                            <nz-select style="width: 100%;" [(ngModel)]="multipleValueSS" #starch formControlName="starch4" nzMode="multiple" nzPlaceHolder="Select starch items">
+                                <nz-option *ngFor="let option of listOfStarch" [nzLabel]="option.item" [nzValue]="option.item"></nz-option>
+                            </nz-select>
+                        </nz-input-group>
+                    </nz-form-control>
+                </nz-form-item>
+                <nz-form-item *ngIf="type.value=='Sauce'">
+                    <nz-form-control nzErrorTip="Please select sauce items!">
+                        <nz-input-group [nzAddOnBefore]="calendarIcon">
+                            <ng-template #calendarIcon><i nz-icon nzType="unordered-list" nzTheme="outline"></i></ng-template>
+                            <nz-select style="width: 100%;" [(ngModel)]="multipleSauceSS" nzMode="multiple" formControlName="sauce4" nzPlaceHolder="Select sauce items">
+                                <nz-option *ngFor="let option of listOfSauce" [nzLabel]="option.item" [nzValue]="option.item"></nz-option>
+                            </nz-select>
+                        </nz-input-group>
+                    </nz-form-control>
+                </nz-form-item>
+                <nz-form-item *ngIf="type.value=='Gravy'">
+                    <nz-form-control nzErrorTip="Please select gravy items!">
+                        <nz-input-group [nzAddOnBefore]="calendarIcon">
+                            <ng-template #calendarIcon><i nz-icon nzType="unordered-list" nzTheme="outline"></i></ng-template>
+                            <nz-select style="width: 100%;" [(ngModel)]="multipleGravySS" nzMode="multiple" formControlName="gravy4" nzPlaceHolder="Select gravy items">
+                                <nz-option *ngFor="let option of listOfGravy" [nzLabel]="option.item" [nzValue]="option.item"></nz-option>
+                            </nz-select>
+                        </nz-input-group>
+                    </nz-form-control>
+                </nz-form-item>
+
+                <nz-form-item *ngIf="type.value=='Vegetable'">
+                    <nz-form-control nzErrorTip="Please select vegetable items!">
+                        <nz-input-group [nzAddOnBefore]="calendarIcon">
+                            <ng-template #calendarIcon><i nz-icon nzType="unordered-list" nzTheme="outline"></i></ng-template>
+                            <nz-select style="width: 100%;" [(ngModel)]="multipleVegetableSS" nzMode="multiple" formControlName="vegetable4" nzPlaceHolder="Select vegetable items">
+                                <nz-option *ngFor="let option of listOfVegetable" [nzLabel]="option.item" [nzValue]="option.item"></nz-option>
+                            </nz-select>
+                        </nz-input-group>
+                    </nz-form-control>
+                </nz-form-item>
+
+                <nz-form-item *ngIf="type.value=='Protein'">
+                    <nz-form-control nzErrorTip="Please select protein items!">
+                        <nz-input-group [nzAddOnBefore]="calendarIcon">
+                            <ng-template #calendarIcon><i nz-icon nzType="unordered-list" nzTheme="outline"></i></ng-template>
+                            <nz-select style="width: 100%;" [(ngModel)]="multipleProteinSS" nzMode="multiple" formControlName="protein4" nzPlaceHolder="Select protein items">
+                                <nz-option *ngFor="let option of listOfProtein" [nzLabel]="option.item" [nzValue]="option.item"></nz-option>
+                            </nz-select>
+                        </nz-input-group>
+                    </nz-form-control>
+                </nz-form-item>
+
+                <nz-form-item *ngIf="type.value=='Salad'">
+                    <nz-form-control nzErrorTip="Please select salad items!">
+                        <nz-input-group [nzAddOnBefore]="calendarIcon">
+                            <ng-template #calendarIcon><i nz-icon nzType="unordered-list" nzTheme="outline"></i></ng-template>
+                            <nz-select style="width: 100%;" [(ngModel)]="multipleSaladSS" nzMode="multiple" formControlName="salad4" nzPlaceHolder="Select salad items">
+                                <nz-option *ngFor="let option of listOfSalad" [nzLabel]="option.item" [nzValue]="option.item"></nz-option>
+                            </nz-select>
+                        </nz-input-group>
+                    </nz-form-control>
+                </nz-form-item>
+
+                <nz-form-item>
+                    <nz-form-control nzErrorTip="Please select items!">
+                        <nz-input-group [nzAddOnBefore]="calendarIcon1">
+                            <ng-template #calendarIcon1><i nz-icon nzType="info" nzTheme="outline"></i></ng-template>
+                            <textarea nz-input nzAutosize placeholder="Items" value=" {{multipleValueSS}} &#13;&#10; {{multipleSauceSS}} &#13;&#10; {{multipleGravySS}} &#13;&#10; {{multipleVegetableSS}} &#13;&#10; {{multipleProteinSS}} &#13;&#10; {{multipleSaladSS}}" formControlName="description4"></textarea>
+
+                        </nz-input-group>
+                    </nz-form-control>
+                </nz-form-item>
+            </div>
+
+            <div id="TS">
+                <nz-divider style="border-width: 2px; min-height:50%; border-color: #1d62ca;" nzText="TuksRes Supper"></nz-divider>
+                <nz-form-item>
+                    <nz-form-control nzErrorTip="Please select an item type!">
+                        <nz-input-group [nzAddOnBefore]="calendarIcon">
+                            <ng-template #calendarIcon><i nz-icon nzType="unordered-list" nzTheme="outline"></i></ng-template>
+                            <nz-select style="width: 100%;" #type nzPlaceHolder="Select Item Type" formControlName="aType5">
+                                <nz-option nzCustomContent nzLabel="Starch" nzValue="Starch">Starch</nz-option>
+                                <nz-option nzCustomContent nzLabel="Sauce" nzValue="Sauce"> Sauce</nz-option>
+                                <nz-option nzCustomContent nzLabel="Gravy" nzValue="Gravy"> Gravy</nz-option>
+                                <nz-option nzCustomContent nzLabel="Vegetable" nzValue="Vegetable"> Vegetable</nz-option>
+                                <nz-option nzCustomContent nzLabel="Protein" nzValue="Protein"> Protein</nz-option>
+                                <nz-option nzCustomContent nzLabel="Salad" nzValue="Salad"> Salad</nz-option>
+                            </nz-select>
+                        </nz-input-group>
+                    </nz-form-control>
+                </nz-form-item>
+                <nz-form-item *ngIf="type.value=='Starch'">
+                    <nz-form-control nzErrorTip="Please select starch items!">
+                        <nz-input-group [nzAddOnBefore]="calendarIcon">
+                            <ng-template #calendarIcon><i nz-icon nzType="unordered-list" nzTheme="outline"></i></ng-template>
+                            <nz-select style="width: 100%;" [(ngModel)]="multipleValueTS" #starch formControlName="starch5" nzMode="multiple" nzPlaceHolder="Select starch items">
+                                <nz-option *ngFor="let option of listOfStarch" [nzLabel]="option.item" [nzValue]="option.item"></nz-option>
+                            </nz-select>
+                        </nz-input-group>
+                    </nz-form-control>
+                </nz-form-item>
+                <nz-form-item *ngIf="type.value=='Sauce'">
+                    <nz-form-control nzErrorTip="Please select sauce items!">
+                        <nz-input-group [nzAddOnBefore]="calendarIcon">
+                            <ng-template #calendarIcon><i nz-icon nzType="unordered-list" nzTheme="outline"></i></ng-template>
+                            <nz-select style="width: 100%;" [(ngModel)]="multipleSauceTS" nzMode="multiple" formControlName="sauce5" nzPlaceHolder="Select sauce items">
+                                <nz-option *ngFor="let option of listOfSauce" [nzLabel]="option.item" [nzValue]="option.item"></nz-option>
+                            </nz-select>
+                        </nz-input-group>
+                    </nz-form-control>
+                </nz-form-item>
+                <nz-form-item *ngIf="type.value=='Gravy'">
+                    <nz-form-control nzErrorTip="Please select gravy items!">
+                        <nz-input-group [nzAddOnBefore]="calendarIcon">
+                            <ng-template #calendarIcon><i nz-icon nzType="unordered-list" nzTheme="outline"></i></ng-template>
+                            <nz-select style="width: 100%;" [(ngModel)]="multipleGravyTS" nzMode="multiple" formControlName="gravy5" nzPlaceHolder="Select gravy items">
+                                <nz-option *ngFor="let option of listOfGravy" [nzLabel]="option.item" [nzValue]="option.item"></nz-option>
+                            </nz-select>
+                        </nz-input-group>
+                    </nz-form-control>
+                </nz-form-item>
+
+                <nz-form-item *ngIf="type.value=='Vegetable'">
+                    <nz-form-control nzErrorTip="Please select vegetable items!">
+                        <nz-input-group [nzAddOnBefore]="calendarIcon">
+                            <ng-template #calendarIcon><i nz-icon nzType="unordered-list" nzTheme="outline"></i></ng-template>
+                            <nz-select style="width: 100%;" [(ngModel)]="multipleVegetableTS" nzMode="multiple" formControlName="vegetable5" nzPlaceHolder="Select vegetable items">
+                                <nz-option *ngFor="let option of listOfVegetable" [nzLabel]="option.item" [nzValue]="option.item"></nz-option>
+                            </nz-select>
+                        </nz-input-group>
+                    </nz-form-control>
+                </nz-form-item>
+
+                <nz-form-item *ngIf="type.value=='Protein'">
+                    <nz-form-control nzErrorTip="Please select protein items!">
+                        <nz-input-group [nzAddOnBefore]="calendarIcon">
+                            <ng-template #calendarIcon><i nz-icon nzType="unordered-list" nzTheme="outline"></i></ng-template>
+                            <nz-select style="width: 100%;" [(ngModel)]="multipleProteinTS" nzMode="multiple" formControlName="protein5" nzPlaceHolder="Select protein items">
+                                <nz-option *ngFor="let option of listOfProtein" [nzLabel]="option.item" [nzValue]="option.item"></nz-option>
+                            </nz-select>
+                        </nz-input-group>
+                    </nz-form-control>
+                </nz-form-item>
+
+                <nz-form-item *ngIf="type.value=='Salad'">
+                    <nz-form-control nzErrorTip="Please select salad items!">
+                        <nz-input-group [nzAddOnBefore]="calendarIcon">
+                            <ng-template #calendarIcon><i nz-icon nzType="unordered-list" nzTheme="outline"></i></ng-template>
+                            <nz-select style="width: 100%;" [(ngModel)]="multipleSaladTS" nzMode="multiple" formControlName="salad5" nzPlaceHolder="Select salad items">
+                                <nz-option *ngFor="let option of listOfSalad" [nzLabel]="option.item" [nzValue]="option.item"></nz-option>
+                            </nz-select>
+                        </nz-input-group>
+                    </nz-form-control>
+                </nz-form-item>
+
+                <nz-form-item>
+                    <nz-form-control nzErrorTip="Please select items!">
+                        <nz-input-group [nzAddOnBefore]="calendarIcon1">
+                            <ng-template #calendarIcon1><i nz-icon nzType="info" nzTheme="outline"></i></ng-template>
+                            <textarea nz-input nzAutosize placeholder="Items" value=" {{multipleValueTS}} &#13;&#10; {{multipleSauceTS}} &#13;&#10; {{multipleGravyTS}} &#13;&#10; {{multipleVegetableTS}} &#13;&#10; {{multipleProteinTS}} &#13;&#10; {{multipleSaladTS}}" formControlName="description5"></textarea>
+
+                        </nz-input-group>
+                    </nz-form-control>
+                </nz-form-item>
+            </div>
+
+
+
+        </ng-container>
+        <div *nzModalFooter>
+            <button nz-button nzType="danger" (click)="handleCancelAddDay()">Cancel</button>
+            <button nz-button nzType="primary" nz-popconfirm nzOkText="Yes" nzCancelText="No" nzPopconfirmTitle="Are you sure you want to update this day?" nzPopconfirmPlacement="top" (nzOnConfirm)="confirm()" (nzOnCancel)="cancel()" [nzLoading]="isConfirmLoading">Update</button>
+        </div>
+    </form>
+</nz-modal>
+
+
+<nz-modal [(nzVisible)]="isDeleteDayVisible" [nzTitle]="title3" nzCentered nzClosable=false nzIconType="warning">
+    <ng-template #title3><span style=" color:#00162b; margin-right: 6px;">Delete</span><span style="color:#f5bd1f;">Day</span></ng-template>
+    <form nz-form>
+        <ng-container *nzModalContent>
+            <b style="color: red;">Are you sure you want to delete this day?</b>
+        </ng-container>
+        <div *nzModalFooter nzColor="green">
+            <button nz-button nzType="danger" (click)="handleCancelDeleteDay()">No</button>
+            <button nz-button nzType="primary" (click)="handleOkDeleteDay()" [nzLoading]="isConfirmLoading" [hidden]="status=='Approved'">Yes</button>
+        </div>
+    </form>
+</nz-modal>

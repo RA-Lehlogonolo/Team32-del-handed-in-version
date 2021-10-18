@@ -1,0 +1,206 @@
+<div class="pageHeader">
+    <div nz-row>
+        <div nz-col [nzSpan]="12">
+            <h1 class="title">Weekly Health Check</h1>
+        </div>
+        <div nz-col [nzSpan]="12">
+            <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
+                <ng-template #suffixIconButton>
+                    <button nz-button nzType="primary" nzSearch><i nz-icon nzType="search"></i></button>
+                </ng-template>
+                <input type="text" nz-input placeholder="Search for health check" />
+            </nz-input-group>
+
+        </div>
+
+    </div>
+</div>
+<br>
+
+<nz-table #basicTable nzBordered [nzData]="history" [nzTitle]="header">
+    <ng-template #header>
+        <div nz-row>
+            <div nz-col [nzSpan]="24">
+                <span class="float-right pr-5">
+                    <button nz-button  nzType="primary" (click)="showCompleteCheckModal()" >Complete Health Check</button>
+                </span>
+            </div>
+        </div>
+    </ng-template>
+
+
+
+    <thead>
+        <tr>
+            <th>Health Check Date</th>
+            <th>Travel to a high-risk country?</th>
+            <th>Travel to a different province?</th>
+            <th>Contact with COVID positive person?</th>
+            <th>Fever?</th>
+            <th>Cough?</th>
+            <th>Difficulty breathing? </th>
+            <th>Sore throat?</th>
+            <th>Scanned by</th>
+            <th>Temperature</th>
+
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let data of basicTable.data">
+            <td>{{ data.date }}</td>
+            <td>{{ data.Chills }}</td>
+            <td>{{ data.SoreThroat }}</td>
+            <td>{{ data.Coughing }}</td>
+            <td>{{ data.BodyAche }}</td>
+            <td>{{ data.Fatigue }}</td>
+            <td>{{ data.RedEyes }}</td>
+            <td>{{ data.DifficultyBreathing }}</td>
+            <td>{{ data.scannedby }}</td>
+            <td>{{ data.temperature }}</td>
+
+
+        </tr>
+    </tbody>
+</nz-table>
+
+<!-- Add res modal -->
+<nz-modal [(nzVisible)]="isCompleteCheckVisible" nzWidth="50vw" [nzTitle]="title2" nzCentered nzClosable=false>
+    <ng-template #title2><span style="color:#00162b; margin-right: 6px;">Complete</span><span style="color:#f5bd1f;">Weekly Health Check</span></ng-template>
+    <form nz-form [formGroup]="validateForm">
+        <ng-container *nzModalContent>
+            <nz-form-item>
+                <nz-form-control nzErrorTip="Please select an option!">
+                    <nz-form-label nzFor="difficulty" nzNoColon>Have you travelled to a high-risk country in the last 14 days?</nz-form-label>
+
+                    <nz-input-group [nzAddOnBefore]="calendarIcon">
+                        <ng-template #calendarIcon><i nz-icon nzType="unordered-list" nzTheme="outline"></i></ng-template>
+
+                        <nz-select style="width: 100%;" id="difficulty" nzPlaceHolder="Choose an option" formControlName="aType">
+                            <nz-option nzCustomContent nzLabel="Yes" nzValue="Yes"> Yes</nz-option>
+                            <nz-option nzCustomContent nzLabel="No" nzValue="No"> No</nz-option>
+                        </nz-select>
+                    </nz-input-group>
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+                <nz-form-control nzErrorTip="Please select an option!">
+                    <nz-form-label nzFor="difficulty" nzNoColon>Have you travelled to a different province in the last 14 days?
+                    </nz-form-label>
+
+                    <nz-input-group [nzAddOnBefore]="calendarIcon">
+                        <ng-template #calendarIcon><i nz-icon nzType="unordered-list" nzTheme="outline"></i></ng-template>
+
+                        <nz-select style="width: 100%;" id="difficulty" nzPlaceHolder="Choose an option" formControlName="aType">
+                            <nz-option nzCustomContent nzLabel="Yes" nzValue="Yes"> Yes</nz-option>
+                            <nz-option nzCustomContent nzLabel="No" nzValue="No"> No</nz-option>
+                        </nz-select>
+                    </nz-input-group>
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+                <nz-form-control nzErrorTip="Please select an option!">
+                    <nz-form-label nzFor="difficulty" nzNoColon style="overflow-wrap: break-word;">Have you had contact with anyone confirmed with COVID-19 in the last 14 days?
+                    </nz-form-label>
+
+                    <nz-input-group [nzAddOnBefore]="calendarIcon">
+                        <ng-template #calendarIcon><i nz-icon nzType="unordered-list" nzTheme="outline"></i></ng-template>
+
+                        <nz-select style="width: 100%;" id="difficulty" nzPlaceHolder="Choose an option" formControlName="aType">
+                            <nz-option nzCustomContent nzLabel="Yes" nzValue="Yes"> Yes</nz-option>
+                            <nz-option nzCustomContent nzLabel="No" nzValue="No"> No</nz-option>
+                        </nz-select>
+                    </nz-input-group>
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+                <nz-form-control nzErrorTip="Please select an option!">
+                    <nz-form-label nzFor="difficulty" nzNoColon>Do you have difficulty breathing?</nz-form-label>
+
+                    <nz-input-group [nzAddOnBefore]="calendarIcon">
+                        <ng-template #calendarIcon><i nz-icon nzType="unordered-list" nzTheme="outline"></i></ng-template>
+
+                        <nz-select style="width: 100%;" id="difficulty" nzPlaceHolder="Choose an option" formControlName="aType">
+                            <nz-option nzCustomContent nzLabel="Yes" nzValue="Yes"> Yes</nz-option>
+                            <nz-option nzCustomContent nzLabel="No" nzValue="No"> No</nz-option>
+                        </nz-select>
+                    </nz-input-group>
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+                <nz-form-control nzErrorTip="Please select an option!">
+                    <nz-form-label nzFor="difficulty" nzNoColon>Do you have a sore throat?</nz-form-label>
+
+                    <nz-input-group [nzAddOnBefore]="calendarIcon">
+                        <ng-template #calendarIcon><i nz-icon nzType="unordered-list" nzTheme="outline"></i></ng-template>
+
+                        <nz-select style="width: 100%;" id="difficulty" nzPlaceHolder="Choose an option" formControlName="aType">
+                            <nz-option nzCustomContent nzLabel="Yes" nzValue="Yes"> Yes</nz-option>
+                            <nz-option nzCustomContent nzLabel="No" nzValue="No"> No</nz-option>
+                        </nz-select>
+                    </nz-input-group>
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+                <nz-form-control nzErrorTip="Please select an option!">
+                    <nz-form-label nzFor="difficulty" nzNoColon>Do you have a cough?</nz-form-label>
+
+                    <nz-input-group [nzAddOnBefore]="calendarIcon">
+                        <ng-template #calendarIcon><i nz-icon nzType="unordered-list" nzTheme="outline"></i></ng-template>
+
+                        <nz-select style="width: 100%;" id="difficulty" nzPlaceHolder="Choose an option" formControlName="aType">
+                            <nz-option nzCustomContent nzLabel="Yes" nzValue="Yes"> Yes</nz-option>
+                            <nz-option nzCustomContent nzLabel="No" nzValue="No"> No</nz-option>
+                        </nz-select>
+                    </nz-input-group>
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+                <nz-form-control nzErrorTip="Please select an option!">
+                    <nz-form-label nzFor="difficulty" nzNoColon>Do you have a fever?</nz-form-label>
+
+                    <nz-input-group [nzAddOnBefore]="calendarIcon">
+                        <ng-template #calendarIcon><i nz-icon nzType="unordered-list" nzTheme="outline"></i></ng-template>
+
+                        <nz-select style="width: 100%;" id="difficulty" nzPlaceHolder="Choose an option" formControlName="aType">
+                            <nz-option nzCustomContent nzLabel="Yes" nzValue="Yes"> Yes</nz-option>
+                            <nz-option nzCustomContent nzLabel="No" nzValue="No"> No</nz-option>
+                        </nz-select>
+                    </nz-input-group>
+                </nz-form-control>
+            </nz-form-item>
+
+            <nz-form-item>
+                <nz-form-control nzErrorTip="Please select an option!">
+                    <nz-form-label nzFor="difficulty" nzNoColon>Temperature reading done by?</nz-form-label>
+
+                    <nz-input-group [nzAddOnBefore]="calendarIcon">
+                        <ng-template #calendarIcon><i nz-icon nzType="unordered-list" nzTheme="outline"></i></ng-template>
+
+                        <nz-select style="width: 100%;" id="difficulty" nzPlaceHolder="Choose an option" formControlName="aType">
+                            <nz-option nzCustomContent nzLabel="Wall Scanner" nzValue="Wall Scanner"> Wall Scanner</nz-option>
+                            <nz-option nzCustomContent nzLabel="House Parent" nzValue="House Parent"> House Parent</nz-option>
+                            <nz-option nzCustomContent nzLabel="Building Coordinator" nzValue="Building Coordinator"> Building Coordinator</nz-option>
+                            <nz-option nzCustomContent nzLabel="RMC" nzValue="RMC"> RMC</nz-option>
+                        </nz-select>
+                    </nz-input-group>
+                </nz-form-control>
+            </nz-form-item>
+
+            <nz-form-item>
+                <nz-form-control nzErrorTip="Please input your temperature!">
+                    <nz-form-label nzFor="difficulty" nzNoColon>Temperature recording</nz-form-label>
+                    <nz-input-group [nzAddOnBefore]="Icon">
+                        <ng-template #Icon><i nz-icon nzType="dashboard" nzTheme="outline"></i></ng-template>
+                        <input type="text" nz-input formControlName="aType" placeholder="Temperature" />
+                    </nz-input-group>
+                </nz-form-control>
+            </nz-form-item>
+
+
+        </ng-container>
+        <div *nzModalFooter>
+            <button nz-button nzType="danger" (click)="handleCancelCompleteCheck()">Cancel</button>
+            <button nz-button nzType="primary" (click)="handleOkCompleteCheck()" [nzLoading]="isConfirmLoading">Submit</button>
+        </div>
+    </form>
+</nz-modal>

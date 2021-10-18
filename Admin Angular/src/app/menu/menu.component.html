@@ -1,0 +1,71 @@
+<div class="pageHeader">
+    <div nz-row>
+        <div nz-col [nzSpan]="12">
+            <h1 class="title">Menu</h1>
+        </div>
+        <div nz-col [nzSpan]="12">
+            <!-- <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
+                <ng-template #suffixIconButton>
+                    <button nz-button nzType="primary" nzSearch><i nz-icon nzType="search"></i></button>
+                </ng-template>
+                <input type="text" nz-input placeholder="Search for items" />
+            </nz-input-group> -->
+        </div>
+    </div>
+</div>
+<br>
+<div nz-row>
+
+    <div nz-col [nzSpan]="24">
+        <span class="">
+            <span class="mr-2">Select Month:</span>
+        <nz-select ngModel="July 2021" style="width: 300px;">
+            <nz-option *ngFor="let option of selectMonth" [nzLabel]="option.month" [nzValue]="option.month"></nz-option>
+
+        </nz-select>
+
+
+        </span>
+    </div>
+
+</div>
+<br>
+<nz-table #basicTable nzBordered [nzData]="days" nzPageSize="31" nzShowPagination="false">
+
+    <thead>
+        <tr>
+            <th>Date</th>
+            <th>Day</th>
+            <th>Menu</th>
+
+        </tr>
+    </thead>
+    <tbody>
+        <ng-container *ngFor="let data of basicTable.data">
+            <tr *ngIf="data.day==('Saturday')||data.day==('Sunday')" style="background: rgb(255, 179, 179);">
+                <td>{{ data.date }}</td>
+                <td>{{ data.day }}</td>
+                <td>
+                    <nz-select class="w-100" nzPlaceHolder="Select Day">
+                        <nz-option *ngFor="let option of MealDays" [nzLabel]="option.mealDay" [nzValue]="option.mealDay"></nz-option>
+
+                    </nz-select>
+                </td>
+            </tr>
+            <tr *ngIf="data.day!=('Saturday')||data.day==('Sunday')">
+                <td>{{ data.date }}</td>
+                <td>{{ data.day }}</td>
+                <td>
+                    <nz-select class="w-100" nzPlaceHolder="Select Day">
+                        <nz-option *ngFor="let option of MealDays" [nzLabel]="option.mealDay" [nzValue]="option.mealDay"></nz-option>
+
+                    </nz-select>
+                </td>
+            </tr>
+        </ng-container>
+
+    </tbody>
+</nz-table>
+
+<br>
+<button nz-button nzType="primary" class="float-right" style="width: 100px;" nz-popconfirm nzOkText="Yes" nzCancelText="No" nzPopconfirmTitle="Are you sure you want to save the menu?" nzPopconfirmPlacement="top" (nzOnConfirm)="confirm()">Save</button><br>

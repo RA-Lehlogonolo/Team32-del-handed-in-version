@@ -1,0 +1,285 @@
+<div class="pageHeader">
+    <div nz-row>
+        <div nz-col [nzSpan]="12">
+            <h1 class="title">Products</h1>
+        </div>
+        <div nz-col [nzSpan]="12">
+            <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
+                <ng-template #suffixIconButton>
+                    <button nz-button nzType="primary" nzSearch><i nz-icon nzType="search"></i></button>
+                </ng-template>
+                <input type="text" nz-input placeholder="Search for products" />
+            </nz-input-group>
+
+        </div>
+
+    </div>
+</div>
+<br>
+<div nz-row>
+    <div nz-col [nzSpan]="12">
+        <!-- <span class="float-left" (click)="showViewCartModal()">
+            <a>
+                <nz-badge [nzCount]="6">
+                    <span class="head-example"><i nz-icon nzType="shopping-cart" nzTheme="outline"></i></span> </nz-badge>
+        </a>
+
+        </span> -->
+    </div>
+    <div nz-col [nzSpan]="12">
+        <span class="float-right">
+            <button nz-button nzType="primary" (click)="showAddProductModal()">Add Product</button>
+
+        </span>
+
+    </div>
+
+</div>
+
+<nz-divider></nz-divider>
+
+<div nz-row [nzGutter]="6">
+    <div nz-col [nzSpan]="8" class="mb-3">
+        <nz-card nzHoverable class="shadow" style="width:300px;" [nzCover]="coverTemplate">
+            <nz-divider class="nz-divider"></nz-divider>
+            <nz-card-meta nzTitle="Village Cap" nzDescription="R250" class="mb-3"></nz-card-meta>
+            <button nz-button class="login-form-button login-form-margin w-100" nzType="primary" (click)="showViewProductModal()">View Product</button>
+
+        </nz-card>
+        <ng-template #coverTemplate>
+            <img style=" width:300px; height:240px;" alt="example" src="../assets/Images/Cap_Left.jpg" />
+        </ng-template>
+    </div>
+    <div nz-col [nzSpan]="8" class="mb-3">
+        <nz-card nzHoverable class="shadow" style="width:300px" [nzCover]="coverTemplate1">
+            <nz-divider class="nz-divider"></nz-divider>
+            <nz-card-meta nzTitle="RMC T-shirt" nzDescription="R300" class="mb-3"></nz-card-meta>
+            <button nz-button class="login-form-button login-form-margin w-100" nzType="primary" (click)="showViewProductModal()">View Product</button>
+
+        </nz-card>
+        <ng-template #coverTemplate1>
+            <img style="width:300px; height:240px;" alt="example" src="../assets/Images/RMC_Back.jpg" />
+        </ng-template>
+    </div>
+    <div nz-col [nzSpan]="8" class="mb-3">
+
+        <nz-card nzHoverable class="shadow" style="width:300px" [nzCover]="coverTemplate2">
+            <nz-divider class="nz-divider"></nz-divider>
+
+            <nz-card-meta nzTitle="Village T-shirt" nzDescription="R200" class="mb-3"></nz-card-meta>
+            <button nz-button class="login-form-button login-form-margin w-100" nzType="primary" (click)="showViewProductModal()">View Product</button>
+
+        </nz-card>
+        <ng-template #coverTemplate2>
+            <img style="width:300px; height:240px;" alt="example" src="../assets/Images/VillageShirt_Front.jpg" />
+        </ng-template>
+    </div>
+    <div nz-col [nzSpan]="8" class="mb-3">
+
+        <nz-card nzHoverable class="shadow" style="width:300px;" [nzCover]="coverTemplate3">
+            <nz-divider class="nz-divider"></nz-divider>
+
+            <nz-card-meta nzTitle="Grocery Bag" nzDescription="R20" class="mb-3"></nz-card-meta>
+            <button nz-button class="login-form-button login-form-margin w-100" nzType="primary" (click)="showViewProductModal()">View Product</button>
+
+        </nz-card>
+        <ng-template #coverTemplate3>
+            <img style="width:300px; height:240px;" alt="example" src="../assets/Images/VillageGroceryBag.jpg" />
+        </ng-template>
+    </div>
+</div>
+
+
+<!-- View product -->
+<nz-modal [(nzVisible)]="isViewProductVisible" [nzTitle]="title" nzCentered nzClosable=false>
+    <ng-template #title><span style="color:#00162b; margin-right: 6px;">View</span><span style="color:#f5bd1f;">Product</span></ng-template>
+    <form nz-form>
+        <ng-container *nzModalContent>
+            <div nz-row>
+                <div nz-col [nzSpan]="12" class="float-left">
+                    <span>
+                    <div>
+                        <img style="height:240px; width:220px" alt="example" src="../assets/Images/RMC_Back.jpg" />
+                    </div>
+                </span>
+                </div>
+
+                <div nz-col [nzSpan]="12" class="float-right ">
+                    <div nz-row class="float-right">
+                        <div nz-col [nzSpan]="24" nzAlign='center'>
+                            <h3>RMC T-shirt</h3>
+                        </div>
+                        <div nz-col [nzSpan]="24" nzAlign='center'>
+                            <h5>R300</h5>
+                        </div>
+                        <div nz-col [nzSpan]="24" class="text-center mb-3">
+                            <button nz-button class="w-100" nzType="primary" (click)="showUpdateProductModal()">Update Product</button>
+                        </div>
+
+                        <div nz-col [nzSpan]="24" nzAlign='center'>
+                            <button nz-button class=" w-100" nzType="danger" (click)="showDeleteProductModal()">Delete Product</button>
+                        </div>
+                    </div>
+
+                </div>
+                <nz-divider></nz-divider>
+
+
+            </div>
+
+        </ng-container>
+        <div *nzModalFooter nzColor="green">
+            <button nz-button nzType="danger" (click)="handleCancelViewProduct()">Close</button>
+            <!-- <button nz-button nzType="primary" (click)="handleOkMiddle()" [nzLoading]="isConfirmLoading" (nzAutofocus)="ok">Add</button> -->
+        </div>
+    </form>
+</nz-modal>
+
+<!-- Confirm Remove product modal -->
+
+<nz-modal [(nzVisible)]="isDeleteProductVisible" [nzTitle]="title3" nzCentered nzClosable=false nzIconType="warning">
+    <ng-template #title3><span style=" color:#00162b; margin-right: 6px;">Delete</span><span style="color:#f5bd1f;">Product</span></ng-template>
+    <form nz-form>
+        <ng-container *nzModalContent>
+            <b style="color: red;">Are you sure you want to delete this product?</b>
+        </ng-container>
+        <div *nzModalFooter nzColor="green">
+            <button nz-button nzType="danger" (click)="handleCancelDeleteProduct()">No</button>
+            <button nz-button nzType="primary" (click)="handleOkDeleteProduct()" [nzLoading]="isConfirmLoading" [hidden]="status=='Approved'">Yes</button>
+        </div>
+    </form>
+</nz-modal>
+
+<!-- Add user modal -->
+<nz-modal [(nzVisible)]="isAddProductVisible" [nzTitle]="title2" nzCentered nzClosable=false>
+    <ng-template #title2><span style="color:#00162b; margin-right: 6px;">Add</span><span style="color:#f5bd1f;">Product</span></ng-template>
+    <form nz-form [formGroup]="validateForm">
+        <ng-container *nzModalContent>
+            <nz-form-item>
+                <nz-form-control nzErrorTip="Please input product name!">
+                    <nz-input-group [nzAddOnBefore]="Icon">
+                        <ng-template #Icon><i nz-icon nzType="info" nzTheme="outline"></i></ng-template>
+                        <input type="text" nz-input formControlName="name" placeholder="Product Name" />
+                    </nz-input-group>
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+                <nz-form-control nzErrorTip="Please input product price!">
+                    <nz-input-group [nzAddOnBefore]="Icon">
+                        <ng-template #Icon><i nz-icon nzType="info" nzTheme="outline"></i></ng-template>
+                        <input type="text" nz-input formControlName="name" placeholder="Product Price" />
+                    </nz-input-group>
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+                <nz-form-control nzErrorTip="Please select a product type!">
+                    <nz-input-group [nzAddOnBefore]="calendarIcon">
+                        <ng-template #calendarIcon><i nz-icon nzType="unordered-list" nzTheme="outline"></i></ng-template>
+                        <nz-select ngModel="Default" style="width: 100%;" nzPlaceHolder="Select Product Type" formControlName="aType">
+                            <nz-option nzCustomContent nzLabel="T-Shirt" nzValue="T-Shirt"> T-Shirt </nz-option>
+                            <nz-option nzCustomContent nzLabel="Hoodie" nzValue="Hoodie">Hoodie</nz-option>
+                            <nz-option nzCustomContent nzLabel="Cap" nzValue="Cap">Cap</nz-option>
+
+
+                        </nz-select>
+                    </nz-input-group>
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+                <nz-form-control nzErrorTip="Please input product image!">
+                    <div class="clearfix">
+                        <nz-upload class="w-100 m-0 p-0" formControlName="name" nzAction="https://www.mocky.io/v2/5cc8019d300000980a055e76" nzListType="picture" [(nzFileList)]="fileList" [nzShowButton]="fileList.length < 1" [nzPreview]="handlePreview">
+                            <div class="w-100">
+                                <nz-input-group [nzAddOnBefore]="suffixIconButton" class="w-100">
+                                    <ng-template #suffixIconButton>
+                                        <i nz-icon nzType="plus" nzTheme="outline"></i>
+                                    </ng-template>
+
+                                    <button nz-button nzType="secondary" class="w-100">Upload Product Image</button>
+                                </nz-input-group>
+                            </div>
+                        </nz-upload>
+                        <nz-modal [nzVisible]="previewVisible" [nzContent]="modalContent" [nzFooter]="null" (nzOnCancel)="previewVisible = false">
+                            <ng-template #modalContent>
+                                <img [src]="previewImage" [ngStyle]="{ width: '100%' }" />
+                            </ng-template>
+                        </nz-modal>
+                    </div>
+                </nz-form-control>
+            </nz-form-item>
+
+
+        </ng-container>
+        <div *nzModalFooter>
+            <button nz-button nzType="danger" (click)="handleCancelAddProduct()">Cancel</button>
+            <button nz-button nzType="primary" nz-popconfirm nzOkText="Yes" nzCancelText="No" nzPopconfirmTitle="Are you sure you want to add the product?" nzPopconfirmPlacement="top" (nzOnConfirm)="confirmAdd()" (nzOnCancel)="cancel()" [nzLoading]="isConfirmLoading">Add</button>
+        </div>
+    </form>
+</nz-modal>
+
+<!-- Add user modal -->
+<nz-modal [(nzVisible)]="isUpdateProductVisible" [nzTitle]="title4" nzCentered nzClosable=false>
+    <ng-template #title4><span style="color:#00162b; margin-right: 6px;">Update</span><span style="color:#f5bd1f;">Product</span></ng-template>
+    <form nz-form [formGroup]="validateForm">
+        <ng-container *nzModalContent>
+            <nz-form-item>
+                <nz-form-control nzErrorTip="Please input product name!">
+                    <nz-input-group [nzAddOnBefore]="Icon">
+                        <ng-template #Icon><i nz-icon nzType="info" nzTheme="outline"></i></ng-template>
+                        <input type="text" nz-input formControlName="name" ngModel="RMC T-shirt" placeholder="Product Name" />
+                    </nz-input-group>
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+                <nz-form-control nzErrorTip="Please input product price!">
+                    <nz-input-group [nzAddOnBefore]="Icon">
+                        <ng-template #Icon><i nz-icon nzType="info" nzTheme="outline"></i></ng-template>
+                        <input type="text" nz-input formControlName="price" ngModel="300" placeholder="Product Price" />
+                    </nz-input-group>
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+                <nz-form-control nzErrorTip="Please select a product type!">
+                    <nz-input-group [nzAddOnBefore]="calendarIcon">
+                        <ng-template #calendarIcon><i nz-icon nzType="unordered-list" nzTheme="outline"></i></ng-template>
+                        <nz-select ngModel="T-Shirt" formControlName="type" style="width: 100%;" nzPlaceHolder="Select Product Type">
+                            <nz-option nzCustomContent nzLabel="T-Shirt" nzValue="T-Shirt"> T-Shirt </nz-option>
+                            <nz-option nzCustomContent nzLabel="Hoodie" nzValue="Hoodie">Hoodie</nz-option>
+                            <nz-option nzCustomContent nzLabel="Cap" nzValue="Cap">Cap</nz-option>
+
+
+                        </nz-select>
+                    </nz-input-group>
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+                <nz-form-control nzErrorTip="Please input product image!">
+                    <div class="clearfix">
+                        <nz-upload class="w-100 m-0 p-0" [ngStyle]="{ width: '100%' }" formControlName="name" nzAction="https://www.mocky.io/v2/5cc8019d300000980a055e76" nzListType="picture" [(nzFileList)]="updatefileList" [nzShowButton]="updatefileList.length < 1" [nzPreview]="handlePreview">
+                            <div class="w-100">
+                                <nz-input-group [nzAddOnBefore]="suffixIconButton" class="w-100">
+                                    <ng-template #suffixIconButton>
+                                        <i nz-icon nzType="plus" nzTheme="outline"></i>
+                                    </ng-template>
+
+                                    <button nz-button nzType="secondary" class="w-100">Upload Product Image</button>
+                                </nz-input-group>
+                            </div>
+                        </nz-upload>
+                        <nz-modal [nzVisible]="previewVisible" [nzContent]="modalContent" [nzFooter]="null" (nzOnCancel)="previewVisible = false">
+                            <ng-template #modalContent>
+                                <img [src]="previewImage" [ngStyle]="{ width: '100%' }" />
+                            </ng-template>
+                        </nz-modal>
+                    </div>
+                </nz-form-control>
+            </nz-form-item>
+
+
+        </ng-container>
+        <div *nzModalFooter>
+            <button nz-button nzType="danger" (click)="handleCancelUpdateProduct()">Cancel</button>
+            <button nz-button nzType="primary" nz-popconfirm nzOkText="Yes" nzCancelText="No" nzPopconfirmTitle="Are you sure you want to update the product?" nzPopconfirmPlacement="top" (nzOnConfirm)="confirm()" (nzOnCancel)="cancel()" [nzLoading]="isConfirmLoading">Update</button>
+        </div>
+    </form>
+</nz-modal>

@@ -1,0 +1,83 @@
+<div class="pageHeader">
+  <div nz-row>
+      <div nz-col [nzSpan]="12">
+          <h1 class="title">Menu-Rotation</h1>
+      </div>
+      <div nz-col [nzSpan]="12">
+          <!-- <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
+              <ng-template #suffixIconButton>
+                  <button nz-button nzType="primary" nzSearch><i nz-icon nzType="search"></i></button>
+              </ng-template>
+              <input type="text" nz-input placeholder="Search for items" />
+          </nz-input-group> -->
+      </div>
+  </div>
+</div>
+<br>
+
+<div nz-row>
+  <div nz-col [nzSpan]="24">
+      <span class="float-right">
+                          <button nz-button  nzType="primary" (click)="showGenerateRotationModal()">Generate Menu Rotation</button>
+      </span>
+  </div>
+
+</div>
+
+<nz-table #basicTable nzBordered [nzData]="days" nzPageSize="31" nzShowPagination="false">
+
+<thead>
+  <tr>
+      <th>Date</th>
+      <th>Day</th>
+      <th>Menu</th>
+
+  </tr>
+</thead>
+<tbody>
+  <ng-container *ngFor="let data of basicTable.data">
+      <tr *ngIf="data.day==('Saturday')||data.day==('Sunday')" style="background: rgb(255, 179, 179);">
+          <td>{{ data.date }}</td>
+          <td>{{ data.day }}</td>
+          <td>
+            {{ data.MealDays }}
+          </td>
+      </tr>
+      <tr *ngIf="data.day!=('Saturday')||data.day==('Sunday')">
+          <td>{{ data.date }}</td>
+          <td>{{ data.day }}</td>
+          <td>
+            {{ Array.mealday }}
+          </td>
+      </tr>
+  </ng-container>
+
+</tbody>
+
+</nz-table>
+
+<!-- Add res modal -->
+<nz-modal [(nzVisible)]="isAddMenuRotationvVisible" [nzTitle]="title2" nzCentered nzClosable=false>
+  <ng-template #title2><span style="color:#00162b; margin-right: 6px;">Generate</span><span style="color:#f5bd1f;">Meal Rotation</span></ng-template>
+  <form nz-form [formGroup]="validateForm">
+      <ng-container *nzModalContent>
+          <nz-form-item>
+              <nz-form-control nzErrorTip="Please Select Month!">
+                <nz-input-group [nzAddOnBefore]="calendarIcon">
+                  <ng-template #calendarIcon><i nz-icon nzType="calendar" nzTheme="outline"></i></ng-template>
+                  <nz-select ngModel="July 2021" style="width: 300px;" placeholder="Select Month">
+                    <nz-option *ngFor="let option of selectMonth" [nzLabel]="option.month" [nzValue]="option.month"></nz-option>
+
+                </nz-select>
+
+              </nz-input-group>
+              </nz-form-control>
+          </nz-form-item>
+
+      </ng-container>
+      <div *nzModalFooter>
+          <button nz-button nzType="danger" (click)="handleCancelGenerate()">Cancel</button>
+          <button nz-button nzType="primary" nz-popconfirm nzOkText="Yes" nzCancelText="No" nzPopconfirmTitle="Are you sure you Generate Menu type Rotation" nzPopconfirmPlacement="top" (nzOnConfirm)="confirmAdd()" (nzOnCancel)="cancel()" [nzLoading]="isConfirmLoading">Add</button>
+      </div>
+  </form>
+</nz-modal>

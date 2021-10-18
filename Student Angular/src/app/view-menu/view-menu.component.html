@@ -1,0 +1,32 @@
+<div class="pageHeader">
+    <div nz-row class="login-form-margin">
+        <div nz-col [nzSpan]="12">
+            <h1 class="title">Menu</h1>
+        </div>
+    </div>
+</div>
+<br>
+
+<full-calendar id="calendar" style="height:auto;" [options]="calendarOptions"></full-calendar>
+
+
+<nz-modal [(nzVisible)]="isViewMenuVisible" [nzTitle]="title1" nzCentered nzClosable=false nzIconType="warning">
+    <ng-template #title1><span style=" color:#00162b; margin-right: 6px;">View</span><span style="color:#f5bd1f;">Menu</span></ng-template>
+    <form nz-form>
+        <ng-container *nzModalContent>
+            <nz-descriptions [nzColumn]="2" nzBordered nzTitle="Menu Details">
+                <nz-descriptions-item nzTitle="Menu" [nzSpan]="1" class="font-weight-bold">{{modalInfo.event.title}}</nz-descriptions-item>
+                <nz-descriptions-item nzTitle="Date" [nzSpan]="1">{{modalInfo.event.start|date:'d MMMM yyyy'}}</nz-descriptions-item>
+                <nz-descriptions-item nzTitle="Vegeterian Lunch" [nzSpan]="2">{{modalInfo.event.extendedProps.vegeterianLunch}}</nz-descriptions-item>
+                <nz-descriptions-item nzTitle="Standard Lunch" [nzSpan]="2">{{modalInfo.event.extendedProps.standardLunch}}</nz-descriptions-item>
+                <nz-descriptions-item nzTitle="TuksRes Lunch" [nzSpan]="2">{{modalInfo.event.extendedProps.tuksResLunch}}</nz-descriptions-item>
+                <nz-descriptions-item nzTitle="Vegeterian Supper" [nzSpan]="2">{{modalInfo.event.extendedProps.vegeterianLunch}}</nz-descriptions-item>
+                <nz-descriptions-item nzTitle="Standard Supper" [nzSpan]="2">{{modalInfo.event.extendedProps.standardLunch}}</nz-descriptions-item>
+                <nz-descriptions-item nzTitle="TuksRes Supper" [nzSpan]="2">{{modalInfo.event.extendedProps.tuksResLunch}}</nz-descriptions-item>
+            </nz-descriptions>
+        </ng-container>
+        <div *nzModalFooter nzColor="green">
+            <button nz-button nzType="danger" (click)="handleCloseViewModal()">Close</button>
+        </div>
+    </form>
+</nz-modal>

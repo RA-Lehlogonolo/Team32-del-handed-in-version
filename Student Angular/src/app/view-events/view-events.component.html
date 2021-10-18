@@ -1,0 +1,73 @@
+<div class="pageHeader">
+    <div nz-row class="login-form-margin">
+        <div nz-col [nzSpan]="12">
+            <h1 class="title">Welcome to TuksVillage Board</h1>
+        </div>
+    </div>
+</div>
+<br>
+
+
+<!-- View Event Modal -->
+<nz-modal [(nzVisible)]="isViewEventVisible" [nzTitle]="title1" nzCentered nzClosable=false nzIconType="warning">
+    <ng-template #title1><span style=" color:#00162b; margin-right: 6px;">View</span><span style="color:#f5bd1f;">Event</span></ng-template>
+    <form nz-form>
+        <ng-container *nzModalContent>
+            <nz-descriptions [nzColumn]="1" nzTitle="Event Details">
+                <nz-descriptions-item nzTitle="Event Name" [nzSpan]="1">{{modalInfo.event.title}}</nz-descriptions-item>
+                <nz-descriptions-item nzTitle="Event Type" [nzSpan]="1">{{modalInfo.event.extendedProps.eventType}}</nz-descriptions-item>
+                <nz-descriptions-item nzTitle="Time" [nzSpan]="1">{{modalInfo.event.start |date:'d MMMM y h:mm a'}} to {{modalInfo.event.end |date:'d MMMM y h:mm a'}} </nz-descriptions-item>
+            </nz-descriptions>
+        </ng-container>
+        <div *nzModalFooter nzColor="green">
+            <button nz-button nzType="danger" (click)="handleCloseViewModal()">Close</button>
+        </div>
+    </form>
+</nz-modal>
+
+
+
+<div nz-row class=" m-0">
+    <div nz-col [nzSpan]="16" class="">
+        <full-calendar id="calendar" style="min-height:100%; height:100vh;" [options]="calendarOptions"></full-calendar>
+    </div>
+    <nz-divider nzType="vertical" style="border-width: 2px; min-height:100%; height:100vh;  vertical-align: middle; border-color: #1d62ca;"></nz-divider>
+
+    <div nz-col [nzSpan]="7" class="float-right">
+
+        <div class="pageHeader ">
+            <div nz-row class="login-form-margin">
+                <div nz-col [nzSpan]="24">
+                    <h1 class="title">Announcements</h1>
+                </div>
+            </div>
+        </div>
+        <br>
+        <nz-timeline>
+            <nz-timeline-item nzColor="purple" [nzDot]="dotTemplate"><strong>2021-06-26</strong><br> Please avoid playing loud music after 10 PM <br><strong>Posted by</strong> House parent</nz-timeline-item>
+            <nz-timeline-item nzColor="blue" [nzDot]="Electrical"><strong>2021-06-21</strong><br> Electrical issues are being attended in block A <br><strong>Posted by</strong> Building Coordinator</nz-timeline-item>
+            <nz-timeline-item nzColor="green" [nzDot]="Operational"><strong>2021-06-13</strong><br> Grass cutting at 9 am tomorrow <br><strong>Posted by</strong> Building Coordinator </nz-timeline-item>
+            <nz-timeline-item nzColor="red" [nzDot]="iTech"><strong>2021-06-11</strong> <br>Network problems being solved <br><strong>Posted by</strong> Building Coordinator </nz-timeline-item>
+            <nz-timeline-item [nzDot]="Plumbing"><strong>2021-09-05</strong><br> Plumbers will be fixing issues reported in block 1 <br><strong>Posted by</strong> Building Coordinator</nz-timeline-item>
+        </nz-timeline>
+
+        <ng-template #dotTemplate>
+            <!-- General Announcement -->
+            <i nz-icon nzType="notification" style="font-size: 16px;"></i>
+        </ng-template>
+        <ng-template #iTech>
+            <i nz-icon nzType="desktop" style="font-size: 16px;"></i>
+        </ng-template>
+        <ng-template #Plumbing>
+            <i nz-icon nzType="tool" style="font-size: 16px; color: gray;"></i>
+        </ng-template>
+        <ng-template #Operational>
+            <i nz-icon nzType="clear" style="font-size: 16px;"></i>
+        </ng-template>
+        <ng-template #Electrical>
+            <i nz-icon nzType="thunderbolt" style="font-size: 16px;"></i>
+        </ng-template>
+
+    </div>
+
+</div>

@@ -1,0 +1,305 @@
+<div class="pageHeader">
+    <div nz-row>
+        <div nz-col [nzSpan]="12">
+            <h1 class="title">Merchandise</h1>
+        </div>
+        <div nz-col [nzSpan]="12">
+            <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
+                <ng-template #suffixIconButton>
+                    <button nz-button nzType="primary" nzSearch><i nz-icon nzType="search"></i></button>
+                </ng-template>
+                <input type="text" nz-input placeholder="Search for merchandise" />
+            </nz-input-group>
+
+        </div>
+
+    </div>
+</div>
+<br>
+<div nz-row>
+    <div nz-col [nzSpan]="12">
+        <span class="float-left" (click)="showViewCartModal()">
+            <a>
+                <nz-badge [nzCount]="6">
+                    <span class="head-example"><i nz-icon nzType="shopping-cart" nzTheme="outline"></i></span> </nz-badge>
+        </a>
+
+        </span>
+    </div>
+    <div nz-col [nzSpan]="12">
+        <span class="float-right">
+            <span class="mr-2">Sort By:</span>
+        <nz-select ngModel="Default" style="width: 300px;">
+            <nz-option nzValue="Default" nzLabel="Default"></nz-option>
+            <nz-option nzCustomContent nzLabel="Name asc." nzValue="sort-ascending"> Name <i nz-icon nzType="sort-ascending"></i></nz-option>
+            <nz-option nzCustomContent nzLabel="Name desc." nzValue="sort-descending">Name <i nz-icon nzType="sort-descending"></i></nz-option>
+            <nz-option nzCustomContent nzLabel="Price asc." nzValue="sort-arrow-up">Price <i nz-icon nzType="arrow-up"></i></nz-option>
+            <nz-option nzCustomContent nzLabel="Price desc." nzValue="arrow-down">Price <i nz-icon nzType="arrow-down"></i></nz-option>
+        </nz-select>
+
+
+        </span>
+    </div>
+
+</div>
+
+<nz-divider></nz-divider>
+
+<div nz-row [nzGutter]="6">
+    <div nz-col [nzSpan]="8" class="mb-3">
+        <nz-card nzHoverable class="shadow" style="width:300px;" [nzCover]="coverTemplate">
+            <nz-divider class="nz-divider"></nz-divider>
+            <nz-card-meta nzTitle="Village Cap" nzDescription="R250" class="mb-3"></nz-card-meta>
+            <button nz-button class="login-form-button login-form-margin w-100" nzType="primary" (click)="showModalMiddle()">Add to cart</button>
+
+        </nz-card>
+        <ng-template #coverTemplate>
+            <img style=" width:300px; height:240px;" alt="example" src="../assets/Images/Cap_Left.jpg" />
+        </ng-template>
+    </div>
+    <div nz-col [nzSpan]="8" class="mb-3">
+        <nz-card nzHoverable class="shadow" style="width:300px" [nzCover]="coverTemplate1">
+            <nz-divider class="nz-divider"></nz-divider>
+            <nz-card-meta nzTitle="RMC T-shirt" nzDescription="R300" class="mb-3"></nz-card-meta>
+            <button nz-button class="login-form-button login-form-margin w-100" nzType="primary" (click)="showModalMiddle()">Add to cart</button>
+
+        </nz-card>
+        <ng-template #coverTemplate1>
+            <img style="width:300px; height:240px;" alt="example" src="../assets/Images/RMC_Back.jpg" />
+        </ng-template>
+    </div>
+    <div nz-col [nzSpan]="8" class="mb-3">
+
+        <nz-card nzHoverable class="shadow" style="width:300px" [nzCover]="coverTemplate2">
+            <nz-divider class="nz-divider"></nz-divider>
+
+            <nz-card-meta nzTitle="Village T-shirt" nzDescription="R200" class="mb-3"></nz-card-meta>
+            <button nz-button class="login-form-button login-form-margin w-100" nzType="primary" (click)="showModalMiddle()">Add to cart</button>
+
+        </nz-card>
+        <ng-template #coverTemplate2>
+            <img style="width:300px; height:240px;" alt="example" src="../assets/Images/VillageShirt_Front.jpg" />
+        </ng-template>
+    </div>
+    <div nz-col [nzSpan]="8" class="mb-3">
+
+        <nz-card nzHoverable class="shadow" style="width:300px;" [nzCover]="coverTemplate3">
+            <nz-divider class="nz-divider"></nz-divider>
+
+            <nz-card-meta nzTitle="Grocery Bag" nzDescription="R20" class="mb-3"></nz-card-meta>
+            <button nz-button class="login-form-button login-form-margin w-100" nzType="primary" (click)="showModalMiddle()">Add to cart</button>
+
+        </nz-card>
+        <ng-template #coverTemplate3>
+            <img style="width:300px; height:240px;" alt="example" src="../assets/Images/VillageGroceryBag.jpg" />
+        </ng-template>
+    </div>
+</div>
+
+
+<!-- Add Item modal -->
+<nz-modal [(nzVisible)]="isVisibleMiddle" [nzTitle]="title" nzCentered nzClosable=false>
+    <ng-template #title><span style="color:#00162b; margin-right: 6px;">Add</span><span style="color:#f5bd1f;">Item to Cart</span></ng-template>
+    <form nz-form>
+        <ng-container *nzModalContent>
+            <div nz-row>
+                <div nz-col [nzSpan]="12" class="float-left">
+                    <span>
+                    <div>
+                        <img style="height:240px; width:220px" alt="example" src="../assets/Images/RMC_Back.jpg" />
+                    </div>
+                </span>
+                </div>
+
+                <div nz-col [nzSpan]="12" class="float-right ">
+                    <div nz-row class="float-right">
+                        <div nz-col [nzSpan]="24" nzAlign='center'>
+                            <h3>RMC T-shirt</h3>
+                        </div>
+                        <div nz-col [nzSpan]="24" nzAlign='center'>
+                            <h5>R300</h5>
+                        </div>
+                        <!-- 
+                        <div nz-row nz-col [nzSpan]="24">
+                            <div>
+
+                            </div>
+                        </div> -->
+                        <div nz-col [nzSpan]="24" class="mb-3">
+                            <nz-select class="w-100" ngModel="lucy" nzPlaceHolder="Select Size">
+                                <nz-option nzValue="xs" nzLabel="XS"></nz-option>
+                                <nz-option nzValue="s" nzLabel="S"></nz-option>
+                                <nz-option nzValue="m" nzLabel="M"></nz-option>
+                                <nz-option nzValue="l" nzLabel="L"></nz-option>
+                                <nz-option nzValue="xl" nzLabel="XL"></nz-option>
+                            </nz-select>
+                        </div>
+
+                        <div nz-col [nzSpan]="24">
+
+                            <nz-input-number class="w-100" nzPlaceHolder="Select Quantity" [(ngModel)]="demoValue" [nzMin]="1" [nzStep]="1"></nz-input-number>
+
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </ng-container>
+        <div *nzModalFooter nzColor="green">
+            <button nz-button nzType="danger" (click)="handleCancelMiddle()">Cancel</button>
+            <button nz-button nzType="primary" (click)="handleOkMiddle()" [nzLoading]="isConfirmLoading" (nzAutofocus)="ok">Add</button>
+        </div>
+    </form>
+</nz-modal>
+
+<!-- View Cart modal -->
+<nz-modal nzWidth="80vw" [(nzVisible)]="isViewCartVisible" [nzTitle]="title1" nzClosable=false style="width: auto;" [nzAutofocus]="null">
+    <ng-template #title1><span style="color:#00162b; margin-right: 6px;">View</span><span style="color:#f5bd1f;">Cart</span></ng-template>
+    <form nz-form>
+        <ng-container *nzModalContent>
+            <nz-table #basicTable nzBordered [nzData]="listOfData" [nzTitle]="header" [nzFooter]="Footer">
+                <ng-template #header>
+                    <div nz-row>
+                        <div nz-col [nzSpan]="24">
+                            <span class="float-right pr-5">
+                                <button nz-button  nzType="danger" (click)="showEmptyCartModal()" >Empty Cart</button>
+                            </span>
+                        </div>
+                    </div>
+                </ng-template>
+
+                <ng-template #Footer>
+                    <div nz-row>
+                        <div nz-col [nzSpan]="24">
+                            <span class="float-right pr-5">
+                                <h4>Total: R{{cartTotal}} </h4>
+                                               
+                            </span>
+                        </div>
+                    </div>
+                </ng-template>
+
+                <thead>
+                    <tr>
+                        <th>Product</th>
+                        <th>Price</th>
+                        <th>Quantity</th>
+                        <th>Subtotal</th>
+                        <th nzAlign='center'><i nz-icon nzType="edit" nzTheme="outline" style="font-size: 16px; color: #f5bd1f;"></i></th>
+                        <th nzAlign='center'><i nz-icon nzType="delete" nzTheme="outline" style="font-size: 16px; color: red;"></i></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let data of basicTable.data">
+                        <td>{{ data.Product }}</td>
+                        <td>R{{ data.Price }}</td>
+                        <td>{{ data.Quantity }}</td>
+                        <td>R{{ data.Price * data.Quantity }}</td>
+                        <td nzAlign='center'>
+                            <button nz-button class="login-form-forgot login-form-button login-form-margin" nzType="primary" (click)="showUpdateCartItemModal()">Update Cart Item</button>
+                        </td>
+                        <td nzAlign='center'>
+                            <button nz-button class="login-form-forgot login-form-button login-form-margin" nzType="danger" (click)="showRemoveCartItemModal()">Remove Cart Item</button>
+                        </td>
+                        <!-- <td>
+                            <button nz-button class="login-form-forgot login-form-button login-form-margin" nzType="danger">Cancel Request</button>
+                        </td> -->
+                    </tr>
+                </tbody>
+            </nz-table>
+
+        </ng-container>
+        <div *nzModalFooter nzColor="green">
+            <button nz-button nzType="danger" class="login-form-forgot login-form-button login-form-margin" (click)="handleCancelViewCart()">Continue Shopping</button>
+            <button nz-button nzType="primary" (click)="showPlaceModal()" [nzLoading]="isConfirmLoading" (nzAutofocus)="ok">Place Order</button>
+        </div>
+    </form>
+</nz-modal>
+
+<!-- Update Item modal -->
+<nz-modal [(nzVisible)]="isUpdateCartItemVisible" [nzTitle]="title2" nzCentered nzClosable=false>
+    <ng-template #title2><span style="color:#00162b; margin-right: 6px;">Update</span><span style="color:#f5bd1f;">Cart Item</span></ng-template>
+    <form nz-form>
+        <ng-container *nzModalContent>
+            <div nz-row>
+                <div nz-col [nzSpan]="12" class="float-left">
+                    <span>
+                    <div>
+                        <img style="height:240px; width:220px" alt="example" src="../assets/Images/RMC_Back.jpg" />
+                    </div>
+                </span>
+                </div>
+
+                <div nz-col [nzSpan]="12" class="float-right ">
+                    <div nz-row class="float-right">
+                        <div nz-col [nzSpan]="24" nzAlign='center'>
+                            <h3>RMC T-shirt</h3>
+                        </div>
+                        <div nz-col [nzSpan]="24" nzAlign='center'>
+                            <h5>R300</h5>
+                        </div>
+                        <div nz-col [nzSpan]="24">
+
+                            <nz-input-number class="w-100" nzPlaceHolder="Select Quantity" [(ngModel)]="demoValue1" name="input1" [nzMin]="1" [nzStep]="1"></nz-input-number>
+
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </ng-container>
+        <div *nzModalFooter nzColor="green">
+            <button nz-button nzType="danger" (click)="handleCancelUpdateCartItem()">Cancel</button>
+            <button nz-button nzType="primary" (click)="handleOkUpdateCartItem()" [nzLoading]="isConfirmLoading" (nzAutofocus)="ok">Update</button>
+        </div>
+    </form>
+</nz-modal>
+
+<!-- Confirm Remove Item modal -->
+
+<nz-modal [(nzVisible)]="isRemoveCartItemVisible" [nzTitle]="title3" nzCentered nzClosable=false nzIconType="warning">
+    <ng-template #title3><span style=" color:#00162b; margin-right: 6px;">Remove</span><span style="color:#f5bd1f;">Cart Item</span></ng-template>
+    <form nz-form>
+        <ng-container *nzModalContent>
+            <b style="color: red;">Are you sure you want to remove this item?</b>
+        </ng-container>
+        <div *nzModalFooter nzColor="green">
+            <button nz-button nzType="danger" (click)="handleCancelRemoveCartItem()">No</button>
+            <button nz-button nzType="primary" (click)="handleOkRemoveCartItem()" [nzLoading]="isConfirmLoading" [hidden]="status=='Approved'">Yes</button>
+        </div>
+    </form>
+</nz-modal>
+
+<!-- Confirm Remove Item modal -->
+
+<nz-modal [(nzVisible)]="isEmptyCartVisible" [nzTitle]="title4" nzCentered nzClosable=false nzIconType="warning">
+    <ng-template #title4><span style=" color:#00162b; margin-right: 6px;">Empty</span><span style="color:#f5bd1f;">Cart</span></ng-template>
+    <form nz-form>
+        <ng-container *nzModalContent>
+            <b style="color: red;">Are you sure you want to empty the cart?</b>
+        </ng-container>
+        <div *nzModalFooter nzColor="green">
+            <button nz-button nzType="danger" (click)="handleCancelEmptyCart()">No</button>
+            <button nz-button nzType="primary" (click)="handleOkEmptyCart()" [nzLoading]="isConfirmLoading" [hidden]="status=='Approved'">Yes</button>
+        </div>
+    </form>
+</nz-modal>
+
+<!-- Confirm Place Order Item modal -->
+
+<nz-modal [(nzVisible)]="isPlaceVisible" [nzTitle]="title9" nzCentered nzClosable=false nzIconType="warning">
+    <ng-template #title9><span style=" color:#00162b; margin-right: 6px;">Place</span><span style="color:#f5bd1f;">Order</span></ng-template>
+    <form nz-form>
+        <ng-container *nzModalContent>
+            <b style="color: red;">Are you sure you want to place the order?</b>
+        </ng-container>
+        <div *nzModalFooter nzColor="green">
+            <button nz-button nzType="danger" (click)="handleCancelPlace()">No</button>
+            <button nz-button nzType="primary" (click)="handleOkPlace()" [nzLoading]="isConfirmLoading" [hidden]="status=='Approved'">Yes</button>
+        </div>
+    </form>
+</nz-modal>

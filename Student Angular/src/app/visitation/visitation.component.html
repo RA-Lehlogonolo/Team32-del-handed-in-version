@@ -1,0 +1,231 @@
+<div class="pageHeader">
+    <div nz-row class="login-form-margin">
+        <div nz-col [nzSpan]="12">
+            <h1 class="title">Visitation Applications</h1>
+        </div>
+        <div nz-col [nzSpan]="12">
+            <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
+                <input type="text" nz-input placeholder="Search for visitation" />
+            </nz-input-group>
+            <ng-template #suffixIconButton>
+                <button nz-button nzType="primary" nzSearch><i nz-icon nzType="search"></i></button>
+            </ng-template>
+        </div>
+    </div>
+
+
+</div>
+<br>
+<nz-table #basicTable nzBordered [nzData]="listOfData" [nzTitle]="header">
+    <ng-template #header>
+        <div nz-row>
+            <div nz-col [nzSpan]="24">
+                <span class="float-right">
+                                    <button nz-button  nzType="primary" (click)="showAddRequestModal()">Apply for Visitation</button>
+                </span>
+            </div>
+
+        </div>
+    </ng-template>
+    <thead>
+        <tr>
+            <th>Application Date</th>
+            <th>Start Date</th>
+            <th>End Date</th>
+            <th>Visitation Reason</th>
+            <th>Status</th>
+            <th nzAlign='center'><i nz-icon nzType="eye" nzTheme="outline" style="font-size: 16px; color: #08c;"></i></th>
+            <!-- <th nzAlign='center'><i nz-icon nzType="close" nzTheme="outline" style="font-size: 16px; color: rgb(204, 0, 0);"></i></th> -->
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let data of basicTable.data">
+            <td>{{ data.Date }}</td>
+            <td>{{ data.Start }}</td>
+            <td>{{ data.End }}</td>
+            <td>{{ data.Reason }}</td>
+            <td>{{ data.Status }}</td>
+
+            <td>
+                <button nz-button class="login-form-forgot login-form-button login-form-margin" nzType="primary" (click)="showModalMiddle()">View Application</button>
+            </td>
+            <!-- <td>
+                <button nz-button class="login-form-forgot login-form-button login-form-margin" nzType="danger">Cancel Request</button>
+            </td> -->
+        </tr>
+    </tbody>
+</nz-table>
+
+
+
+<!-- View Request modal -->
+<nz-modal [(nzVisible)]="isVisibleMiddle" [nzTitle]="title" nzCentered nzClosable=false>
+    <ng-template #title><span style="color:#00162b; margin-right: 6px;">View</span><span style="color:#f5bd1f;">Visitation Application</span></ng-template>
+    <form nz-form #requestStatus>
+        <ng-container *nzModalContent>
+            <nz-descriptions [nzColumn]="1" nzTitle="Visitation Details" nzBordered [nzExtra]="extraTpl">
+                <nz-descriptions-item nzTitle="Application Date" [nzSpan]="1">2020-08-18 23:16</nz-descriptions-item>
+                <nz-descriptions-item nzTitle="Visit Start Date" [nzSpan]="1">2021-08-23</nz-descriptions-item>
+                <nz-descriptions-item nzTitle="Visit End Date" [nzSpan]="1">2021-08-26</nz-descriptions-item>
+                <nz-descriptions-item nzTitle="Visitation Reason" [nzSpan]="1">I have to attend a relative's funeral</nz-descriptions-item>
+                <nz-descriptions-item nzTitle="Host Name" [nzSpan]="1">Jane Doe</nz-descriptions-item>
+                <nz-descriptions-item nzTitle="Address of Visit" [nzSpan]="1">235 Thungela Street</nz-descriptions-item>
+                <nz-descriptions-item nzTitle="Host cellphone" [nzSpan]="1">0821234561</nz-descriptions-item>
+
+                <ng-container>
+                    <nz-descriptions-item nzTitle="Status" [nzSpan]="1"><span>Pending</span>
+                    </nz-descriptions-item>
+                </ng-container>
+            </nz-descriptions>
+            <ng-template #extraTpl>
+                <button nz-button nzType="primary" (click)="showUpdateModal()">Update Visitation Application</button>
+            </ng-template>
+        </ng-container>
+        <div *nzModalFooter nzColor="green">
+            <button nz-button nzType="danger" (click)="handleCancelMiddle()">Close</button>
+            <button nz-button nzType="primary" (click)="showCancelRequestModal()" [nzLoading]="isConfirmLoading">Cancel Visitation Application</button>
+        </div>
+    </form>
+</nz-modal>
+
+<!-- Confirm Cancel Request modal -->
+
+<nz-modal [(nzVisible)]="isCancelRequestVisible" [nzTitle]="title1" nzCentered nzClosable=false nzIconType="warning">
+    <ng-template #title1><span style=" color:#00162b; margin-right: 6px;">Cancel</span><span style="color:#f5bd1f;">Visitation Application</span></ng-template>
+    <form nz-form>
+        <ng-container *nzModalContent>
+            <b style="color: red;">Are you sure you want to cancel this application?</b>
+        </ng-container>
+        <div *nzModalFooter nzColor="green">
+            <button nz-button nzType="danger" (click)="handleCancelRequestModal()">No</button>
+            <button nz-button nzType="primary" (click)="showCancelRequestConfirm()" [nzLoading]="isConfirmLoading" [hidden]="status=='Approved'">Yes</button>
+        </div>
+    </form>
+</nz-modal>
+
+<!-- Add request modal -->
+<nz-modal [(nzVisible)]="isAddRequestMiddle" [nzTitle]="title2" nzCentered nzClosable=false>
+    <ng-template #title2><span style="color:#00162b; margin-right: 6px;">Apply</span><span style="color:#f5bd1f;">for Visitation</span></ng-template>
+    <form nz-form [formGroup]="validateForm">
+        <ng-container *nzModalContent>
+            <nz-form-item>
+                <nz-form-control nzErrorTip="Please input your visitation reason!">
+                    <nz-input-group [nzAddOnBefore]="Icon">
+                        <ng-template #Icon><i nz-icon nzType="compass" nzTheme="outline"></i></ng-template>
+                        <textarea nz-input nzAutosize placeholder="Visitation reason" formControlName="visitationReason"></textarea>
+                    </nz-input-group>
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+                <nz-form-control nzErrorTip="Please input your visitation start date!">
+                    <nz-input-group [nzAddOnBefore]="calendarIcon">
+                        <ng-template #calendarIcon><i nz-icon nzType="calendar" nzTheme="outline"></i></ng-template>
+                        <nz-date-picker class="w-100" nzAutosize formControlName="visitationReason" nzPlaceHolder="Select visitation start date"></nz-date-picker>
+
+                    </nz-input-group>
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+                <nz-form-control nzErrorTip="Please input your visitation end date!">
+                    <nz-input-group [nzAddOnBefore]="calendarIcon">
+                        <ng-template #calendarIcon><i nz-icon nzType="calendar" nzTheme="outline"></i></ng-template>
+                        <nz-date-picker class="w-100" nz-input formControlName="visitationReason" nzPlaceHolder="Select visitation end date"></nz-date-picker>
+                    </nz-input-group>
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+                <nz-form-control nzErrorTip="Please input your host's name!">
+                    <nz-input-group [nzAddOnBefore]="Icon9">
+                        <ng-template #Icon><i nz-icon nzType="compass" nzTheme="outline"></i></ng-template>
+                        <input nz-input nzAutosize placeholder="Who are you visiting?" formControlName="visitationReason">
+                    </nz-input-group>
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+                <nz-form-control nzErrorTip="Please input your host's cellphone!">
+                    <nz-input-group [nzAddOnBefore]="Icon9">
+                        <ng-template #Icon><i nz-icon nzType="compass" nzTheme="outline"></i></ng-template>
+                        <input nz-input nzAutosize placeholder="Phone number of host" formControlName="visitationReason">
+                    </nz-input-group>
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+                <nz-form-control nzErrorTip="Please input your host's address!">
+                    <nz-input-group [nzAddOnBefore]="Icon9">
+                        <ng-template #Icon9><i nz-icon nzType="info" nzTheme="outline"></i></ng-template>
+                        <input nz-input nzAutosize placeholder="Address of Visit" formControlName="visitationReason">
+                    </nz-input-group>
+                </nz-form-control>
+            </nz-form-item>
+
+        </ng-container>
+        <div *nzModalFooter>
+            <button nz-button nzType="danger" (click)="handleCancelAddRequestModal()">Cancel</button>
+            <button nz-button nzType="primary" (click)="handleOkAddRequest()" [nzLoading]="isConfirmLoading">Apply</button>
+        </div>
+    </form>
+</nz-modal>
+
+
+<!-- Update request modal -->
+<nz-modal [(nzVisible)]="isUpdateVisible" [nzTitle]="title9" nzCentered nzClosable=false>
+    <ng-template #title9><span style="color:#00162b; margin-right: 6px;">Update</span><span style="color:#f5bd1f;">Visitation Application</span></ng-template>
+    <form nz-form [formGroup]="validateForm">
+        <ng-container *nzModalContent>
+            <nz-form-item>
+                <nz-form-control nzErrorTip="Please input your visitation reason!">
+                    <nz-input-group [nzAddOnBefore]="Icon">
+                        <ng-template #Icon><i nz-icon nzType="compass" nzTheme="outline"></i></ng-template>
+                        <textarea nz-input nzAutosize ngModel="I have to attend a relative's funeral" placeholder="Visitation reason" formControlName="visitationReason"></textarea>
+                    </nz-input-group>
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+                <nz-form-control nzErrorTip="Please input your visitation start date!">
+                    <nz-input-group [nzAddOnBefore]="calendarIcon">
+                        <ng-template #calendarIcon><i nz-icon nzType="calendar" nzTheme="outline"></i></ng-template>
+                        <nz-date-picker class="w-100" ngModel="2021/08/23" nz-input formControlName="sDate" nzPlaceHolder="Select visitation start date"></nz-date-picker>
+
+                    </nz-input-group>
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+                <nz-form-control nzErrorTip="Please input your visitation end date!">
+                    <nz-input-group [nzAddOnBefore]="calendarIcon">
+                        <ng-template #calendarIcon><i nz-icon nzType="calendar" nzTheme="outline"></i></ng-template>
+                        <nz-date-picker class="w-100" ngModel="2021/08/26" nz-input formControlName="eDate" nzPlaceHolder="Select visitation end date"></nz-date-picker>
+                    </nz-input-group>
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+                <nz-form-control nzErrorTip="Please input your host's name!">
+                    <nz-input-group [nzAddOnBefore]="Icon9">
+                        <ng-template #Icon><i nz-icon nzType="compass" nzTheme="outline"></i></ng-template>
+                        <textarea nz-input nzAutosize placeholder="Who are you visiting?" ngModel="Jane Doe" formControlName="host"></textarea>
+                    </nz-input-group>
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+                <nz-form-control nzErrorTip="Please input your host's cellphone!">
+                    <nz-input-group [nzAddOnBefore]="Icon9">
+                        <ng-template #Icon><i nz-icon nzType="compass" nzTheme="outline"></i></ng-template>
+                        <textarea nz-input nzAutosize placeholder="Phone number of host" ngModel="0821234561" formControlName="visitationReason"></textarea>
+                    </nz-input-group>
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+                <nz-form-control nzErrorTip="Please input your host's address!">
+                    <nz-input-group [nzAddOnBefore]="Icon9">
+                        <ng-template #Icon9><i nz-icon nzType="info" nzTheme="outline"></i></ng-template>
+                        <textarea nz-input nzAutosize placeholder="Address of Visit" ngModel="235 Thungela Street" formControlName="address"></textarea>
+                    </nz-input-group>
+                </nz-form-control>
+            </nz-form-item>
+
+        </ng-container>
+        <div *nzModalFooter>
+            <button nz-button nzType="danger" (click)="handleCancelUpdate()">Cancel</button>
+            <button nz-button nzType="primary" [nzLoading]="isConfirmLoading" nz-popconfirm nzPopconfirmTitle="Are you sure you want to update the application?" nzPopconfirmPlacement="top" (nzOnConfirm)="confirm()" (nzOnCancel)="cancel()">Update</button>
+        </div>
+    </form>
+</nz-modal>

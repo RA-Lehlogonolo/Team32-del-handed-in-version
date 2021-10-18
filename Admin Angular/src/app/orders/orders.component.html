@@ -1,0 +1,102 @@
+<div class="pageHeader">
+    <div nz-row>
+        <div nz-col [nzSpan]="12">
+            <h1 class="title">Orders</h1>
+        </div>
+        <div nz-col [nzSpan]="12">
+            <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
+                <ng-template #suffixIconButton>
+                    <button nz-button nzType="primary" nzSearch><i nz-icon nzType="search"></i></button>
+                </ng-template>
+                <input type="text" nz-input #searchText [(ngModel)]="keywords" (ngModelChange)="search($event)" placeholder="Search for order" />
+            </nz-input-group>
+
+        </div>
+    </div>
+</div>
+<br>
+
+<nz-table #basicTable nzBordered [nzData]="listOfData">
+
+    <thead>
+        <tr>
+            <th>Order Number</th>
+            <th>Student</th>
+            <th>Order Date</th>
+            <th>Total Cost</th>
+            <th>Order Status</th>
+            <th nzAlign='center'><i nz-icon nzType="eye" nzTheme="outline" style="font-size: 16px; color: #08c;"></i></th>
+            <!-- <th nzAlign='center'><i nz-icon nzType="edit" nzTheme="outline" style="font-size: 16px; color: #f5bd1f;"></i></th>
+            <th nzAlign='center'><i nz-icon nzType="delete" nzTheme="outline" style="font-size: 16px; color: red;"></i></th> -->
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let data of basicTable.data ">
+            <td [innerHTML]=" data.OrderId | highlight:keywords"></td>
+            <td [innerHTML]=" data.student | highlight:keywords"></td>
+            <td [innerHTML]=" data.OrderDate | highlight:keywords"></td>
+            <td [innerHTML]=" cost.innerHTML | highlight:keywords"></td>
+            <span #cost hidden>R{{data.TotalCost}}</span>
+            <td [innerHTML]=" data.Status | highlight:keywords"></td>
+            <td nzAlign='center'>
+                <button nz-button class="login-form-forgot login-form-button login-form-margin" nzType="primary" (click)="showViewOrderModal()">View Order Details</button>
+            </td>
+
+        </tr>
+    </tbody>
+</nz-table>
+
+<!-- View Order modal -->
+<nz-modal [(nzVisible)]="isViewOrderVisible" [nzTitle]="title" nzClosable=false [nzAutofocus]="null">
+    <ng-template #title><span style="color:#00162b; margin-right: 6px;">View</span><span style="color:#f5bd1f;">Order</span></ng-template>
+    <form nz-form #requestStatus>
+        <ng-container *nzModalContent>
+            <nz-descriptions [nzColumn]="2" nzTitle="Order Details" nzBordered [nzExtra]="extraTpl">
+                <nz-descriptions-item nzTitle="Order Number" [nzSpan]="1">12345</nz-descriptions-item>
+                <nz-descriptions-item nzTitle="Order Date" [nzSpan]="1">2021-05-26 17:51</nz-descriptions-item>
+                <nz-descriptions-item nzTitle="Student Details" [nzSpan]="2">Jim Doe<br>u13425479</nz-descriptions-item>
+                <nz-descriptions-item nzTitle="Products" [nzSpan]="2">
+                    RMC T-shirt, Size: XS, Quantity: 3 <br> Village T-shirt, Size: XS, Quantity: 2
+                    <br>RMC T-shirt, Size: M, Quantity: 1
+                </nz-descriptions-item>
+                <nz-descriptions-item nzTitle="Total Cost" [nzSpan]="2">R300</nz-descriptions-item>
+                <nz-descriptions-item nzTitle="Status" [nzSpan]="2">
+                    <span #status>Paid</span>
+                    <!-- Changed Order status inside the span tags when taking screenshots for different use cases. e.g Placed or Ready for Collection etc -->
+                    <!-- nz-popconfirm nzOkText="Yes" nzCancelText="No" nzPopconfirmTitle="Do you want to update the status to 'Paid'?" nzPopconfirmPlacement="top" (nzOnConfirm)="confirmPaid()" (nzOnCancel)="cancel()" -->
+                    <span class="float-right">
+                        <button *ngIf="status.innerHTML=='Placed'" (click)="showUpdateOrderModal()" nz-button nzType="primary"  [nzLoading]="isConfirmLoading">Update Student Order</button>
+                        <button *ngIf="status.innerHTML=='Paid'" nz-button nzType="primary" nz-popconfirm nzOkText="Yes" nzCancelText="No" nzPopconfirmTitle="Do you want to update the status to 'Ready for Collection'?" nzPopconfirmPlacement="top" (nzOnConfirm)="confirmReady()" (nzOnCancel)="cancel()" [nzLoading]="isConfirmLoading">Complete Order</button>
+                        <button *ngIf="status.innerHTML=='Ready for Collection'" nz-button nzType="primary" nz-popconfirm nzOkText="Yes" nzCancelText="No" nzPopconfirmTitle="Do you want to update the status to 'Collected'?" nzPopconfirmPlacement="top" (nzOnConfirm)="confirmCollected()" (nzOnCancel)="cancel()" [nzLoading]="isConfirmLoading">Picked Up Order</button>
+                    </span>
+                </nz-descriptions-item>
+            </nz-descriptions>
+        </ng-container>
+        <div *nzModalFooter nzColor="green">
+            <button nz-button nzType="danger" (click)="handleCancelViewOrder()">Close</button>
+        </div>
+    </form>
+</nz-modal>
+
+<nz-modal [(nzVisible)]="isUpdateOrderVisible" [nzTitle]="title2" nzCentered nzClosable=false>
+    <ng-template #title2><span style="color:#00162b; margin-right: 6px;">Update</span><span style="color:#f5bd1f;">Student Order</span></ng-template>
+    <form nz-form>
+        <ng-container *nzModalContent>
+            <nz-form-item>
+                <nz-form-control nzErrorTip="Please select a payment type!">
+                    <nz-input-group [nzAddOnBefore]="calendarIcon">
+                        <ng-template #calendarIcon><i nz-icon nzType="unordered-list" nzTheme="outline"></i></ng-template>
+                        <nz-select style="width: 100%;" nzPlaceHolder="Select a payment Type" formControlName="aType">
+                            <nz-option nzCustomContent nzLabel="Cash" nzValue="Cash">Cash</nz-option>
+                            <nz-option nzCustomContent nzLabel="EFT" nzValue="EFT">EFT</nz-option>
+                        </nz-select>
+                    </nz-input-group>
+                </nz-form-control>
+            </nz-form-item>
+        </ng-container>
+        <div *nzModalFooter>
+            <button nz-button nzType="danger" (click)="handleCancelUpdateOrder()">Cancel</button>
+            <button nz-button nzType="primary" nz-popconfirm nzOkText="Yes" nzCancelText="No" nzPopconfirmTitle="Are you sure you want to update the status to 'Paid'?" nzPopconfirmPlacement="top" (nzOnConfirm)="confirmPaid()" (nzOnCancel)="cancel()" [nzLoading]="isConfirmLoading">Update</button>
+        </div>
+    </form>
+</nz-modal>

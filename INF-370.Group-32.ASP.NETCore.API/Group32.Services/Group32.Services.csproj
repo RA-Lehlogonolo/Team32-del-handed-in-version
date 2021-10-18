@@ -1,0 +1,17 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.Identity.Core" Version="5.0.10" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Group32.Communication\Group32.Communication.csproj" />
+    <ProjectReference Include="..\Group32.Core\Group32.Core.csproj" />
+    <ProjectReference Include="..\Group32.Data\Group32.Data.csproj" />
+  </ItemGroup>
+
+</Project>

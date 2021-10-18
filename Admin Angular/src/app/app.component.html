@@ -1,0 +1,246 @@
+<nz-layout class="app-layout" *ngIf="showMenuItems">
+  <nz-sider class="menu-sidebar" nzCollapsible nzWidth="256px" nzBreakpoint="md" [(nzCollapsed)]="isCollapsed"
+    [nzTrigger]="null">
+    <div class="sidebar-logo">
+      <a routerLink="/home">
+        <img src="../assets/Images/transparentLogo2.png" alt="logo">
+        <h1>
+          <span style="color:#004b91;">Tuks</span><span style="color:#f5bd1f;">Village</span> Board
+        </h1>
+      </a>
+    </div>
+
+    <ul nz-menu nzTheme="dark" nzMode="inline" [nzInlineCollapsed]="isCollapsed">
+      <li nz-menu-item nzMatchRouter routerLink="/announcementtype">
+        <i nz-icon nzType="sound"></i>
+        <span>Announcement Type</span>
+      </li>
+      <li nz-menu-item nzMatchRouter routerLink="/announcements">
+        <i nz-icon nzType="sound"></i>
+        <span>Announcements</span>
+      </li>
+
+      <li nz-submenu nzTitle="Admin" nzIcon="file-done" [(nzOpen)]="openMap.sub2" (nzOpenChange)="openHandler('sub2')">
+        <ul>
+          <li nz-menu-item nzMatchRouter>
+            <a routerLink="/disciplinary-hearing">Disciplinary Hearing
+            </a>
+          </li>
+          <li nz-menu-item nzMatchRouter>
+            <a routerLink="/visitation-applications">Visitation Applications
+            </a>
+          </li>
+        </ul>
+      </li>
+
+      <li nz-submenu nzTitle="Village Fresh" nzIcon="shop" [(nzOpen)]="openMap.sub3"
+        (nzOpenChange)="openHandler('sub3')">
+        <ul>
+          <li nz-menu-item nzMatchRouter>
+            <a routerLink="/menu">Menu
+            </a>
+          </li>
+          <li nz-menu-item nzMatchRouter>
+            <a routerLink="/days">Days</a>
+          </li>
+          <li nz-menu-item nzMatchRouter>
+            <a routerLink="/menu-type">Menu Types</a>
+          </li>
+          <li nz-menu-item nzMatchRouter>
+            <a routerLink="/meal-type"> Meal Types</a>
+          </li>
+          <li nz-menu-item nzMatchRouter>
+            <a routerLink="/items"> Items</a>
+          </li>
+          <li nz-menu-item nzMatchRouter>
+            <a routerLink="/item-type"> Item Types</a>
+          </li>
+          <li nz-menu-item nzMatchRouter>
+            <a routerLink="/menu-rotation"> Menu rotation</a>
+          </li>
+
+        </ul>
+      </li>
+
+      <li nz-submenu nzTitle="Health Check" nzIcon="file-done" [(nzOpen)]="openMap.sub8"
+        (nzOpenChange)="openHandler('sub8')">
+        <ul>
+          <li nz-menu-item nzMatchRouter>
+            <a routerLink="/health-inspection-results">View health inspection results
+            </a>
+          </li>
+
+        </ul>
+      </li>
+
+      <li nz-submenu nzTitle="Reporting" nzIcon="bar-chart" [(nzOpen)]="openMap.sub4"
+        (nzOpenChange)="openHandler('sub4')">
+        <ul>
+          <li nz-menu-item nzMatchRouter><a routerLink="/health-inspection-report">Health Inspection Report</a> </li>
+          <li nz-menu-item nzMatchRouter>
+            <a routerLink="/sales-report">Sales Report
+            </a>
+          </li>
+          <li nz-menu-item nzMatchRouter>
+            <a routerLink="/visitation-report">Visitation Report
+            </a>
+          </li>
+          <li nz-menu-item nzMatchRouter>
+            <a routerLink="/disciplinary-hearing-report">Disciplinary Hearing Report
+            </a>
+          </li>
+          <li nz-menu-item nzMatchRouter>
+            <a routerLink="/product-level-report">Product-level Report</a>
+          </li>
+          <li nz-menu-item nzMatchRouter>
+            <a routerLink="/room-inspection-report">Room Inspection Report</a>
+          </li>
+
+        </ul>
+      </li>
+
+      <li nz-submenu nzTitle="Facility" nzIcon="ungroup" [(nzOpen)]="openMap.sub5" (nzOpenChange)="openHandler('sub5')">
+        <ul>
+          <li nz-menu-item nzMatchRouter>
+            <a routerLink="/room-inspection">Room Inspections</a>
+          </li>
+          <li nz-menu-item nzMatchRouter>
+            <a routerLink="/maintenance-request">Maintenance Requests</a>
+          </li>
+          <li nz-menu-item nzMatchRouter>
+            <a routerLink="/maintenancerequest-type">Maintenance Request Types</a>
+          </li>
+        </ul>
+      </li>
+
+      <li nz-submenu nzTitle="Events" nzIcon="calendar" [(nzOpen)]="openMap.sub6" (nzOpenChange)="openHandler('sub6')">
+        <ul>
+          <li nz-menu-item nzMatchRouter>
+            <a routerLink="/event">Events</a>
+          </li>
+          <li nz-menu-item nzMatchRouter>
+            <a routerLink="/event-type">Event Types</a>
+          </li>
+        </ul>
+      </li>
+
+      <li nz-submenu nzTitle="Products" nzIcon="skin" [(nzOpen)]="openMap.sub7" (nzOpenChange)="openHandler('sub7')">
+        <ul>
+          <li nz-menu-item nzMatchRouter>
+            <a routerLink="/product">Products</a>
+          </li>
+          <li nz-menu-item nzMatchRouter>
+            <a routerLink="/product-type">Product Types</a>
+          </li>
+        </ul>
+      </li>
+
+      <li nz-submenu nzTitle="Ordering" nzIcon="field-binary" [(nzOpen)]="openMap.sub9"
+        (nzOpenChange)="openHandler('sub9')">
+        <ul>
+
+          <li nz-menu-item nzMatchRouter>
+            <a routerLink="/orders">Manage Orders</a>
+          </li>
+        </ul>
+      </li>
+
+      <li nz-submenu nzTitle="User Management" nzIcon="user" [(nzOpen)]="openMap.sub10"
+        (nzOpenChange)="openHandler('sub10')">
+        <ul>
+          <li nz-menu-item nzMatchRouter><a routerLink="/user-management/house-parents">House Parents</a></li>
+          <li nz-menu-item nzMatchRouter><a routerLink="/user-management/building-coordinators">Building Coordinators</a></li>
+          <li nz-menu-item nzMatchRouter><a routerLink="/user-management/village-fresh-managers">Village Fresh Managers</a></li>
+          <li nz-menu-item nzMatchRouter><a routerLink="/user-management/students">Students</a></li>
+          <li nz-menu-item nzMatchRouter><a routerLink="/user-management/user-roles">User Roles</a></li>
+        </ul>
+      </li>
+
+      <li nz-submenu nzTitle="Campus Management" nzIcon="setting" [(nzOpen)]="openMap.sub1"  (nzOpenChange)="openHandler('sub1')">
+      <ul>
+        <li nz-menu-item nzMatchRouter><a routerLink="/campus-management/campuses">Campuses</a></li>
+        <li nz-menu-item nzMatchRouter><a routerLink="/campus-management/faculties">Faculties</a></li>
+      </ul>
+     </li>
+
+     <li nz-submenu nzTitle="Residence Management" nzIcon="setting" [(nzOpen)]="openMap.sub11"  (nzOpenChange)="openHandler('sub11')">
+      <ul>
+        <li nz-menu-item nzMatchRouter> <a routerLink="/residence-management/residence-types">Residence Types</a></li>
+        <li nz-menu-item nzMatchRouter><a routerLink="/residence-management/residences">Residences</a></li>
+        <li nz-menu-item nzMatchRouter><a routerLink="/residence-management/block">Block</a></li>
+        <li nz-menu-item nzMatchRouter> <a routerLink="/residence-management/rooms">Rooms</a></li>
+        <li nz-menu-item nzMatchRouter> <a routerLink="/residence-management/student-roles">Student Roles</a></li>
+      </ul>
+     </li>
+
+
+     <li nz-submenu nzTitle="Audit Logs" nzIcon="field-time" [(nzOpen)]="openMap.sub12"  (nzOpenChange)="openHandler('sub12')">
+      <ul>
+        <li nz-menu-item nzMatchRouter><a routerLink="/audit-logs/residences-allocation">Residence Alocation Log</a></li>
+      </ul>
+     </li>
+    </ul>
+
+  </nz-sider>
+
+  <nz-layout>
+    <nz-header>
+      <div class="app-header">
+        <div nz-row>
+          <div nz-col [nzSpan]="12">
+            <div nz-row>
+              <div nz-col [nzSpan]="4">
+                <span style="vertical-align:baseline;
+                            vertical-align:-webkit-baseline-middle;" class="header-trigger"
+                  (click)="isCollapsed = !isCollapsed">
+                  <i class="trigger" nz-icon [nzType]="isCollapsed ? 'menu-unfold' : 'menu-fold'"></i>
+                </span>
+              </div>
+              <div nz-col [nzSpan]="12">
+              </div>
+            </div>
+          </div>
+          <div nz-col [nzSpan]="12">
+            <div nz-row>
+              <div nz-col [nzSpan]="21">
+                <span class="trigger float-right header-trigger" style="padding: 0px;">
+                  <i nz-icon nzType="user"></i>
+                  Hi, {{loggedInUser.DisplayName}}
+                  <nz-divider nzType="vertical" style="border-width: 2px; min-height:50%; border-color: #1d62ca;">
+                  </nz-divider>
+                </span>
+              </div>
+              <div nz-col [nzSpan]="3">
+                <span class="header-trigger" style="padding: 0px;" (click)="onLogOut()">
+                  <a>
+                    <i class="trigger" nz-icon nzType="export" nzTheme="outline"></i>
+                  </a>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </nz-header>
+
+    <nz-content>
+      <div class="inner-content">
+        <ng-container *ngTemplateOutlet="template"></ng-container>
+      </div>
+    </nz-content>
+  </nz-layout>
+</nz-layout>
+
+
+<ng-template #template>
+  <router-outlet> </router-outlet>
+</ng-template>
+
+<!-- For login page/reset-password page -->
+<nz-layout *ngIf="!showMenuItems" class="app-layout">
+  <nz-content>
+    <div class="inner-content">
+      <ng-container *ngTemplateOutlet="template"></ng-container>
+    </div>
+  </nz-content>
+</nz-layout>

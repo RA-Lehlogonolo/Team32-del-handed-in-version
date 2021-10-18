@@ -1,0 +1,114 @@
+<div class="pageHeader">
+    <div nz-row>
+        <div nz-col [nzSpan]="12">
+            <h1 class="title">Health Inspection Results</h1>
+        </div>
+        <div nz-col [nzSpan]="12">
+            <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
+                <ng-template #suffixIconButton>
+                    <button nz-button nzType="primary" nzSearch><i nz-icon nzType="search"></i></button>
+                </ng-template>
+                <input type="text" nz-input placeholder="Search for Health Inspection Results" />
+            </nz-input-group>
+        </div>
+    </div>
+</div>
+<br>
+
+<nz-table #basicTable nzBordered [nzData]="listOfData">
+    <ng-template #header>
+        <div nz-row>
+            <div nz-col [nzSpan]="24">
+                <span class="float-right">
+                                    <button nz-button  nzType="primary" (click)="showAddDisciplinaryModal()">Add Disciplinary Hearing</button>
+                </span>
+            </div>
+
+        </div>
+    </ng-template>
+    <thead>
+        <tr>
+            <th>Student</th>
+            <th>Status</th>
+            <th>Result</th>
+            <th nzAlign='center'><i nz-icon nzType="eye" nzTheme="outline" style="font-size: 16px; color: #08c;"></i></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let data of basicTable.data">
+            <td>{{ data.fullName }}</td>
+            <td>{{ data.status }}</td>
+            <td>{{ data.result }}</td>
+            <td nzAlign='center'>
+                <button nz-button class="login-form-forgot login-form-button login-form-margin" nzType="primary" (click)="showViewResultsModal()">View More Details</button>
+            </td>
+
+
+        </tr>
+    </tbody>
+</nz-table>
+
+
+<!-- View Cart modal -->
+<nz-modal nzWidth="100vw" [(nzVisible)]="isViewResultVisible" [nzTitle]="title1" nzClosable=false style="width: auto;" [nzAutofocus]="null">
+    <ng-template #title1><span style="color:#00162b; margin-right: 6px;">View</span><span style="color:#f5bd1f;">Health Inspection Results</span></ng-template>
+    <form nz-form>
+        <ng-container *nzModalContent>
+            <nz-table #basicTable nzBordered [nzData]="history" [nzTitle]="header">
+                <ng-template #header>
+                    <div nz-row>
+                        <div nz-col [nzSpan]="24">
+                            <span class=" pr-5">
+                                <strong> Student: John Doe</strong>
+                                  
+                             </span>
+                        </div>
+                    </div>
+                </ng-template>
+
+
+
+                <thead>
+                    <tr>
+
+
+                        <th>Inspection Date</th>
+                        <th>Health Check type</th>
+                        <th>Chills</th>
+                        <th>SoreThroat</th>
+                        <th>Coughing</th>
+                        <th>BodyAche</th>
+                        <th>Fatigue</th>
+                        <th>RedEyes</th>
+                        <th>DifficultyBreathing</th>
+                        <th>NauseaOrVomitting</th>
+                        <th>AnySysmptoms</th>
+                        <th>Diarrhoea</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let data of basicTable.data">
+                        <td>{{ data.date }}</td>
+                        <td>{{ data.type }}</td>
+                        <td>{{ data.Chills }}</td>
+                        <td>{{ data.SoreThroat }}</td>
+                        <td>{{ data.Coughing }}</td>
+                        <td>{{ data.BodyAche }}</td>
+                        <td>{{ data.Fatigue }}</td>
+                        <td>{{ data.RedEyes }}</td>
+                        <td>{{ data.DifficultyBreathing }}</td>
+                        <td>{{ data.NauseaOrVomitting }}</td>
+                        <td>{{ data.AnySysmptoms }}</td>
+                        <td>{{ data.Diarrhoea }}</td>
+
+
+                    </tr>
+                </tbody>
+            </nz-table>
+
+        </ng-container>
+        <div *nzModalFooter nzColor="green">
+            <button nz-button nzType="danger" class="login-form-forgot login-form-button login-form-margin" (click)="handleCancelViewResult()">Close</button>
+        </div>
+    </form>
+</nz-modal>

@@ -1,0 +1,109 @@
+<div class="pageHeader">
+    <div nz-row>
+        <div nz-col [nzSpan]="12">
+            <h1 class="title">Room Inspections</h1>
+        </div>
+        <div nz-col [nzSpan]="12">
+            <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
+                <ng-template #suffixIconButton>
+                    <button nz-button nzType="primary" nzSearch><i nz-icon nzType="search"></i></button>
+                </ng-template>
+                <input type="text" nz-input placeholder="Search for room inspections" />
+            </nz-input-group>
+
+        </div>
+    </div>
+</div>
+<br>
+
+<nz-table #basicTable nzBordered [nzData]="listOfData" [nzTitle]="header">
+    <ng-template #header>
+        <div nz-row>
+            <div nz-col [nzSpan]="24">
+                <span class="float-right">
+                                    <!-- <button nz-button  nzType="primary" (click)="showAddDisciplinaryModal()">Add Disciplinary Hearing</button> -->
+                </span>
+            </div>
+
+        </div>
+    </ng-template>
+    <thead>
+        <tr>
+            <th>Inspection Date</th>
+            <th>Student</th>
+            <th>Room number</th>
+            <!-- <th>Inspection details</th> -->
+            <th nzAlign='center'><i nz-icon nzType="eye" nzTheme="outline" style="font-size: 16px; color: #08c;"></i></th>
+            <!-- <th nzAlign='center'><i nz-icon nzType="edit" nzTheme="outline" style="font-size: 16px; color: #f5bd1f;"></i></th>
+            <th nzAlign='center'><i nz-icon nzType="delete" nzTheme="outline" style="font-size: 16px; color: red;"></i></th> -->
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let data of basicTable.data">
+            <td>{{ data.date }}</td>
+            <td>{{ data.student }}</td>
+            <td>{{ data.room }}</td>
+            <!-- <td>{{ data.description }}</td> -->
+            <td nzAlign='center'>
+                <button nz-button class="login-form-forgot login-form-button login-form-margin" nzType="primary" (click)="showViewRoomModal()">View Room Inspection</button>
+            </td>
+            <!-- <td nzAlign='center'>
+                <button nz-button class="login-form-forgot login-form-button login-form-margin" nzType="primary" (click)="showUpdateDisciplinaryModal()">Update Disciplinary Hearing</button>
+            </td>
+            <td nzAlign='center'>
+                <button nz-button class="login-form-forgot login-form-button login-form-margin" nzType="danger" (click)="showDeleteDisciplinaryModal()">Delete Disciplinary Hearing</button>
+            </td> -->
+
+        </tr>
+    </tbody>
+</nz-table>
+
+<nz-modal [(nzVisible)]="isViewRoomVisible" [nzTitle]="title1" nzCentered nzClosable=false nzIconType="warning">
+    <ng-template #title1><span style=" color:#00162b; margin-right: 6px;">View</span><span style="color:#f5bd1f;">Room Inspection</span></ng-template>
+    <form nz-form>
+        <ng-container *nzModalContent>
+            <nz-descriptions [nzColumn]="2" nzBordered nzTitle="Room Inspection Details">
+                <nz-descriptions-item nzTitle="Block" [nzSpan]="1">Block G</nz-descriptions-item>
+                <nz-descriptions-item nzTitle="Room" [nzSpan]="1">0703</nz-descriptions-item>
+                <nz-descriptions-item nzTitle="Date" [nzSpan]="2">2021-09-15 15:00</nz-descriptions-item>
+                <nz-descriptions-item nzTitle="Student" [nzSpan]="2">John Doe</nz-descriptions-item>
+                <nz-descriptions-item nzTitle="Student Number" [nzSpan]="2">12345678</nz-descriptions-item>
+                <nz-descriptions-item nzTitle="Inspection Details" [nzSpan]="2">
+                    <nz-alert nzType="success" nzMessage="Curtain/Blinds" nzShowIcon></nz-alert>
+                    <nz-alert nzType="error" nzMessage="CurtainRail/Hooks" nzShowIcon></nz-alert>
+                    <nz-alert nzType="success" nzMessage="Globes" nzShowIcon></nz-alert>
+                    <nz-alert nzType="success" nzMessage="LightSwitches" nzShowIcon></nz-alert>
+                    <nz-alert nzType="success" nzMessage="Study Desk" nzShowIcon></nz-alert>
+                    <nz-alert nzType="error" nzMessage="Chair" nzShowIcon></nz-alert>
+                    <nz-alert nzType="success" nzMessage="Wardrobe" nzShowIcon></nz-alert>
+                    <nz-alert nzType="success" nzMessage="Doors" nzShowIcon></nz-alert>
+                    <nz-alert nzType="success" nzMessage="Mattress" nzShowIcon></nz-alert>
+                    <nz-alert nzType="success" nzMessage="Wall Sockets" nzShowIcon></nz-alert>
+                    <nz-alert nzType="success" nzMessage="Room Door" nzShowIcon></nz-alert>
+                    <nz-alert nzType="success" nzMessage="Door Lock" nzShowIcon></nz-alert>
+                    <nz-alert nzType="error" nzMessage="Mirror" nzShowIcon></nz-alert>
+                    <nz-alert nzType="success" nzMessage="Wardrobe" nzShowIcon></nz-alert>
+                    <nz-alert nzType="success" nzMessage="Walls" nzShowIcon></nz-alert>
+                    <nz-alert nzType="success" nzMessage="Ceiling" nzShowIcon></nz-alert>
+                    <nz-alert nzType="success" nzMessage="Floor/Carpet" nzShowIcon></nz-alert>
+                </nz-descriptions-item>
+
+            </nz-descriptions>
+            <div nz-row>
+                <div nz-col [nzSpan]="12" class="float-left">
+
+                </div>
+
+                <div nz-col [nzSpan]="12" class="float-right ">
+
+
+                </div>
+
+            </div>
+
+        </ng-container>
+        <div *nzModalFooter nzColor="green">
+            <button nz-button nzType="danger" (click)="handleCancelViewRoom()">Close</button>
+        </div>
+    </form>
+</nz-modal>

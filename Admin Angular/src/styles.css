@@ -1,0 +1,95 @@
+/* You can add global styles to this file, and also import other style files */
+
+
+/* You can add global styles to this file, and also import other style files */
+
+.title {
+    font-size: 30px;
+    color: rgba(0, 0, 0, 0.85);
+    line-height: 24px;
+    display: block;
+    /* margin-bottom: 16px; */
+}
+
+.item-wrap {
+    font-size: 14px;
+    line-height: 22px;
+    margin-bottom: 7px;
+    color: rgba(0, 0, 0, 0.65);
+}
+
+.label {
+    margin-right: 8px;
+    display: inline-block;
+    color: rgba(0, 0, 0, 0.85);
+}
+
+.nz-divider {
+    border-top-color: #1d62ca;
+}
+
+ant-modal-footer {
+    background: #1d62ca;
+}
+
+.pageHeader {
+    background: #1d62ca;
+    padding: 10px;
+    vertical-align: middle;
+    width: 100%;
+}
+
+.float-right {
+    float: right;
+}
+
+.float-left {
+    float: left;
+}
+
+.border {
+    border-style: solid;
+}
+
+.m-0 {
+    margin: 0px;
+}
+
+.p-0 {
+    padding: 0px;
+}
+
+.w-100 {
+    width: 100%;
+}
+
+.mb-3 {
+    margin-bottom: 1rem;
+}
+
+.mr-2 {
+    margin-right: .5rem;
+}
+
+mark {
+    padding: 0rem;
+    background-color: #f5bd1f;
+}
+
+.search-box {
+  padding: 8px;
+}
+
+.search-box input {
+  width: 188px;
+  margin-bottom: 8px;
+  display: block;
+}
+
+.search-box button {
+  width: 90px;
+}
+
+.search-button {
+  margin-right: 8px;
+}

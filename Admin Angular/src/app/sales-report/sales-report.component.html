@@ -1,0 +1,110 @@
+<div class="pageHeader">
+    <div nz-row>
+        <div nz-col [nzSpan]="12">
+            <h1 class="title">Sales Report</h1>
+        </div>
+        <div nz-col [nzSpan]="12">
+        </div>
+    </div>
+</div>
+<br>
+
+<div nz-row [nzGutter]="16">
+    <div nz-col [nzSpan]="8">
+        <nz-form-item>
+            <nz-form-control nzErrorTip="Please input your start date!">
+                <nz-input-group [nzAddOnBefore]="calendarIcon">
+                    <ng-template #calendarIcon><i nz-icon nzType="calendar" nzTheme="outline"></i></ng-template>
+                    <nz-date-picker class="w-100" nz-input formControlName="date" nzPlaceHolder="Select start date"></nz-date-picker>
+                </nz-input-group>
+            </nz-form-control>
+        </nz-form-item>
+    </div>
+    <div nz-col [nzSpan]="8">
+        <nz-form-item>
+            <nz-form-control nzErrorTip="Please input your end date!">
+                <nz-input-group [nzAddOnBefore]="calendarIcon">
+                    <ng-template #calendarIcon><i nz-icon nzType="calendar" nzTheme="outline"></i></ng-template>
+                    <nz-date-picker class="w-100" nz-input formControlName="date" nzPlaceHolder="Select end date"></nz-date-picker>
+                </nz-input-group>
+            </nz-form-control>
+        </nz-form-item>
+    </div>
+    <div nz-col [nzSpan]="8">
+        <span>
+        <nz-select class="w-100" nzPlaceHolder="Select payment type">
+            <nz-option nzCustomContent nzLabel="All" nzValue="All">All</nz-option>
+            <nz-option nzCustomContent nzLabel="Cash" nzValue="Cash">Cash</nz-option>
+            <nz-option nzCustomContent nzLabel="EFT" nzValue="EFT">EFT</nz-option>
+        </nz-select>
+        </span>
+    </div>
+</div>
+
+<div nz-row [nzGutter]="16">
+    <div nz-col [nzSpan]="8">
+
+    </div>
+    <div nz-col [nzSpan]="8">
+
+    </div>
+    <div nz-col [nzSpan]="8">
+        <button nz-button nzType="primary" class="w-100">Generate Sales Report</button>
+
+    </div>
+</div>
+
+<br>
+
+<nz-table #basicTable nzBordered [nzData]="listOfData" [nzFooter]="Footer">
+    <ng-template #Footer>
+        <div nz-row>
+            <div nz-col [nzSpan]="24">
+                <span class="float-right pr-5">
+                    <h2>Total Sales: R{{Total}} </h2>
+                                   
+                </span>
+            </div>
+        </div>
+    </ng-template>
+    <thead>
+        <tr>
+            <th>Order Number</th>
+            <th>Payment Date</th>
+            <th>Products</th>
+            <th>Payment Type</th>
+            <th>Total Cost</th>
+
+            <!-- <th nzAlign='center'><i nz-icon nzType="eye" nzTheme="outline" style="font-size: 16px; color: #08c;"></i></th> -->
+            <!-- <th nzAlign='center'><i nz-icon nzType="edit" nzTheme="outline" style="font-size: 16px; color: #f5bd1f;"></i></th>
+            <th nzAlign='center'><i nz-icon nzType="delete" nzTheme="outline" style="font-size: 16px; color: red;"></i></th> -->
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let data of basicTable.data ">
+            <td [innerHTML]=" data.OrderId | highlight:keywords"></td>
+            <td [innerHTML]=" data.OrderDate | highlight:keywords"></td>
+            <td [innerHTML]=" data.Products | highlight:keywords">
+                <!-- <nz-table class="m-0 p-0 w-100" #basicTable1 nzBordered [nzData]="listOfData" nzShowPagination="false" nzWidth="100%">
+
+                    <thead>
+                        <tr>
+                            <th>Product</th>
+                            <th>Quantity</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td [innerHTML]=" data.OrderId | highlight:keywords"></td>
+                            <td [innerHTML]=" data.OrderDate | highlight:keywords"></td>
+                        </tr>
+                    </tbody>
+                </nz-table> -->
+            </td>
+            <td [innerHTML]=" data.Type | highlight:keywords"></td>
+            <td [innerHTML]=" cost.innerHTML | highlight:keywords"></td>
+            <span #cost hidden>R{{data.TotalCost}}</span>
+
+        </tr>
+    </tbody>
+</nz-table>

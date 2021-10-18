@@ -1,0 +1,45 @@
+<div class="login-page">
+    <div class="login-header">
+        <div class="sidebar-logo">
+            <a routerLink="/">
+                <img src="../assets/Images/transparentLogo2.png" alt="logo">
+                <h1>
+                    <span style="color:#004b91;">Tuks</span><span style="color:#f5bd1f;">Village</span> Board</h1>
+            </a>
+        </div>
+
+    </div>
+    <div class="form">
+        <div class="login">
+            <h3>LOGIN</h3>
+            <h5 class="aunthication-error-message" *ngIf="authenticationError">{{authenticationError}}</h5>
+            <p>Please enter your credentials to login.</p>
+            <form nz-form [formGroup]="validateForm" class="login-form login-page">
+                <nz-form-item>
+                    <nz-form-control nzErrorTip="Please input your username!">
+                        <nz-input-group nzPrefixIcon="user">
+                            <input type="text" nz-input formControlName="UserName" placeholder="Username" />
+                        </nz-input-group>
+                    </nz-form-control>
+                </nz-form-item>
+                <nz-form-item>
+                    <nz-form-control nzErrorTip="Please input your Password!">
+                        <nz-input-group nzPrefixIcon="lock">
+                            <input type="password" nz-input formControlName="Password" placeholder="Password" />
+                        </nz-input-group>
+                    </nz-form-control>
+                </nz-form-item>
+                <div nz-row class="login-form-margin">
+                    <div nz-col [nzSpan]="12">
+
+                    </div>
+                    <div nz-col [nzSpan]="12">
+                        <a class="login-form-forgot" routerLink="/reset-password">Forgot password?</a>
+                    </div>
+                </div>
+                <button nz-button class="login-form-button login-form-margin" nzType="primary" (click)="login()">Log in</button>
+            </form>
+        </div>
+
+    </div>
+</div>

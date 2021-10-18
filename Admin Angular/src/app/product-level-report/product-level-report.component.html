@@ -1,0 +1,55 @@
+<div class="pageHeader">
+  <div nz-row>
+      <div nz-col [nzSpan]="12">
+          <h1 class="title">Product-level-Report</h1>
+      </div>
+      <div nz-col [nzSpan]="12">
+          <button nz-button nzType="primary" style="width: 50%; float: right;">Print Report</button>
+
+      </div>
+  </div>
+</div>
+<br>
+
+<div nz-row [nzGutter]="16">
+
+  <div nz-col [nzSpan]="8">
+      <span>
+      <nz-select class="w-100" nzPlaceHolder="Select Product type">
+          <nz-option nzCustomContent nzLabel="Caps" nzValue="Caps">Caps</nz-option>
+          <nz-option nzCustomContent nzLabel="T-shirts" nzValue="T-shirts">T-shirts</nz-option>
+          <nz-option nzCustomContent nzLabel="Grocery-bag" nzValue="Grocery-bag">Grocery-bag</nz-option>
+      </nz-select>
+      </span>
+  </div>
+</div>
+<div nz-row [nzGutter]="16">
+  <div nz-col [nzSpan]="8">
+
+  </div>
+  <div nz-col [nzSpan]="8">
+
+  </div>
+  <div nz-col [nzSpan]="8">
+      <button nz-button nzType="primary" class="w-100">Generate Product-level Report</button>
+
+  </div>
+</div>
+
+<br>
+
+<nz-table #basicTable nzBordered [nzData]="listOfData">
+
+  <thead>
+      <tr>
+          <th>Product</th>
+          <th>Number On Hand</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr *ngFor="let data of basicTable.data ">
+          <td [innerHTML]=" data.Product | highlight:keywords"></td>
+          <td [innerHTML]=" data.NumberOnHand | highlight:keywords"></td>
+      </tr>
+  </tbody>
+</nz-table>

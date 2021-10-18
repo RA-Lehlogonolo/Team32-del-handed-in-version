@@ -1,0 +1,296 @@
+<div class="pageHeader">
+    <div nz-row class="login-form-margin">
+        <div nz-col [nzSpan]="12">
+            <h1 class="title">Move-In Inspection</h1>
+        </div>
+        <div nz-col [nzSpan]="12">
+            <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
+                <input type="text" nz-input placeholder="Search for inspection" />
+            </nz-input-group>
+            <ng-template #suffixIconButton>
+                <button nz-button nzType="primary" nzSearch><i nz-icon nzType="search"></i></button>
+            </ng-template>
+        </div>
+    </div>
+
+
+</div>
+<br>
+
+<nz-table #basicTable nzBordered [nzData]="listOfData" [nzTitle]="header">
+    <ng-template #header>
+        <div nz-row>
+            <div nz-col [nzSpan]="24">
+                <span class="float-right">
+                                    <button nz-button  nzType="primary" (click)="showAddRequestModal()">Complete Move-In Inspection</button>
+                </span>
+            </div>
+
+        </div>
+    </ng-template>
+    <thead>
+        <tr>
+            <th>Inspection Date</th>
+            <th>Block</th>
+            <th>Room</th>
+            <th nzAlign='center'><i nz-icon nzType="eye" nzTheme="outline" style="font-size: 16px; color: #08c;"></i></th>
+            <!-- <th nzAlign='center'><i nz-icon nzType="close" nzTheme="outline" style="font-size: 16px; color: rgb(204, 0, 0);"></i></th> -->
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let data of basicTable.data">
+            <td>{{ data.Date }}</td>
+            <td>{{ data.block }}</td>
+            <td>{{ data.room }}</td>
+            <td nzAlign='center'>
+                <button nz-button class="login-form-forgot login-form-button login-form-margin" nzType="primary" (click)="showViewModal()">View Inspection</button>
+            </td>
+            <!-- <td>
+                <button nz-button class="login-form-forgot login-form-button login-form-margin" nzType="danger">Cancel Request</button>
+            </td> -->
+        </tr>
+    </tbody>
+</nz-table>
+
+<!-- Add request modal -->
+<nz-modal [(nzVisible)]="isAddRequestMiddle" [nzTitle]="title2" nzWidth="70vw" nzCentered nzClosable=false>
+    <ng-template #title2><span style="color:#00162b; margin-right: 6px;">Complete</span><span style="color:#f5bd1f;">Move-In Inspection </span></ng-template>
+    <form nz-form [formGroup]="validateForm">
+        <ng-container *nzModalContent>
+            <nz-descriptions [nzColumn]="1" nzBordered nzLayout="vertical">
+                <nz-descriptions-item nzTitle="Inspection for:" [nzSpan]="2">Block A Room 456</nz-descriptions-item>
+                <nz-descriptions-item nzTitle="Check List" [nzSpan]="2">
+
+                    <div nz-row>
+                        <div nz-col [nzSpan]="11" style="margin-right: 12px;">
+                            <nz-form-item>
+                                <nz-form-control nzErrorTip="Please choose an option!">
+                                    <nz-input-group>
+                                        <ng-template #Icon11><i nz-icon nzType="unordered-list" nzTheme="outline"></i></ng-template>
+                                        <label nz-checkbox>Curtain/Blinds</label>
+                                    </nz-input-group>
+                                </nz-form-control>
+                            </nz-form-item>
+                            <nz-form-item>
+                                <nz-form-control nzErrorTip="Please choose an option!">
+                                    <nz-input-group>
+                                        <ng-template #Icon11><i nz-icon nzType="unordered-list" nzTheme="outline"></i></ng-template>
+                                        <label nz-checkbox>CurtainRail/Hooks</label>
+                                    </nz-input-group>
+                                </nz-form-control>
+                            </nz-form-item>
+                            <nz-form-item>
+                                <nz-form-control nzErrorTip="Please choose an option!">
+                                    <nz-input-group>
+                                        <ng-template #Icon11><i nz-icon nzType="unordered-list" nzTheme="outline"></i></ng-template>
+                                        <label nz-checkbox>Globes</label>
+                                    </nz-input-group>
+                                </nz-form-control>
+                            </nz-form-item>
+                            <nz-form-item>
+                                <nz-form-control nzErrorTip="Please choose an option!">
+                                    <nz-input-group>
+                                        <ng-template #Icon11><i nz-icon nzType="unordered-list" nzTheme="outline"></i></ng-template>
+                                        <label nz-checkbox>Light Switches</label>
+                                    </nz-input-group>
+                                </nz-form-control>
+                            </nz-form-item>
+                            <nz-form-item>
+                                <nz-form-control nzErrorTip="Please choose an option!">
+                                    <nz-input-group>
+                                        <ng-template #Icon11><i nz-icon nzType="unordered-list" nzTheme="outline"></i></ng-template>
+                                        <label nz-checkbox>Study Desk</label>
+                                    </nz-input-group>
+                                </nz-form-control>
+                            </nz-form-item>
+                            <nz-form-item>
+                                <nz-form-control nzErrorTip="Please choose an option!">
+                                    <nz-input-group>
+                                        <ng-template #Icon11><i nz-icon nzType="unordered-list" nzTheme="outline"></i></ng-template>
+                                        <label nz-checkbox>Chair</label>
+                                    </nz-input-group>
+                                </nz-form-control>
+                            </nz-form-item>
+                            <nz-form-item>
+                                <nz-form-control nzErrorTip="Please choose an option!">
+                                    <nz-input-group>
+                                        <ng-template #Icon11><i nz-icon nzType="unordered-list" nzTheme="outline"></i></ng-template>
+                                        <label nz-checkbox>Wardrobe</label>
+                                    </nz-input-group>
+                                </nz-form-control>
+                            </nz-form-item>
+                            <nz-form-item>
+                                <nz-form-control nzErrorTip="Please choose an option!">
+                                    <nz-input-group>
+                                        <ng-template #Icon11><i nz-icon nzType="unordered-list" nzTheme="outline"></i></ng-template>
+                                        <label nz-checkbox>Doors</label>
+                                    </nz-input-group>
+                                </nz-form-control>
+                            </nz-form-item>
+                            <nz-form-item>
+                                <nz-form-control nzErrorTip="Please choose an option!">
+                                    <nz-input-group>
+                                        <ng-template #Icon11><i nz-icon nzType="unordered-list" nzTheme="outline"></i></ng-template>
+                                        <label nz-checkbox>Mattress</label>
+                                    </nz-input-group>
+                                </nz-form-control>
+                            </nz-form-item>
+                        </div>
+
+                        <div nz-col [nzSpan]="11" class="float-right">
+                            <nz-form-item>
+                                <nz-form-control nzErrorTip="Please choose an option!">
+                                    <nz-input-group>
+                                        <ng-template #Icon11><i nz-icon nzType="unordered-list" nzTheme="outline"></i></ng-template>
+                                        <label nz-checkbox>Wall Sockets</label>
+                                    </nz-input-group>
+                                </nz-form-control>
+                            </nz-form-item>
+                            <nz-form-item>
+                                <nz-form-control nzErrorTip="Please choose an option!">
+                                    <nz-input-group>
+                                        <ng-template #Icon11><i nz-icon nzType="unordered-list" nzTheme="outline"></i></ng-template>
+                                        <label nz-checkbox>Room Door</label>
+                                    </nz-input-group>
+                                </nz-form-control>
+                            </nz-form-item>
+                            <nz-form-item>
+                                <nz-form-control nzErrorTip="Please choose an option!">
+                                    <nz-input-group>
+                                        <ng-template #Icon11><i nz-icon nzType="unordered-list" nzTheme="outline"></i></ng-template>
+                                        <label nz-checkbox>Door Lock</label>
+                                    </nz-input-group>
+                                </nz-form-control>
+                            </nz-form-item>
+                            <nz-form-item>
+                                <nz-form-control nzErrorTip="Please choose an option!">
+                                    <nz-input-group>
+                                        <ng-template #Icon11><i nz-icon nzType="unordered-list" nzTheme="outline"></i></ng-template>
+                                        <label nz-checkbox>Mirror</label>
+                                    </nz-input-group>
+                                </nz-form-control>
+                            </nz-form-item>
+                            <nz-form-item>
+                                <nz-form-control nzErrorTip="Please choose an option!">
+                                    <nz-input-group>
+                                        <ng-template #Icon11><i nz-icon nzType="unordered-list" nzTheme="outline"></i></ng-template>
+                                        <label nz-checkbox>Wardrobe</label>
+                                    </nz-input-group>
+                                </nz-form-control>
+                            </nz-form-item>
+                            <nz-form-item>
+                                <nz-form-control nzErrorTip="Please choose an option!">
+                                    <nz-input-group>
+                                        <ng-template #Icon11><i nz-icon nzType="unordered-list" nzTheme="outline"></i></ng-template>
+                                        <label nz-checkbox>Walls</label>
+                                    </nz-input-group>
+                                </nz-form-control>
+                            </nz-form-item>
+                            <nz-form-item>
+                                <nz-form-control nzErrorTip="Please choose an option!">
+                                    <nz-input-group>
+                                        <ng-template #Icon11><i nz-icon nzType="unordered-list" nzTheme="outline"></i></ng-template>
+                                        <label nz-checkbox>Ceiling</label>
+                                    </nz-input-group>
+                                </nz-form-control>
+                            </nz-form-item>
+                            <nz-form-item>
+                                <nz-form-control nzErrorTip="Please choose an option!">
+                                    <nz-input-group>
+                                        <ng-template #Icon11><i nz-icon nzType="unordered-list" nzTheme="outline"></i></ng-template>
+                                        <label nz-checkbox>Floor/Carpet</label>
+                                    </nz-input-group>
+                                </nz-form-control>
+                            </nz-form-item>
+                            <nz-form-item>
+                                <nz-form-control nzErrorTip="Please choose an option!">
+                                    <nz-input-group>
+                                        <ng-template #Icon11><i nz-icon nzType="unordered-list" nzTheme="outline"></i></ng-template>
+                                        <label nz-checkbox>Mattress</label>
+                                    </nz-input-group>
+                                </nz-form-control>
+                            </nz-form-item>
+
+                        </div>
+
+                    </div>
+
+
+
+                </nz-descriptions-item>
+
+            </nz-descriptions>
+
+            <br>
+
+
+
+        </ng-container>
+        <div *nzModalFooter>
+            <button nz-button nzType="danger" (click)="handleCancelAddRequestModal()">Cancel</button>
+            <button nz-button nzType="primary" [nzLoading]="isConfirmLoading" nz-popconfirm nzPopconfirmTitle="Are you sure you want to submit this inspection?" nzPopconfirmPlacement="top" (nzOnConfirm)="confirm()" (nzOnCancel)="cancel()">Submit</button>
+        </div>
+    </form>
+</nz-modal>
+
+<nz-modal [(nzVisible)]="isViewVisible" nzWidth="80vw" [nzTitle]="title1" nzCentered nzClosable=false nzIconType="warning">
+    <ng-template #title1><span style=" color:#00162b; margin-right: 6px;">View</span><span style="color:#f5bd1f;">Room Inspection</span></ng-template>
+    <form nz-form>
+        <ng-container *nzModalContent>
+            <nz-descriptions [nzColumn]="2" nzBordered nzTitle="Room Inspection Details">
+                <nz-descriptions-item nzTitle="Block" [nzSpan]="1">Block B</nz-descriptions-item>
+                <nz-descriptions-item nzTitle="Room" [nzSpan]="1">0436</nz-descriptions-item>
+                <nz-descriptions-item nzTitle="Date" [nzSpan]="2">2020-08-18 23:16</nz-descriptions-item>
+                <!-- <nz-descriptions-item nzTitle="Student" [nzSpan]="2">John Doe</nz-descriptions-item>
+                <nz-descriptions-item nzTitle="Student Number" [nzSpan]="2">12345678</nz-descriptions-item> -->
+                <nz-descriptions-item nzTitle="Inspection Details" [nzSpan]="2">
+
+
+
+                    <div nz-row>
+                        <div nz-col [nzSpan]="11" style="margin-right: 12px;">
+                            <nz-alert nzType="success" nzMessage="Curtain/Blinds" nzShowIcon></nz-alert>
+                            <nz-alert nzType="error" nzMessage="CurtainRail/Hooks" nzShowIcon></nz-alert>
+                            <nz-alert nzType="success" nzMessage="Globes" nzShowIcon></nz-alert>
+                            <nz-alert nzType="success" nzMessage="LightSwitches" nzShowIcon></nz-alert>
+                            <nz-alert nzType="success" nzMessage="Study Desk" nzShowIcon></nz-alert>
+                            <nz-alert nzType="error" nzMessage="Chair" nzShowIcon></nz-alert>
+                            <nz-alert nzType="success" nzMessage="Wardrobe" nzShowIcon></nz-alert>
+                            <nz-alert nzType="success" nzMessage="Doors" nzShowIcon></nz-alert>
+                            <nz-alert nzType="success" nzMessage="Mattress" nzShowIcon></nz-alert>
+                        </div>
+
+                        <div nz-col [nzSpan]="11" class="float-right">
+                            <nz-alert nzType="success" nzMessage="Wall Sockets" nzShowIcon></nz-alert>
+                            <nz-alert nzType="success" nzMessage="Room Door" nzShowIcon></nz-alert>
+                            <nz-alert nzType="success" nzMessage="Door Lock" nzShowIcon></nz-alert>
+                            <nz-alert nzType="error" nzMessage="Mirror" nzShowIcon></nz-alert>
+                            <nz-alert nzType="success" nzMessage="Wardrobe" nzShowIcon></nz-alert>
+                            <nz-alert nzType="success" nzMessage="Walls" nzShowIcon></nz-alert>
+                            <nz-alert nzType="success" nzMessage="Ceiling" nzShowIcon></nz-alert>
+                            <nz-alert nzType="success" nzMessage="Floor/Carpet" nzShowIcon></nz-alert>
+
+                        </div>
+
+                    </div>
+                </nz-descriptions-item>
+
+            </nz-descriptions>
+            <div nz-row>
+                <div nz-col [nzSpan]="12" class="float-left">
+
+                </div>
+
+                <div nz-col [nzSpan]="12" class="float-right ">
+
+
+                </div>
+
+            </div>
+
+        </ng-container>
+        <div *nzModalFooter nzColor="green">
+            <button nz-button nzType="danger" (click)="handleCancelView()">Close</button>
+        </div>
+    </form>
+</nz-modal>

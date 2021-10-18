@@ -1,0 +1,34 @@
+field-container {
+  display: flex;
+  flex-direction: column;
+}
+.upload-file-container {
+  width: 100%;
+  height: 200px;
+  margin: 20px auto;
+  padding: 20px auto;
+  border: 2px dashed #1c8adb;
+  border-radius: 10px;
+}
+
+.upload-file-container:hover {
+  cursor: pointer;
+  background-color: #9ecbec !important;
+  opacity: 0.8;
+}
+
+.upload-progress-bar {
+  width: 100%;
+  height: 2px;
+  margin: 2px auto;
+  padding: 2px auto;
+  margin: 1rem 0;
+}
+
+.error-message {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 15px;
+  color: red;
+  font-weight: 500;
+}

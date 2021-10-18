@@ -1,0 +1,27 @@
+#calendar {
+    /* 		float: right; */
+    /* margin: 0 auto; */
+    width: 990px;
+    /* background-color: #FFFFFF;
+    border-radius: 6px;
+    box-shadow: 0 1px 2px #f1da09; */
+}
+
+.fc-event-time,
+.fc-event-title {
+    padding: 0 1px;
+    white-space: normal;
+}
+
+.fc-day-grid-event .fc-content {
+    white-space: normal!important;
+}
+
+button {
+    outline: none;
+}
+
+.ant-descriptions-bordered .ant-descriptions-item-label {
+    background-color: #fafafa;
+    font-weight: bold;
+}

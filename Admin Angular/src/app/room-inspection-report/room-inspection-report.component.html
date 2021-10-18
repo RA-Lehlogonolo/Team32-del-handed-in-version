@@ -1,0 +1,84 @@
+
+<div class="pageHeader">
+  <div nz-row>
+      <div nz-col [nzSpan]="12">
+          <h1 class="title">Room Inspection Report</h1>
+      </div>
+      <div nz-col [nzSpan]="12">
+          <button nz-button nzType="primary" style="width: 50%; float: right;">Print Report</button>
+
+      </div>
+  </div>
+</div>
+<br>
+
+<div nz-row [nzGutter]="16">
+  <div nz-col [nzSpan]="8">
+      <nz-form-item>
+          <nz-form-control nzErrorTip="Please input your start date!">
+              <nz-input-group [nzAddOnBefore]="calendarIcon">
+                  <ng-template #calendarIcon><i nz-icon nzType="calendar" nzTheme="outline"></i></ng-template>
+                  <nz-date-picker class="w-100" nz-input formControlName="date" nzPlaceHolder="Select start date"></nz-date-picker>
+              </nz-input-group>
+          </nz-form-control>
+      </nz-form-item>
+  </div>
+  <div nz-col [nzSpan]="8">
+      <nz-form-item>
+          <nz-form-control nzErrorTip="Please input your end date!">
+              <nz-input-group [nzAddOnBefore]="calendarIcon">
+                  <ng-template #calendarIcon><i nz-icon nzType="calendar" nzTheme="outline"></i></ng-template>
+                  <nz-date-picker class="w-100" nz-input formControlName="date" nzPlaceHolder="Select end date"></nz-date-picker>
+              </nz-input-group>
+          </nz-form-control>
+      </nz-form-item>
+  </div>
+  <div nz-col [nzSpan]="8">
+      <span>
+      <nz-select class="w-100" nzPlaceHolder="Select Occupation status">
+          <nz-option nzCustomContent nzLabel="Unccupied" nzValue="Unccupied">Unccupied</nz-option>
+          <nz-option nzCustomContent nzLabel="Occupied" nzValue="Occupied">Occupied</nz-option>
+      </nz-select>
+      </span>
+  </div>
+</div>
+
+<div nz-row [nzGutter]="16">
+  <div nz-col [nzSpan]="8">
+
+  </div>
+  <div nz-col [nzSpan]="8">
+
+  </div>
+  <div nz-col [nzSpan]="8">
+      <button nz-button nzType="primary" class="w-100">Generate Room Inspection Report</button>
+
+  </div>
+</div>
+
+<nz-table #basicTable nzBordered [nzData]="listOfData">
+
+  <thead>
+      <tr>
+          <th>Date</th>
+          <th>Student Number</th>
+          <th>Student</th>
+          <th>Status</th>
+          <th>Results</th>
+          <th>Block</th>
+          <th>Room</th>
+
+      </tr>
+  </thead>
+  <tbody>
+      <tr *ngFor="let data of basicTable.data ">
+          <td [innerHTML]=" data.date | highlight:keywords"></td>
+          <td [innerHTML]=" data.number | highlight:keywords"></td>
+          <td [innerHTML]=" data.student | highlight:keywords"></td>
+          <td [innerHTML]=" data.status | highlight:keywords"></td>
+          <td [innerHTML]=" data.result| highlight:keywords"></td>
+          <td [innerHTML]=" data.block| highlight:keywords"></td>
+          <td [innerHTML]=" data.room| highlight:keywords"></td>
+      </tr>
+  </tbody>
+</nz-table>

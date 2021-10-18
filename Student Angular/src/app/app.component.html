@@ -1,0 +1,145 @@
+<nz-layout class="app-layout" *ngIf="showMenuItems">
+    <nz-sider class="menu-sidebar" nzCollapsible nzWidth="256px" nzBreakpoint="md" [(nzCollapsed)]="isCollapsed" [nzTrigger]="null">
+        <div class="sidebar-logo">
+            <a routerLink="/">
+                <img src="../assets/Images/transparentLogo2.png" alt="logo">
+                <h1>
+                    <span style="color:#004b91;">Tuks</span><span style="color:#f5bd1f;">Village</span> Board</h1>
+            </a>
+        </div>
+        <ul nz-menu nzTheme="dark" nzMode="inline" [nzInlineCollapsed]="isCollapsed">
+            <li nz-menu-item routerLink="/home" nzMatchRouter>
+                <i nz-icon nzType="home"></i>
+                <span>Home</span>
+            </li>
+            <li nz-menu-item routerLink="/profile" nzMatchRouter>
+                <i nz-icon nzType="idcard"></i>
+                <span>Profile</span>
+            </li>
+
+            <li nz-menu-item routerLink="/visitation" nzMatchRouter>
+                <i nz-icon nzType="compass"></i>
+                <span>Visitation</span>
+            </li>
+
+            <li nz-submenu nzTitle="Health Check" nzIcon="file-done" [(nzOpen)]="openMap.sub2" (nzOpenChange)="openHandler('sub2')">
+                <ul>
+                    <li nz-menu-item nzMatchRouter>
+                        <a routerLink="/compulsory-health-check">Compulsory Health Check</a>
+                    </li>
+
+                    <li nz-menu-item nzMatchRouter>
+                        <a routerLink="/weekly-health-check">Weekly Health Check
+                        </a>
+                    </li>
+
+                </ul>
+            </li>
+
+            <li nz-submenu nzTitle="Merchandise" nzIcon="shopping" [(nzOpen)]="openMap.sub1" (nzOpenChange)="openHandler('sub1')">
+                <ul>
+                    <li nz-menu-item nzMatchRouter>
+                        <a routerLink="/browse-merchandise">Browse Merchandise</a>
+                    </li>
+
+                    <li nz-menu-item nzMatchRouter>
+                        <a routerLink="/view-orders">View orders
+                        </a>
+                    </li>
+
+                </ul>
+            </li>
+
+            <li nz-submenu nzTitle="Village Fresh" nzIcon="shop" [(nzOpen)]="openMap.sub3" (nzOpenChange)="openHandler('sub3')">
+                <ul>
+                    <li nz-menu-item nzMatchRouter>
+                        <a routerLink="/view-menu">View Menu</a>
+                    </li>
+
+                </ul>
+            </li>
+
+            <li nz-submenu nzTitle="Facility" nzIcon="calendar" [(nzOpen)]="openMap.sub4" (nzOpenChange)="openHandler('sub4')">
+                <ul>
+                    <li nz-menu-item nzMatchRouter>
+                        <a routerLink="/maintenance-request">Maintenance Request</a>
+                    </li>
+                    <li nz-menu-item nzMatchRouter>
+                        <a routerLink="/move-in-inspection">Move-In Inspection</a>
+                    </li>
+                    <li nz-menu-item nzMatchRouter>
+                        <a routerLink="/move-out-inspection">Move-Out Inspection</a>
+                    </li>
+
+                </ul>
+            </li>
+
+            <!-- <li nz-submenu nzTitle="Form" nzIcon="form">
+                <ul>
+                    <li nz-menu-item nzMatchRouter>
+                        <a>Basic Form</a>
+                    </li>
+                </ul>
+            </li> -->
+        </ul>
+    </nz-sider>
+    <nz-layout>
+        <nz-header>
+            <div class="app-header">
+                <div nz-row>
+                    <div nz-col [nzSpan]="12">
+                        <div nz-row>
+                            <div nz-col [nzSpan]="4">
+                                <span style="vertical-align:baseline;
+                            vertical-align:-webkit-baseline-middle;" class="header-trigger" (click)="isCollapsed = !isCollapsed">
+                         <i class="trigger"
+                            nz-icon
+                            [nzType]="isCollapsed ? 'menu-unfold' : 'menu-fold'"
+                            ></i>
+                         </span>
+                            </div>
+                            <div nz-col [nzSpan]="12">
+                            </div>
+                        </div>
+                    </div>
+                    <div nz-col [nzSpan]="12">
+                        <div nz-row>
+                            <div nz-col [nzSpan]="21">
+                                <span class="trigger float-right header-trigger" routerLink="/profile" style="padding: 0px;">
+                            <i   nz-icon nzType="user"></i>
+                            Lily Han
+                            <nz-divider  nzType="vertical" style="border-width: 2px; min-height:50%; border-color: #1d62ca;"></nz-divider>
+                         </span>
+                            </div>
+                            <div nz-col [nzSpan]="3">
+                                <span class="header-trigger" style="padding: 0px;" routerLink="/login">                             
+                         <a >
+                         <i class="trigger" nz-icon nzType="export" nzTheme="outline" ></i>
+                         </a>
+                         </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nz-header>
+        <nz-content>
+            <div class="inner-content">
+                <ng-container *ngTemplateOutlet="template"></ng-container>
+            </div>
+        </nz-content>
+    </nz-layout>
+</nz-layout>
+
+<!-- For login page/reset-password page -->
+<nz-layout *ngIf="!showMenuItems" class="app-layout">
+    <nz-content>
+        <div class="inner-content">
+            <ng-container *ngTemplateOutlet="template"></ng-container>
+        </div>
+    </nz-content>
+</nz-layout>
+
+<ng-template #template>
+    <router-outlet> </router-outlet>
+</ng-template>

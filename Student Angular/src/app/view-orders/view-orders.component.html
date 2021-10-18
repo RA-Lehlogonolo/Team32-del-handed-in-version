@@ -1,0 +1,106 @@
+<div class="pageHeader">
+    <div nz-row>
+        <div nz-col [nzSpan]="12">
+            <h1 class="title">Orders</h1>
+        </div>
+        <div nz-col [nzSpan]="12">
+            <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
+                <ng-template #suffixIconButton>
+                    <button nz-button nzType="primary" nzSearch><i nz-icon nzType="search"></i></button>
+                </ng-template>
+                <input type="text" nz-input placeholder="Search for order" />
+            </nz-input-group>
+
+        </div>
+    </div>
+</div>
+<br>
+<nz-table #basicTable nzBordered [nzData]="listOfData">
+
+    <thead>
+        <tr>
+            <th>Order Number</th>
+            <th>Order Date</th>
+            <th>Total Cost</th>
+            <th>Order Status</th>
+            <th nzAlign='center'><i nz-icon nzType="eye" nzTheme="outline" style="font-size: 16px; color: #08c;"></i></th>
+            <!-- <th nzAlign='center'><i nz-icon nzType="edit" nzTheme="outline" style="font-size: 16px; color: #f5bd1f;"></i></th>
+            <th nzAlign='center'><i nz-icon nzType="delete" nzTheme="outline" style="font-size: 16px; color: red;"></i></th> -->
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let data of basicTable.data">
+            <td>{{ data.OrderId }}</td>
+            <td>{{ data.OrderDate }}</td>
+            <td>R{{ data.TotalCost }}</td>
+            <td>{{ data.Status }}</td>
+            <td nzAlign='center'>
+                <button nz-button class="login-form-forgot login-form-button login-form-margin" nzType="primary" (click)="showViewOrderModal()">View Order Details</button>
+            </td>
+
+        </tr>
+    </tbody>
+</nz-table>
+
+<!-- View Order modal -->
+<nz-modal [(nzVisible)]="isViewOrderVisible" [nzTitle]="title" nzCentered nzClosable=false [nzAutofocus]="null">
+    <ng-template #title><span style="color:#00162b; margin-right: 6px;">View</span><span style="color:#f5bd1f;">Order</span></ng-template>
+    <form nz-form #requestStatus>
+        <ng-container *nzModalContent>
+            <nz-descriptions [nzColumn]="1" nzTitle="Order Details" nzBordered [nzExtra]="extraTpl">
+                <nz-descriptions-item nzTitle="Order Number" [nzSpan]="1">12345</nz-descriptions-item>
+                <nz-descriptions-item nzTitle="Order Date" [nzSpan]="1">2021-05-26 17:51</nz-descriptions-item>
+                <nz-descriptions-item nzTitle="Products" [nzSpan]="1">
+                    RMC T-shirt, Size: XS, Quantity: 3 <br> Village T-shirt, Size: XS, Quantity: 2
+                    <br>RMC T-shirt, Size: M, Quantity: 1
+                </nz-descriptions-item>
+                <nz-descriptions-item nzTitle="Total Cost" [nzSpan]="1">R300</nz-descriptions-item>
+                <nz-descriptions-item nzTitle="Status" [nzSpan]="1"><span>Placed</span> <span class="float-right"><button nz-button nzType="danger" (click)="showCancelOrderModal()" [nzLoading]="isConfirmLoading">Cancel Order</button></span>
+                </nz-descriptions-item>
+            </nz-descriptions>
+            <ng-template #extraTpl>
+                <button nz-button nzType="primary" (click)="showProofOfPaymentModal()">Upload Proof of Payment</button>
+            </ng-template>
+        </ng-container>
+        <div *nzModalFooter nzColor="green">
+            <button nz-button nzType="danger" (click)="handleCancelViewOrder()">Close</button>
+            <!-- <button nz-button nzType="primary" (click)="showCancelOrderModal()" [nzLoading]="isConfirmLoading">Cancel Order</button> -->
+        </div>
+    </form>
+</nz-modal>
+
+<!-- Confirm Cancel Order modal -->
+
+<nz-modal [(nzVisible)]="isCancelOrderVisible" [nzTitle]="title1" nzCentered nzClosable=false nzIconType="warning" [nzAutofocus]="null">
+    <ng-template #title1><span style=" color:#00162b; margin-right: 6px;">Cancel</span><span style="color:#f5bd1f;">Order</span></ng-template>
+    <form nz-form>
+        <ng-container *nzModalContent>
+            <b style="color: red;">Are you sure you want to cancel this order?</b>
+        </ng-container>
+        <div *nzModalFooter nzColor="green">
+            <button nz-button nzType="danger" (click)="handleCancelCancelOrder()">No</button>
+            <button nz-button nzType="primary" (click)="handleOkCancelOrder()" [nzLoading]="isConfirmLoading" [hidden]="status=='Approved'">Yes</button>
+        </div>
+    </form>
+</nz-modal>
+
+<!-- Update Item modal -->
+<nz-modal [(nzVisible)]="isProofOfPaymentVisible" [nzTitle]="title2" nzCentered nzClosable=false>
+    <ng-template #title2><span style="color:#00162b; margin-right: 6px;">Upload</span><span style="color:#f5bd1f;">Proof of Payment</span></ng-template>
+    <form nz-form>
+        <ng-container *nzModalContent>
+
+
+            <p>Upload proof of payment in PDF format </p>
+            <nz-upload nzAccept='.pdf' nzFileType='application/pdf' [(nzFileList)]="fileList" [nzBeforeUpload]="beforeUpload">
+                <button [disabled]="fileList.length >= 1" nz-button><i nz-icon nzType="upload"></i>Select Proof of Payment</button>
+            </nz-upload>
+
+
+        </ng-container>
+        <div *nzModalFooter nzColor="green">
+            <button nz-button nzType="danger" (click)="handleCancelProofOfPayment()">Cancel</button>
+            <button nz-button nzType="primary" (click)="handleOkProofOfPayment()" [nzLoading]="isConfirmLoading">Upload</button>
+        </div>
+    </form>
+</nz-modal>

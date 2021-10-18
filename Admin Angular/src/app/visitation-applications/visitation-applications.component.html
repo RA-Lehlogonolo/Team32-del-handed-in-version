@@ -1,0 +1,128 @@
+<div class="pageHeader">
+    <div nz-row>
+        <div nz-col [nzSpan]="12">
+            <h1 class="title">Visitation Applications</h1>
+        </div>
+        <div nz-col [nzSpan]="12">
+            <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
+                <ng-template #suffixIconButton>
+                    <button nz-button nzType="primary" nzSearch><i nz-icon nzType="search"></i></button>
+                </ng-template>
+                <input type="text" nz-input placeholder="Search for visitation application" />
+            </nz-input-group>
+        </div>
+    </div>
+</div>
+<br>
+
+<nz-table #basicTable nzBordered [nzData]="listOfData">
+
+    <thead>
+        <tr>
+            <th>Application Date</th>
+            <th>Start Date</th>
+            <th>End Date</th>
+            <th>Visitation Reason</th>
+            <th>Student</th>
+            <th>Status</th>
+            <th nzAlign='center'><i nz-icon nzType="eye" nzTheme="outline" style="font-size: 16px; color: #08c;"></i></th>
+            <!-- <th nzAlign='center'><i nz-icon nzType="edit" nzTheme="outline" style="font-size: 16px; color: #f5bd1f;"></i></th>
+            <th nzAlign='center'><i nz-icon nzType="delete" nzTheme="outline" style="font-size: 16px; color: red;"></i></th> -->
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let data of basicTable.data">
+            <td>{{ data.Date }}</td>
+            <td>{{ data.Start }}</td>
+            <td>{{ data.End }}</td>
+            <td>{{ data.Reason }}</td>
+            <td>{{ data.Student }}</td>
+            <td>{{ data.Status }}</td>
+            <td nzAlign='center'>
+                <button nz-button class="login-form-forgot login-form-button login-form-margin" nzType="primary" (click)="showViewApplicationModal()">View Application</button>
+            </td>
+
+
+        </tr>
+    </tbody>
+</nz-table>
+
+<!-- View Applcation modal -->
+<nz-modal [(nzVisible)]="isViewApplicationVisible" [nzTitle]="title" [nzAutofocus]="null" nzWidth="700px" nzCentered nzClosable=false>
+    <ng-template #title><span style="color:#00162b; margin-right: 6px;">View</span><span style="color:#f5bd1f;">Visitation Application</span></ng-template>
+    <form nz-form #requestStatus>
+        <ng-container *nzModalContent>
+            <nz-descriptions [nzColumn]="2" nzTitle="Visitation Application Details" nzBordered>
+                <nz-descriptions-item nzTitle="Application Date" [nzSpan]="2">2020-07-18 23:16</nz-descriptions-item>
+                <nz-descriptions-item nzTitle="Visit Start Date" [nzSpan]="1">2021-05-26</nz-descriptions-item>
+                <nz-descriptions-item nzTitle="Visit End Date" [nzSpan]="1">2021-08-23</nz-descriptions-item>
+                <nz-descriptions-item nzTitle="Student" [nzSpan]="1">John Doe</nz-descriptions-item>
+                <nz-descriptions-item nzTitle="Student Number" [nzSpan]="1">12345678</nz-descriptions-item>
+                <nz-descriptions-item nzTitle="Visitation Reason" [nzSpan]="2">I have to attend a relative's funeral</nz-descriptions-item>
+                <nz-descriptions-item nzTitle="Status" [nzSpan]="2"><span>Pending</span></nz-descriptions-item>
+                <nz-descriptions-item nzTitle="Host Name" [nzSpan]="1">Jane Doe</nz-descriptions-item>
+                <nz-descriptions-item nzTitle="Address of Visit" [nzSpan]="1">235 Thungela Street</nz-descriptions-item>
+                <nz-descriptions-item nzTitle="Host cellphone" [nzSpan]="1">0821234561</nz-descriptions-item>
+            </nz-descriptions>
+            <br>
+            <div nz-row>
+                <div nz-col [nzSpan]="12" class="">
+                    <td class="text-center float-right">
+                        <button nz-button class="" [nzAutofocus]="null" nzType="danger" (click)="showRejectApplicationModal()">Reject Application</button>
+                    </td>
+                </div>
+
+                <div nz-col [nzSpan]="12" class="">
+
+                    <td class="text-center  float-right">
+                        <button nz-button class="" nzType="primary" (click)="showApproveApplicationModal()">Approve Application</button>
+                    </td>
+                </div>
+
+
+            </div>
+
+
+
+        </ng-container>
+        <div *nzModalFooter nzColor="green">
+            <button nz-button nzType="danger" (click)="handleCancelViewApplication()">Close</button>
+            <!-- <button nz-button nzType="primary" (click)="showCancelRequestModal()" [nzLoading]="isConfirmLoading">Cancel Visitation Application</button> -->
+        </div>
+    </form>
+</nz-modal>
+
+<!-- Confirm Remove application modal -->
+
+<nz-modal [(nzVisible)]="isApproveApplicationVisible" [nzTitle]="title6" nzCentered nzClosable=false nzIconType="warning">
+    <ng-template #title6><span style=" color:#00162b; margin-right: 6px;">Approve</span><span style="color:#f5bd1f;">Visitation Application</span></ng-template>
+    <form nz-form>
+        <ng-container *nzModalContent>
+            <b style="color: red;">Are you sure you want to approve this application?</b>
+        </ng-container>
+        <div *nzModalFooter nzColor="green">
+            <button nz-button nzType="danger" (click)="handleCancelApproveApplication()">No</button>
+            <button nz-button nzType="primary" (click)="handleOkApproveApplication()" [nzLoading]="isConfirmLoading">Yes</button>
+        </div>
+    </form>
+</nz-modal>
+
+<nz-modal [(nzVisible)]="isRejectApplicationVisible" [nzTitle]="title2" nzCentered nzClosable=false nzIconType="warning">
+    <ng-template #title2><span style=" color:#00162b; margin-right: 6px;">Reject</span><span style="color:#f5bd1f;">Visitation Application</span></ng-template>
+    <form nz-form>
+        <ng-container *nzModalContent>
+            <nz-form-item>
+                <nz-form-control nzErrorTip="Please input rejection reason!">
+                    <nz-input-group [nzAddOnBefore]="Icon">
+                        <ng-template #Icon><i nz-icon nzType="info" nzTheme="outline"></i></ng-template>
+                        <textarea nz-input nzAutosize placeholder="Rejection Reason" formControlName="Reason"></textarea>
+                    </nz-input-group>
+                </nz-form-control>
+            </nz-form-item>
+        </ng-container>
+        <div *nzModalFooter nzColor="green">
+            <button nz-button nzType="danger" (click)="handleCancelRejectApplication()">Cancel</button>
+            <button nz-button nzType="primary" (click)="handleOkRejectApplication()" [nzLoading]="isConfirmLoading">Save</button>
+        </div>
+    </form>
+</nz-modal>
